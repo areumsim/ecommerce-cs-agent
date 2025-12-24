@@ -1,0 +1,89 @@
+version: "3.8"
+
+services:
+  # ==============================================
+  # API 서버
+  # ==============================================
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ar-agent-api
+    ports:
+      - "${APP_PORT:-8000}:${APP_PORT:-8000}"
+      - "${UI_PORT:-7860}:${UI_PORT:-7860}"
+    environment:
+      - APP_ENV=development
+      - PYTHONUNBUFFERED=1
+      - APP_PORT=${APP_PORT:-8000}
+      - UI_PORT=${UI_PORT:-7860}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    volumes:
+      # 데이터 영속화
+      - ./data:/app/data
+      # 설정 파일
+      - ./configs:/app/configs
+      # 로그
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${APP_PORT:-8000}/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ar-agent-network
+
+  # ==============================================
+  # Prometheus (모니터링)
+  # ==============================================
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    container_name: ar-agent-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - ar-agent-network
+    depends_on:
+      api:
+        condition: service_healthy
+
+  # ==============================================
+  # Grafana (대시보드) - 선택적
+  # ==============================================
+  grafana:
+    image: grafana/grafana:10.1.0
+    container_name: ar-agent-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+      - ar-agent-network
+    depends_on:
+      - prometheus
+
+networks:
+  ar-agent-network:
+    driver: bridge
+
+volumes:
+  prometheus-data:
+  grafana-data:

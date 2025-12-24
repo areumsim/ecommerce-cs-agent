@@ -1,0 +1,112 @@
+version: "3.8"
+
+# 프로덕션 환경 구성
+# 사용법: docker-compose -f docker-compose.prod.yml up -d
+
+services:
+  # ==============================================
+  # API 서버 (프로덕션)
+  # ==============================================
+  api:
+    image: ar-agent-api:${VERSION:-latest}
+    container_name: ar-agent-api-prod
+    ports:
+      - "${APP_PORT:-8000}:${APP_PORT:-8000}"
+      - "${UI_PORT:-7860}:${UI_PORT:-7860}"
+    environment:
+      - APP_ENV=production
+      - PYTHONUNBUFFERED=1
+      - APP_PORT=${APP_PORT:-8000}
+      - UI_PORT=${UI_PORT:-7860}
+      # 시크릿은 환경변수나 Docker secrets으로 주입
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    volumes:
+      # 데이터 영속화 (읽기/쓰기)
+      - api-data:/app/data
+      # 설정 파일 (읽기 전용)
+      - ./configs:/app/configs:ro
+      # 로그
+      - api-logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${APP_PORT:-8000}/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: always
+    networks:
+      - ar-agent-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  # ==============================================
+  # Prometheus (프로덕션)
+  # ==============================================
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    container_name: ar-agent-prometheus-prod
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    restart: always
+    networks:
+      - ar-agent-network
+    depends_on:
+      api:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+
+  # ==============================================
+  # Grafana (프로덕션)
+  # ==============================================
+  grafana:
+    image: grafana/grafana:10.1.0
+    container_name: ar-agent-grafana-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=${GRAFANA_ROOT_URL:-http://localhost:3000}
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: always
+    networks:
+      - ar-agent-network
+    depends_on:
+      - prometheus
+
+networks:
+  ar-agent-network:
+    driver: bridge
+
+volumes:
+  api-data:
+  api-logs:
+  prometheus-data:
+  grafana-data:

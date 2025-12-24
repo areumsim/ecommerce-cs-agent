@@ -1,0 +1,78 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+.eggs
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache
+.coverage
+htmlcov
+.tox
+.nox
+
+# Documentation
+docs/_build
+
+# Jupyter
+.ipynb_checkpoints
+
+# Local development
+*.log
+*.tmp
+tmp/
+temp/
+
+# Large data files (optional, mount as volume)
+# data/processed/*.parquet
+# outputs/
+
+# Kubernetes manifests (separate deployment)
+k8s/
+
+# Archive and legacy
+archive/
+_archive/
+legacy/
+_legacy_phase/
+
+# macOS
+.DS_Store
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.docker

@@ -1,0 +1,27 @@
+# 인증 설정
+
+jwt:
+  # 시크릿 키 (프로덕션에서는 환경변수 JWT_SECRET_KEY 사용)
+  secret_key: "dev-secret-key-change-in-production-12345"
+  algorithm: "HS256"
+
+  # 토큰 만료 시간
+  access_token_expire_minutes: 30
+  refresh_token_expire_days: 7
+
+# 비밀번호 정책
+password:
+  min_length: 8
+  require_uppercase: false
+  require_lowercase: false
+  require_digit: false
+  require_special: false
+
+# 보안 설정
+security:
+  # 로그인 시도 제한
+  max_login_attempts: 5
+  lockout_duration_minutes: 15
+
+  # 세션 설정
+  max_sessions_per_user: 5

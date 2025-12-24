@@ -1,0 +1,47 @@
+# Prometheus 설정 파일
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+  # 외부 시스템에 연결할 때 모든 시계열/알림에 붙는 레이블
+  external_labels:
+    monitor: 'ar-agent-monitor'
+
+# Alertmanager 설정 (선택적)
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets:
+#           - alertmanager:9093
+
+# 규칙 파일 로드 (선택적)
+# rule_files:
+#   - "alert_rules.yml"
+
+# 스크래핑 설정
+scrape_configs:
+  # Prometheus 자체 메트릭
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    metrics_path: /metrics
+
+  # AR Agent API 메트릭
+  - job_name: 'ar-agent-api'
+    static_configs:
+      - targets: ['api:8000']
+    metrics_path: /metrics
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+    # 레이블 추가
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'ar-agent-api'
+
+    # 메트릭 필터링 (선택적)
+    # metric_relabel_configs:
+    #   - source_labels: [__name__]
+    #     regex: 'http_requests_total|agent_.*|llm_.*'
+    #     action: keep

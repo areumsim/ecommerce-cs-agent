@@ -1,0 +1,65 @@
+# RAG (Retrieval-Augmented Generation) 설정
+
+# 임베딩 모델 설정
+embedding:
+  # 모델 선택 (다국어 지원 모델 권장)
+  # 옵션: intfloat/multilingual-e5-small, intfloat/multilingual-e5-base, sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+  model_name: "intfloat/multilingual-e5-small"
+
+  # 배치 크기 (메모리에 따라 조정)
+  batch_size: 32
+
+  # 정규화 여부
+  normalize: true
+
+  # 디바이스 (auto, cpu, cuda)
+  device: "auto"
+
+# 검색 설정
+retrieval:
+  # 검색 모드: keyword, embedding, hybrid
+  mode: "hybrid"
+
+  # 기본 반환 결과 수
+  default_top_k: 5
+
+  # 최대 반환 결과 수
+  max_top_k: 20
+
+  # 하이브리드 검색 가중치 (embedding 비율, 0.0~1.0)
+  # 0.0 = 키워드만, 1.0 = 임베딩만, 0.7 = 임베딩 70% + 키워드 30%
+  hybrid_alpha: 0.7
+
+  # 최소 점수 임계값 (0 이하 결과 제외)
+  min_score: 0.0
+
+  # 결과 리랭킹 사용 여부
+  use_reranking: false
+
+# 인덱스 설정
+index:
+  # 청킹 설정
+  chunk_size: 1000
+  chunk_overlap: 100
+
+  # 벡터 인덱스 타입: flat, ivf
+  # flat: 정확하지만 대용량에서 느림
+  # ivf: 근사 검색, 대용량에서 빠름
+  vector_index_type: "flat"
+
+  # IVF 클러스터 수 (ivf 사용 시)
+  ivf_nlist: 100
+
+# 경로 설정
+paths:
+  # 정책 원본
+  policies_source: "data/processed/policies.jsonl"
+
+  # 텍스트 인덱스
+  policies_index: "data/processed/policies_index.jsonl"
+
+  # 벡터 인덱스
+  vector_index: "data/processed/policies_vectors.faiss"
+
+  # 임베딩 캐시
+  embeddings_cache: "data/processed/policies_embeddings.npy"

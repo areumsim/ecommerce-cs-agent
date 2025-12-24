@@ -1,0 +1,53 @@
+# 데이터 경로 설정
+
+# 저장소 설정
+storage:
+  backend: "sqlite"  # csv | sqlite | postgres
+  data_dir: "data/mock_csv"
+  sqlite_path: "data/ecommerce.db"
+
+# 데이터 파일 경로
+data:
+  # 원천 데이터
+  raw:
+    products: "data/raw/products.csv"
+    reviews: "data/raw/reviews.csv"
+
+  # 가공 데이터
+  processed:
+    products: "data/processed/products.parquet"
+    reviews: "data/processed/reviews.parquet"
+    reviews_agg: "data/processed/reviews_agg.parquet"
+    policies: "data/processed/policies.jsonl"
+    policies_index: "data/processed/policies_index.jsonl"
+
+  # Mock CSV 테이블
+  mock:
+    users: "data/mock_csv/users.csv"
+    orders: "data/mock_csv/orders.csv"
+    order_items: "data/mock_csv/order_items.csv"
+    products_cache: "data/mock_csv/products_cache.csv"
+    support_tickets: "data/mock_csv/support_tickets.csv"
+    ticket_messages: "data/mock_csv/ticket_messages.csv"
+    promotions: "data/mock_csv/promotions.csv"
+    product_promotions: "data/mock_csv/product_promotions.csv"
+
+  # 학습 데이터
+  training:
+    policy_qa: "data/training/policy_qa.jsonl"
+    policy_chat: "data/training/policy_chat.jsonl"
+    order_claim_qa: "data/training/order_claim_qa.jsonl"
+
+# 출력 경로
+outputs:
+  models: "outputs"
+  qlora: "outputs/ecommerce-agent-qlora"
+  logs: "logs"
+  cache: ".cache"
+
+# 설정 파일 경로
+configs:
+  llm: "configs/llm.yaml"
+  mock: "configs/mock.yaml"
+  crawl: "configs/crawl.yaml"
+  prompts_dir: "configs/prompts"

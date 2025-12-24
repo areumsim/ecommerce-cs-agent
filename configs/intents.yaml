@@ -1,0 +1,89 @@
+# 의도 분류 설정
+
+# LLM 기반 의도 분류 설정
+llm_classification:
+  enabled: true  # LLM 의도 분류 활성화 여부
+  fallback_to_keyword: true  # LLM 실패 시 키워드 방식 폴백
+  confidence_threshold: "medium"  # 최소 신뢰도 (low/medium/high)
+  timeout: 10  # LLM 호출 타임아웃 (초)
+  max_retries: 1  # 재시도 횟수
+
+# 주문 ID 패턴
+patterns:
+  # ORD-xxx 또는 ORD_xxx 형식 모두 지원
+  order_id: "\\bORD[-_][A-Za-z0-9_-]+\\b"
+  ticket_id: "\\bTKT[-_][A-Za-z0-9_-]+\\b"
+  user_id: "\\buser_[A-Za-z0-9_-]+\\b"
+
+# 의도별 키워드 (우선순위 순서)
+intents:
+  # 정책 질의 (최우선)
+  policy:
+    keywords:
+      - "정책"
+      - "faq"
+      - "알려"
+      - "어떻게"
+      - "방법"
+      - "규정"
+      - "약관"
+    default_params:
+      top_k: 5
+
+  # 주문 관련
+  order:
+    keywords:
+      - "주문"
+      - "배송"
+      - "취소"
+      - "결제"
+      - "구매"
+    sub_intents:
+      cancel:
+        keywords: ["취소"]
+        default_reason: "사용자 요청"
+      status:
+        keywords: ["상태", "배송", "어디"]
+      detail:
+        keywords: ["상세", "내역", "정보"]
+      list:
+        keywords: []  # 기본값
+        default_limit: 10
+
+  # 클레임 (환불/교환 요청)
+  claim:
+    keywords:
+      - "환불"
+      - "교환"
+      - "불량"
+      - "클레임"
+      - "고장"
+      - "신청"
+      - "요청"
+      - "파손"
+      - "하자"
+    issue_types:
+      refund:
+        keywords: ["환불"]
+      exchange:
+        keywords: ["교환"]
+      defect:
+        keywords: ["불량", "고장", "파손", "하자"]
+      other:
+        keywords: []
+
+  # 일반 대화
+  general:
+    keywords:
+      - "안녕"
+      - "고마워"
+      - "감사"
+      - "도움"
+    responses:
+      greeting: "안녕하세요! 무엇을 도와드릴까요?"
+      thanks: "감사합니다. 더 도움이 필요하시면 말씀해주세요."
+
+# 분류 실패 시 기본 응답
+fallback:
+  intent: "unknown"
+  response: "죄송합니다. 질문을 이해하지 못했습니다. 주문, 환불, 정책 등에 대해 질문해주세요."

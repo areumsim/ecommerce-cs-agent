@@ -1,0 +1,38 @@
+# Prometheus 설정 파일
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# 알림 규칙 파일
+rule_files:
+  - "alerts.yml"
+
+# Alertmanager 설정 (선택)
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets:
+#           - alertmanager:9093
+
+# 스크래핑 대상
+scrape_configs:
+  # Prometheus 자체 메트릭
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Ecommerce Agent 메트릭
+  - job_name: 'ecommerce-agent'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: /metrics
+
+  # 여러 인스턴스 스크래핑 (선택)
+  # - job_name: 'ecommerce-agent-cluster'
+  #   static_configs:
+  #     - targets:
+  #       - 'agent1:8000'
+  #       - 'agent2:8000'
+  #       - 'agent3:8000'

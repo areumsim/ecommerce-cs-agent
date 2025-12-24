@@ -1,0 +1,12 @@
+# 크롤링 설정 (정책/FAQ 위주)
+user_agent: "EcommerceAgentBot/0.1 (+internal)"
+timeout_sec: 10
+retries: 2
+rate_limit_per_domain_per_min: 6
+whitelist_domains:
+  - example.com
+seed_urls:
+  - https://example.com/refund
+  - https://example.com/shipping
+  - https://example.com/faq
+

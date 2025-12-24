@@ -1,0 +1,47 @@
+# 앱 전역 설정
+app:
+  name: "ecommerce-agent"
+  version: "1.0.0"
+  description: "한국어 전자상거래 상담 에이전트"
+  environment: "development"  # development | staging | production
+
+# 서버 설정
+server:
+  host: "0.0.0.0"
+  port: 8000
+  ui_port: 7860
+  reload: true
+
+# 로깅 설정
+logging:
+  level: "INFO"  # DEBUG | INFO | WARNING | ERROR
+  format: "json"  # text | json
+  file: "./log/app.log"  # 파일 로깅 경로 (null이면 콘솔만)
+  rotation:
+    max_bytes: 10485760  # 10MB
+    backup_count: 5
+
+# 기본값 설정
+defaults:
+  user_id: "user_001"
+  order_limit: 10
+  ticket_limit: 10
+  search_top_k: 5
+
+# CORS 설정 (개발 중에는 * 허용, 운영 시 제한 권장)
+cors:
+  allowed_origins:
+    - "*"
+
+# 모니터링 설정
+monitoring:
+  enable_prometheus: true
+  metrics_path: "/metrics"
+
+# OpenAI 호환 레이어 설정
+openai_compat:
+  enabled: true
+  mode: orchestrator
+  require_api_key: false
+  allowed_keys: []
+  default_model: "ecommerce-agent-merged"

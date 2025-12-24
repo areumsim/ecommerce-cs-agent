@@ -1,0 +1,116 @@
+# Prometheus 알림 규칙
+
+groups:
+  # 서비스 가용성 알림
+  - name: availability
+    rules:
+      - alert: ServiceDown
+        expr: up{job="ecommerce-agent"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Ecommerce Agent 서비스 다운"
+          description: "{{ $labels.instance }} 인스턴스가 1분 이상 응답하지 않습니다."
+
+      - alert: HighErrorRate
+        expr: sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m])) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "높은 HTTP 5xx 에러율"
+          description: "5xx 에러율이 5% 이상입니다 (현재: {{ $value | printf \"%.2f\" }}%)."
+
+  # 성능 알림
+  - name: performance
+    rules:
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "높은 HTTP 응답 지연"
+          description: "P95 응답 시간이 2초를 초과합니다 (현재: {{ $value | printf \"%.2f\" }}s)."
+
+      - alert: HighAgentResponseTime
+        expr: histogram_quantile(0.95, sum(rate(agent_response_time_seconds_bucket[5m])) by (le, agent_type)) > 30
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "높은 에이전트 응답 시간"
+          description: "{{ $labels.agent_type }} 에이전트 P95 응답 시간이 30초를 초과합니다."
+
+      - alert: HighLLMLatency
+        expr: histogram_quantile(0.95, sum(rate(llm_latency_seconds_bucket[5m])) by (le, model)) > 60
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "높은 LLM 응답 지연"
+          description: "{{ $labels.model }} 모델 P95 응답 시간이 60초를 초과합니다."
+
+  # 에러 알림
+  - name: errors
+    rules:
+      - alert: HighAgentErrorRate
+        expr: sum(rate(agent_errors_total[5m])) by (agent_type) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "높은 에이전트 에러율"
+          description: "{{ $labels.agent_type }} 에이전트 에러율이 높습니다 ({{ $value | printf \"%.2f\" }}/s)."
+
+      - alert: LLMFailures
+        expr: sum(rate(llm_requests_total{status="error"}[5m])) by (model) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "LLM API 실패 증가"
+          description: "{{ $labels.model }} 모델 API 실패율이 높습니다."
+
+  # 리소스 알림
+  - name: resources
+    rules:
+      - alert: HighDatabaseQueryTime
+        expr: histogram_quantile(0.95, sum(rate(db_query_duration_seconds_bucket[5m])) by (le, table)) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "느린 데이터베이스 쿼리"
+          description: "{{ $labels.table }} 테이블 쿼리 P95가 500ms를 초과합니다."
+
+      - alert: LowActiveUsers
+        expr: active_users < 1 and hour() >= 9 and hour() <= 18
+        for: 30m
+        labels:
+          severity: info
+        annotations:
+          summary: "낮은 사용자 활동"
+          description: "업무 시간 중 활성 사용자가 없습니다."
+
+  # 용량 알림
+  - name: capacity
+    rules:
+      - alert: HighTokenUsage
+        expr: sum(increase(llm_tokens_used_total[1h])) > 100000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "높은 LLM 토큰 사용량"
+          description: "시간당 LLM 토큰 사용량이 100,000을 초과합니다."
+
+      - alert: HighRequestRate
+        expr: sum(rate(http_requests_total[5m])) > 100
+        for: 5m
+        labels:
+          severity: info
+        annotations:
+          summary: "높은 요청률"
+          description: "초당 100개 이상의 요청이 들어오고 있습니다."

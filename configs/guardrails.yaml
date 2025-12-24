@@ -1,0 +1,107 @@
+# 가드레일 설정
+
+# 입력 가드레일
+input:
+  # 길이 제한
+  max_length: 2000
+  min_length: 1
+
+  # PII 패턴 (한국어 환경)
+  pii_patterns:
+    phone_kr:
+      pattern: "(01[0-9][-.]?\\d{3,4}[-.]?\\d{4})"
+      mask: "***-****-****"
+      description: "휴대폰 번호"
+    phone_landline:
+      pattern: "(0[2-6][0-9][-.]?\\d{3,4}[-.]?\\d{4})"
+      mask: "***-****-****"
+      description: "유선 전화번호"
+    email:
+      pattern: "([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+)"
+      mask: "***@***.***"
+      description: "이메일 주소"
+    rrn:
+      pattern: "(\\d{6}[-.]?[1-4]\\d{6})"
+      mask: "******-*******"
+      description: "주민등록번호"
+    card_number:
+      pattern: "(\\d{4}[-.]?\\d{4}[-.]?\\d{4}[-.]?\\d{4})"
+      mask: "****-****-****-****"
+      description: "카드 번호"
+    account_number:
+      pattern: "(\\d{3,6}[-.]?\\d{2,6}[-.]?\\d{2,6}[-.]?\\d{0,6})"
+      mask: "***-**-******"
+      description: "계좌 번호"
+    passport:
+      pattern: "([A-Z]{1,2}\\d{7,8})"
+      mask: "*********"
+      description: "여권 번호"
+    driver_license:
+      pattern: "(\\d{2}[-.]?\\d{2}[-.]?\\d{6}[-.]?\\d{2})"
+      mask: "**-**-******-**"
+      description: "운전면허번호"
+
+  # 프롬프트 인젝션 패턴
+  injection_patterns:
+    - "(ignore|disregard|forget)\\s+(previous|all|above|prior)\\s+(instructions?|rules?|prompts?)"
+    - "(you\\s+are\\s+now|act\\s+as|pretend\\s+to\\s+be|roleplay\\s+as)"
+    - "(system\\s*:?\\s*prompt|system\\s*:?\\s*message)"
+    - "jailbreak"
+    - "(이전|위의|모든)\\s*(지시|명령|규칙|프롬프트).*?(무시|잊어|버려)"
+    - "(너는\\s*이제|지금부터\\s*너는|역할을\\s*바꿔)"
+    - "시스템\\s*프롬프트"
+    - "(exec|eval|import|__[a-z]+__)"
+    - "<script>|</script>|javascript:"
+    - "(show|reveal|tell|print|display)\\s*(me\\s+)?(your|the)\\s*(system\\s+)?(prompt|instructions?)"
+    - "(시스템|너의)\\s*(프롬프트|지시|명령).*?(보여|알려|출력)"
+
+  # 금지어 목록
+  blocked_words:
+    - "시발"
+    - "씨발"
+    - "병신"
+    - "지랄"
+    - "니미"
+    - "느금마"
+
+# 출력 가드레일
+output:
+  # 길이 제한
+  max_length: 4000
+  min_length: 1
+
+  # 톤 검증
+  tone:
+    # 존댓말 어미
+    polite_endings:
+      - "니다"
+      - "세요"
+      - "습니다"
+      - "십시오"
+      - "시죠"
+      - "시요"
+    # 최소 존댓말 비율
+    min_polite_ratio: 0.5
+
+  # 민감 정보 패턴
+  sensitive_patterns:
+    - "(/etc/|/var/|/home/|/root/|C:\\\\|D:\\\\)"
+    - "(sk-[a-zA-Z0-9]{20,})"
+    - "(api[_-]?key\\s*[:=]\\s*['\"]?[a-zA-Z0-9_-]+)"
+    - "(traceback|stack\\s*trace|exception\\s*in|error\\s*at\\s*line)"
+    - "(select\\s+\\*?\\s+from|insert\\s+into|delete\\s+from|drop\\s+table)"
+    - "(system\\s*prompt|시스템\\s*프롬프트|내부\\s*지시)"
+
+  # 부적절한 응답 패턴
+  inappropriate_patterns:
+    - "(저는\\s*인간입니다|i\\s*am\\s*human|i\\s*am\\s*not\\s*an?\\s*(ai|bot))"
+    - "(관리자\\s*권한|admin\\s*access|root\\s*access)"
+
+# 정책 준수
+policy:
+  # 엄격 모드 (인젝션/금지어 시 차단)
+  strict_mode: true
+  # 사실 검증 활성화
+  check_factual: true
+  # 톤 검증 활성화
+  check_tone: true
