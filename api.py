@@ -68,9 +68,13 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Ecommerce Agent API", version="0.2.0", lifespan=lifespan)
 
 # CORS 미들웨어
+# ⚠️ 프로덕션 배포 시 주의:
+# - allow_origins=["*"]는 개발 편의용 설정입니다
+# - 프로덕션에서는 반드시 특정 도메인으로 제한하세요
+# - 예: allow_origins=["https://your-domain.com", "https://api.your-domain.com"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 프로덕션에서는 특정 도메인으로 제한
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -204,8 +208,8 @@ async def health_check() -> Dict[str, Any]:
     # RAG 인덱스 체크
     try:
         from src.rag.retriever import get_retriever
-        retriever = get_retriever()
-        health["components"]["rag_index"] = {"status": "up", "documents": len(retriever._text_index)}
+        rag_retriever = get_retriever()
+        health["components"]["rag_index"] = {"status": "up", "documents": len(rag_retriever._docs)}
     except Exception as e:
         health["components"]["rag_index"] = {"status": "down", "reason": str(e)}
         health["status"] = "degraded"

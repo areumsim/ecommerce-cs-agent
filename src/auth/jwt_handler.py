@@ -48,7 +48,17 @@ def _get_secret_key() -> str:
     import os
 
     cfg = _get_auth_config()
-    return os.environ.get("JWT_SECRET_KEY", cfg.get("secret_key", "dev-secret-key-change-in-production"))
+    env_key = os.environ.get("JWT_SECRET_KEY")
+
+    if env_key:
+        return env_key
+
+    # 환경변수 미설정 시 경고 (개발 환경용)
+    logger.warning(
+        "JWT_SECRET_KEY 환경변수가 설정되지 않았습니다. "
+        "개발용 기본값을 사용합니다. 프로덕션에서는 반드시 환경변수를 설정하세요."
+    )
+    return cfg.get("secret_key", "dev-secret-key-change-in-production")
 
 
 def _get_algorithm() -> str:

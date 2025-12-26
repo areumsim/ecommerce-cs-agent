@@ -6,8 +6,11 @@ bcrypt 알고리즘을 사용한 안전한 비밀번호 해싱을 제공합니�
 from __future__ import annotations
 
 import hashlib
+import logging
 import secrets
 from typing import Tuple
+
+logger = logging.getLogger(__name__)
 
 # bcrypt가 설치되어 있으면 사용, 아니면 fallback
 try:
@@ -18,6 +21,11 @@ try:
 except ImportError:
     pwd_context = None
     USE_PASSLIB = False
+    # bcrypt 미설치 시 경고 (개발 환경용)
+    logger.warning(
+        "passlib[bcrypt]가 설치되지 않았습니다. SHA-256 fallback을 사용합니다. "
+        "프로덕션에서는 반드시 'pip install passlib[bcrypt]'로 설치하세요."
+    )
 
 
 def hash_password(password: str) -> str:
