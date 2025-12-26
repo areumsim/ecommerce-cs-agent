@@ -9,8 +9,8 @@
   - 생성물: `data/processed/products.parquet`(~203MB), `reviews.parquet`(~7.5GB), `reviews_agg.parquet`(~19MB)
 - 스모크 도구 추가: `scripts/smoke_api.sh` (헬스/정책 검색 자동 점검)
 - 정책 크롤/인덱싱 구조 완료:
-  - `python scripts/01a_crawl_policies.py` → `data/processed/policies.jsonl` 생성(placeholder 1건)
-  - `python scripts/04_build_index.py` → `data/processed/policies_index.jsonl` 생성(1 청크)
+  - `python scripts/01a_crawl_policies.py` → `data/processed/policies.jsonl` 생성(15 문서)
+  - `python scripts/04_build_index.py` → `data/processed/policies_index.jsonl` 생성(15 청크)
 - CSV-우선(Mock) 저장소 완성: 8개 테이블 (`data/mock_csv/*`)
 - API 서버 완성: 11개 엔드포인트 (`api.py`)
 - Agent 노드 및 오케스트레이터 구조 완성 (`src/agents/`)
@@ -173,10 +173,12 @@ python scripts/08_test_finetuned_model.py --interactive
 **테스트 실행**: `python -m pytest tests/ -v`
 
 **테스트 커버리지**:
-- 총 56개 테스트 모두 통과
+- 총 222개 테스트 (2025-12 기준)
 - API 엔드포인트: 헬스체크, 정책 검색, 주문, 티켓, 채팅
 - 가드레일: PII 마스킹, 인젝션 탐지, 출력 검증, 정책 준수
 - 오케스트레이터: 의도별 처리, 포맷팅, 입력 가드 통합
+- 인증: JWT 토큰, 회원가입, 로그인
+- 대화: 멀티턴 세션 관리
 
 ---
 
