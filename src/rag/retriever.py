@@ -303,6 +303,18 @@ class PolicyRetriever:
                     )
                     for r in reranked
                 ]
+            else:
+                # 휴리스틱 리랭커: 쿼리 토큰과 텍스트/타이틀 겹침 점수로 정렬
+                q_tokens = set(_tokenize(query))
+                def _hscore(h: PolicyHit) -> float:
+                    text_tokens = set(_tokenize(h.text))
+                    title = (h.metadata or {}).get('title', '')
+                    title_tokens = set(_tokenize(title))
+                    overlap = len(q_tokens & text_tokens)
+                    overlap_title = len(q_tokens & title_tokens)
+                    return overlap + (2.0 * overlap_title) + (0.1 * h.score)
+                hits = sorted(hits, key=_hscore, reverse=True)[:top_k]
+
 
         return hits
 
