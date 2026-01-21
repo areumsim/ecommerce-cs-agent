@@ -26,6 +26,64 @@ from src.agents.orchestrator import run as orchestrate
 VIS_DATA_DIR = Path(__file__).parent / "data" / "visualization"
 ONTOLOGY_PATH = Path(__file__).parent / "ontology" / "ecommerce.ttl"
 _trace_history: List[str] = []
+_unified_log: List[Dict[str, Any]] = []
+_current_log_hour: str = ""
+_log_file_handle = None
+
+LOG_DIR = Path(__file__).parent / "logs"
+LOG_DIR.mkdir(exist_ok=True)
+
+
+def _get_log_file():
+    global _current_log_hour, _log_file_handle
+    current_hour = time.strftime("%Y-%m-%d_%H")
+    
+    if current_hour != _current_log_hour:
+        if _log_file_handle:
+            _log_file_handle.close()
+        _current_log_hour = current_hour
+        log_path = LOG_DIR / f"debug_{current_hour}.log"
+        _log_file_handle = open(log_path, "a", encoding="utf-8")
+    
+    return _log_file_handle
+
+
+def _write_log_to_file(entry: Dict[str, Any]):
+    try:
+        f = _get_log_file()
+        if f:
+            ts_full = time.strftime("%Y-%m-%d %H:%M:%S")
+            line_parts = [
+                f"[{ts_full}]",
+                f"[{entry['type']}]",
+            ]
+            if entry.get("user_id"):
+                line_parts.append(f"user={entry['user_id']}")
+            if entry.get("intent"):
+                intent_str = entry["intent"]
+                if entry.get("sub_intent"):
+                    intent_str += f"/{entry['sub_intent']}"
+                line_parts.append(f"intent={intent_str}")
+            if entry.get("duration_ms"):
+                line_parts.append(f"({entry['duration_ms']:.0f}ms)")
+            
+            line_parts.append(entry["message"])
+            
+            f.write(" ".join(line_parts) + "\n")
+            
+            if entry.get("data"):
+                try:
+                    data_str = json.dumps(entry["data"], ensure_ascii=False, default=str)
+                    if len(data_str) > 2000:
+                        data_str = data_str[:2000] + "..."
+                    f.write(f"    DATA: {data_str}\n")
+                except:
+                    pass
+            
+            f.flush()
+    except Exception:
+        pass
+
 
 # 온톨로지 스키마 캐시 (모듈 로드 시 1회만 파싱)
 _ontology_schema_cache: str = ""
@@ -155,6 +213,102 @@ def clear_trace() -> str:
     return "(cleared)"
 
 
+def add_unified_log(
+    event_type: str,
+    message: str,
+    user_id: str = "",
+    intent: str = "",
+    sub_intent: str = "",
+    duration_ms: float = 0,
+    data: Any = None,
+    is_error: bool = False
+):
+    global _unified_log
+    entry = {
+        "ts": time.strftime("%H:%M:%S"),
+        "type": event_type,
+        "message": message,
+        "user_id": user_id,
+        "intent": intent,
+        "sub_intent": sub_intent,
+        "duration_ms": duration_ms,
+        "data": data,
+        "is_error": is_error,
+    }
+    _unified_log.append(entry)
+    if len(_unified_log) > 200:
+        _unified_log = _unified_log[-200:]
+    
+    _write_log_to_file(entry)
+
+
+def get_unified_log_html() -> str:
+    if not _unified_log:
+        return '<div class="log-empty">로그가 없습니다</div>'
+    
+    html_parts = []
+    for entry in reversed(_unified_log[-50:]):
+        ts = entry["ts"]
+        etype = entry["type"]
+        msg = entry["message"]
+        is_error = entry.get("is_error", False)
+        
+        type_colors = {
+            "REQUEST": "#3b82f6",
+            "INTENT": "#8b5cf6",
+            "TOOL": "#10b981",
+            "RESULT": "#06b6d4",
+            "JSON": "#6366f1",
+            "ERROR": "#ef4444",
+            "GUARD": "#f59e0b",
+            "LLM": "#ec4899",
+        }
+        color = type_colors.get(etype, "#64748b")
+        if is_error:
+            color = "#ef4444"
+        
+        duration = ""
+        if entry.get("duration_ms"):
+            duration = f'<span class="log-duration">{entry["duration_ms"]:.0f}ms</span>'
+        
+        intent_badge = ""
+        if entry.get("intent"):
+            sub = f"/{entry['sub_intent']}" if entry.get("sub_intent") else ""
+            intent_badge = f'<span class="log-intent">{entry["intent"]}{sub}</span>'
+        
+        data_html = ""
+        if entry.get("data"):
+            try:
+                data_str = json.dumps(entry["data"], ensure_ascii=False, indent=2, cls=DateTimeEncoder)
+                if len(data_str) > 500:
+                    data_str = data_str[:500] + "\n..."
+                data_html = f'<pre class="log-data">{html.escape(data_str)}</pre>'
+            except:
+                pass
+        
+        error_class = " log-error" if is_error else ""
+        html_parts.append(f'''
+        <div class="log-entry{error_class}">
+            <div class="log-header">
+                <span class="log-time">{ts}</span>
+                <span class="log-type" style="background:{color}">{etype}</span>
+                {intent_badge}
+                {duration}
+            </div>
+            <div class="log-message">{html.escape(msg)}</div>
+            {data_html}
+        </div>
+        ''')
+    
+    return "".join(html_parts)
+
+
+def clear_unified_log() -> str:
+    global _unified_log
+    _unified_log = []
+    return '<div class="log-empty">로그가 초기화되었습니다</div>'
+
+
 def get_customers() -> List[str]:
     try:
         from src.rdf.repository import RDFRepository
@@ -199,9 +353,27 @@ def get_customer_info(user_id: str) -> str:
         repo = RDFRepository(get_store())
         c = repo.get_customer(user_id)
         if c:
-            orders = repo.get_customer_orders(user_id, limit=10)
+            orders = repo.get_customer_orders(user_id, limit=50)
             total = sum(o.total_amount for o in orders) if orders else 0
-            return f"**{c.name}** | {c.membership_level} | {c.email}\n주문 {len(orders)}건 · 총 ₩{total:,.0f}"
+            
+            level_badge = {
+                "platinum": "PLATINUM",
+                "gold": "GOLD", 
+                "silver": "SILVER",
+                "bronze": "BRONZE"
+            }.get(c.membership_level.lower() if c.membership_level else "", "BRONZE")
+            
+            pending = sum(1 for o in orders if o.status in ("pending", "processing", "confirmed"))
+            shipped = sum(1 for o in orders if o.status in ("shipping", "shipped"))
+            delivered = sum(1 for o in orders if o.status == "delivered")
+            
+            return f"""**{c.name}** `{level_badge}`
+
+{c.email} · {c.phone or '-'}
+
+| 총 주문 | 누적 금액 | 진행중 | 배송중 | 완료 |
+|:---:|:---:|:---:|:---:|:---:|
+| **{len(orders)}**건 | **₩{total:,.0f}** | {pending} | {shipped} | {delivered} |"""
         return user_id
     except:
         return user_id
@@ -668,29 +840,28 @@ def generate_vis_html(data: dict, height: int = 400, title: str = "") -> str:
 
 
 def render_mermaid_er() -> str:
-    """docs/images/ontology-er.md의 Mermaid 다이어그램을 HTML로 렌더링 (iframe 방식)"""
+    """docs/ARCHITECTURE.md의 완전한 Mermaid ER 다이어그램을 HTML로 렌더링 (iframe 방식)"""
     mermaid_code = """erDiagram
     Customer {
-        string customerId PK
+        string customerId PK "user_XXX"
         string name
         string email UK
         string phone
         string address
-        string membershipLevel
-        dateTime createdAt
+        string membershipLevel "bronze|silver|gold|platinum"
     }
     Product {
         string productId PK
         string title
         string brand
         decimal price
-        decimal averageRating
+        decimal averageRating "0~5"
         integer ratingNumber
-        string stockStatus
+        string stockStatus "in_stock|out_of_stock|limited"
     }
     Order {
-        string orderId PK
-        string status
+        string orderId PK "ORD_YYYYMMDD_XXXX"
+        string status "pending|confirmed|shipping|delivered|cancelled"
         dateTime orderDate
         dateTime deliveryDate
         decimal totalAmount
@@ -699,13 +870,15 @@ def render_mermaid_er() -> str:
     OrderItem {
         integer quantity
         decimal unitPrice
+        Product hasProduct FK
+        Order belongsToOrder FK
     }
     Ticket {
-        string ticketId PK
-        string issueType
-        string status
-        string priority
+        string ticketId PK "TICKET_XXXXXXXXXX"
+        string issueType "shipping|refund|exchange|..."
         string description
+        string priority "low|normal|high|urgent"
+        string status "open|in_progress|resolved|closed"
         dateTime createdAt
         dateTime resolvedAt
     }
@@ -713,35 +886,56 @@ def render_mermaid_er() -> str:
         string name
     }
     Company {
-        string companyId PK
+        string companyId PK "COM_XXX"
         string companyName
-        string industry
-        string companySize
-        integer foundedYear
+        string industry "Electronics|Technology|Retail|..."
+        string companySize "startup|small|medium|large|enterprise"
+        integer foundedYear "1800~2026"
         string headquarters
         integer employeeCount
         decimal annualRevenue
+        anyURI website
+        string stockTicker
+    }
+    BusinessRelationship {
+        string relationshipType "supplier|partner|competitor|subsidiary"
+        date relationshipStartDate
+        date relationshipEndDate
+        decimal relationshipStrength "0.0~1.0"
     }
 
     Customer ||--o{ Order : placedOrder
     Customer ||--o{ Ticket : hasTicket
-    Customer ||--o{ Product : purchased
+    Customer }o--o{ Product : purchased
     Customer }o--o| Company : worksAt
+    Customer }o--o{ Company : purchasedFrom
+    Customer }o--o{ Company : subscribedTo
     Order ||--|{ OrderItem : containsItem
-    OrderItem }|--|| Product : hasProduct
-    Product }o--o{ Product : similarTo
-    Product }o--|| Category : inCategory
-    Product }o--o| Company : manufacturedBy
+    Order }o--|| Customer : orderedBy
+    OrderItem }o--|| Product : hasProduct
+    OrderItem }o--|| Order : belongsToOrder
     Ticket }o--o| Order : relatedToOrder
-    Company }o--o{ Company : supplierOf"""
+    Ticket }o--|| Customer : ticketOf
+    Product }o--|| Category : inCategory
+    Product }o--o{ Product : similarTo
+    Product }o--o| Company : manufacturedBy
+    Product }o--o{ Company : distributedBy
+    Company ||--o{ Product : manufactures
+    Company }o--o{ Company : supplierOf
+    Company }o--o{ Company : partnerWith
+    Company }o--o{ Company : competitorOf
+    Company }o--o| Company : subsidiaryOf
+    BusinessRelationship }o--|| Company : hasSourceCompany
+    BusinessRelationship }o--|| Company : hasTargetCompany"""
 
     # iframe + srcdoc 방식으로 Mermaid 렌더링 (Gradio 동적 HTML에서 스크립트 실행 보장)
+    # 밝은 테마 적용
     iframe_content = f'''<!DOCTYPE html>
 <html>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
-        html, body {{ margin: 0; padding: 0; background: #181825; width: 100%; height: 100%; }}
+        html, body {{ margin: 0; padding: 0; background: #ffffff; width: 100%; height: 100%; }}
         .mermaid {{ text-align: center; padding: 20px; }}
     </style>
 </head>
@@ -751,25 +945,25 @@ def render_mermaid_er() -> str:
     </div>
     <script>mermaid.initialize({{
         startOnLoad: true, 
-        theme: 'dark',
+        theme: 'default',
         themeVariables: {{
-            primaryTextColor: '#ffffff',
-            secondaryTextColor: '#f4f4f5',
-            tertiaryTextColor: '#e4e4e7',
-            lineColor: '#a78bfa',
-            primaryColor: '#6366f1',
-            secondaryColor: '#4f46e5',
-            tertiaryColor: '#312e81',
-            attributeBackgroundColorEven: '#27272a',
-            attributeBackgroundColorOdd: '#1f1f23'
+            primaryTextColor: '#1e293b',
+            secondaryTextColor: '#475569',
+            tertiaryTextColor: '#64748b',
+            lineColor: '#94a3b8',
+            primaryColor: '#e2e8f0',
+            secondaryColor: '#f1f5f9',
+            tertiaryColor: '#f8fafc',
+            attributeBackgroundColorEven: '#f8fafc',
+            attributeBackgroundColorOdd: '#f1f5f9'
         }}
     }});</script>
 </body>
 </html>'''
     escaped = html.escape(iframe_content)
     return f'''
-    <div style="background:#1e1e2e;border-radius:12px;padding:16px;margin:8px 0;">
-        <iframe srcdoc="{escaped}" style="width:100%;height:900px;border:1px solid #313244;border-radius:8px;background:#181825;"></iframe>
+    <div style="background:#ffffff;border-radius:8px;padding:12px;margin:4px 0;border:1px solid #e2e8f0;">
+        <iframe srcdoc="{escaped}" style="width:100%;height:1100px;border:1px solid #e2e8f0;border-radius:4px;background:#ffffff;"></iframe>
     </div>
     '''
 
@@ -901,63 +1095,111 @@ def render_similarity_graph(limit: int = 50, threshold: float = 0.0, category: s
 
 
 async def process_message(user_id: str, message: str) -> Tuple[Dict[str, Any], str]:
+    total_start = time.time()
+    
+    add_unified_log("REQUEST", f"입력: {message}", user_id=user_id)
     add_trace(f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "INFO")
     add_trace(f"입력: {message[:50]}{'...' if len(message) > 50 else ''}", "INFO")
     add_trace(f"사용자: {user_id}", "INFO")
 
-    # 의도 분류
     t0 = time.time()
     result = await classify_intent_async(message)
-    ms = (time.time() - t0) * 1000
+    intent_ms = (time.time() - t0) * 1000
     intent, sub_intent, payload = result.intent, result.sub_intent, result.payload
 
-    add_trace(f"[intent_classifier] 분류 완료 ({ms:.0f}ms)", "INTENT")
+    add_unified_log(
+        "INTENT", 
+        f"분류: {intent}/{sub_intent or '-'} | 신뢰도: {result.confidence} | 출처: {result.source}",
+        user_id=user_id,
+        intent=intent,
+        sub_intent=sub_intent or "",
+        duration_ms=intent_ms,
+        data={"payload": payload, "reason": result.reason}
+    )
+    add_trace(f"[intent_classifier] 분류 완료 ({intent_ms:.0f}ms)", "INTENT")
     add_trace(f"  → 의도: {intent} / {sub_intent or 'None'}", "SELECT")
     add_trace(f"  → 신뢰도: {result.confidence}, 출처: {result.source}", "SELECT")
     if result.reason:
         add_trace(f"  → 사유: {result.reason}", "INFO")
 
-    # unknown 의도 → policy fallback
     if intent == "unknown":
         intent, payload = "policy", {"query": message, "top_k": 5}
+        add_unified_log("GUARD", "unknown → policy 폴백 (RAG 검색)", user_id=user_id, intent="policy")
         add_trace(f"[fallback] unknown → policy (RAG 검색)", "WARN")
 
-    # order_id 누락 체크
     if intent == "order" and sub_intent in {"status", "detail", "cancel"} and not payload.get("order_id"):
+        add_unified_log("ERROR", "order_id 누락 - 사용자 입력 필요", user_id=user_id, is_error=True)
         add_trace(f"[validation] order_id 누락 - 사용자 입력 필요", "WARN")
         return {"need": "order_id", "message": "주문번호를 포함해 주세요 (예: ORD-20251201-001)"}, get_trace()
 
-    # 오케스트레이터 실행
     state = AgentState(user_id=user_id, intent=intent, sub_intent=sub_intent, payload=payload)
     add_trace(f"[orchestrator] 처리 시작: {intent}/{sub_intent}", "TOOL")
 
     t0 = time.time()
     state = await orchestrate(state)
-    ms = (time.time() - t0) * 1000
+    orch_ms = (time.time() - t0) * 1000
 
-    # 결과 요약
     response = state.final_response or {}
+    total_ms = (time.time() - total_start) * 1000
+    
+    result_summary = ""
+    is_error = False
     if response.get("error"):
+        result_summary = f"오류: {response.get('error')}"
+        is_error = True
         add_trace(f"[결과] 오류: {response.get('error')}", "ERROR")
     elif response.get("blocked"):
+        result_summary = f"차단: {response.get('error', '정책 위반')}"
+        is_error = True
         add_trace(f"[guardrails] 차단됨: {response.get('error', '정책 위반')}", "GUARD")
     else:
-        # 결과 요약 출력
         if "orders" in response:
+            result_summary = f"주문 {len(response['orders'])}건 조회"
             add_trace(f"[결과] 주문 {len(response['orders'])}건 조회", "OK")
         elif "recommendations" in response or "products" in response:
             cnt = len(response.get("recommendations") or response.get("products", []))
+            result_summary = f"추천 상품 {cnt}건"
             add_trace(f"[결과] 추천 상품 {cnt}건", "OK")
         elif "hits" in response:
+            result_summary = f"정책 검색 {len(response['hits'])}건"
             add_trace(f"[결과] 정책 검색 {len(response['hits'])}건", "OK")
         elif "ticket" in response:
+            result_summary = f"티켓: {response['ticket'].get('ticket_id', 'N/A')}"
             add_trace(f"[결과] 티켓 생성: {response['ticket'].get('ticket_id', 'N/A')}", "OK")
         elif "detail" in response:
+            result_summary = "주문 상세 조회"
             add_trace(f"[결과] 주문 상세 조회 완료", "OK")
         else:
+            result_summary = "처리 완료"
             add_trace(f"[결과] 처리 완료", "OK")
 
-    add_trace(f"[orchestrator] 완료 ({ms:.0f}ms)", "TOOL")
+    add_unified_log(
+        "TOOL",
+        f"오케스트레이터 실행: {intent}/{sub_intent or '-'}",
+        user_id=user_id,
+        intent=intent,
+        sub_intent=sub_intent or "",
+        duration_ms=orch_ms
+    )
+    
+    add_unified_log(
+        "RESULT",
+        result_summary,
+        user_id=user_id,
+        intent=intent,
+        sub_intent=sub_intent or "",
+        duration_ms=total_ms,
+        is_error=is_error
+    )
+    
+    add_unified_log(
+        "JSON",
+        f"응답 데이터 ({len(json.dumps(response, default=str))} bytes)",
+        user_id=user_id,
+        data=response
+    )
+
+    add_trace(f"[orchestrator] 완료 ({orch_ms:.0f}ms)", "TOOL")
     add_trace(f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", "INFO")
 
     return response, get_trace()
@@ -1016,64 +1258,14 @@ PRODUCTS = get_products()
 STATS = get_stats()
 
 CUSTOM_CSS = """
-/* ============================================
-   Knowledge Graph Intelligence Platform
-   Design System v2.0
-   ============================================ */
-
 :root {
-    /* Backgrounds - Professional dark theme */
-    --bg-primary: #09090b;
-    --bg-secondary: #0f0f12;
-    --bg-tertiary: #18181b;
-    --bg-elevated: #27272a;
-    --bg-hover: #3f3f46;
-    
-    /* Text - High contrast for readability */
-    --text-primary: #ffffff;
-    --text-secondary: #fafafa;
-    --text-muted: #f4f4f5;
-    --text-label: #c4b5fd;
-    --text-inverse: #09090b;
-    
-    /* Accent colors */
-    --accent-primary: #6366f1;
-    --accent-primary-hover: #818cf8;
-    --accent-primary-subtle: rgba(99, 102, 241, 0.15);
-    --accent-success: #22c55e;
-    --accent-warning: #f59e0b;
-    --accent-error: #ef4444;
-    --accent-info: #06b6d4;
-    
-    /* Entity colors for graphs */
-    --entity-customer: #22c55e;
-    --entity-product: #f59e0b;
-    --entity-order: #06b6d4;
-    --entity-ticket: #ef4444;
-    --entity-category: #a855f7;
-    --entity-company: #f97316;
-    --entity-class: #6366f1;
-    
-    /* Borders & Shadows */
-    --border-default: #27272a;
-    --border-hover: #3f3f46;
-    --border-active: #6366f1;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
-    
-    /* Radius */
-    --radius-sm: 6px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    
-    /* Spacing */
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 20px;
-    --space-6: 24px;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --border-default: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-muted: #64748b;
+    --accent-primary: #2563eb;
 }
 
 /* Base Layout */
@@ -1127,20 +1319,18 @@ input::placeholder, textarea::placeholder {
     color: var(--text-muted) !important;
 }
 
-/* Buttons - Compact */
 button { 
-    border-radius: 6px !important;
+    border-radius: 4px !important;
     font-weight: 500 !important;
-    font-size: 12px !important;
-    transition: all 0.15s ease !important;
-    padding: 6px 12px !important;
-    min-height: 28px !important;
-    line-height: 1.2 !important;
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+    min-height: 22px !important;
+    line-height: 1 !important;
 }
 button.sm, .gr-button-sm {
-    padding: 4px 10px !important;
-    font-size: 11px !important;
-    min-height: 24px !important;
+    padding: 2px 6px !important;
+    font-size: 10px !important;
+    min-height: 18px !important;
 }
 .gr-button-primary, button.primary { 
     background: var(--accent-primary) !important; 
@@ -1151,13 +1341,13 @@ button.sm, .gr-button-sm {
     background: var(--accent-primary-hover) !important;
 }
 .gr-button-secondary, button.secondary {
-    background: var(--bg-tertiary) !important;
-    border: 1px solid var(--border-default) !important;
-    color: var(--text-secondary) !important;
+    background: #e5e7eb !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #374151 !important;
 }
 .gr-button-secondary:hover, button.secondary:hover {
-    background: var(--bg-elevated) !important;
-    border-color: var(--border-hover) !important;
+    background: #d1d5db !important;
+    border-color: #9ca3af !important;
 }
 button.stop {
     background: var(--accent-error) !important;
@@ -1166,31 +1356,30 @@ button.stop {
 
 /* Tab Navigation */
 .tabs, .tab-nav, [role="tablist"] { 
-    background: var(--bg-primary) !important; 
-    border: 1px solid var(--border-default) !important; 
-    border-radius: 8px !important; 
-    padding: 4px !important;
-    margin-bottom: 12px !important;
+    background: #f3f4f6 !important; 
+    border: 1px solid #e5e7eb !important; 
+    border-radius: 6px !important; 
+    padding: 2px !important;
+    margin-bottom: 8px !important;
 }
 .tab-nav button, [role="tab"], .tabs button { 
     background: transparent !important; 
-    color: #ffffff !important; 
-    font-weight: 600 !important; 
-    font-size: 13px !important;
+    color: #374151 !important; 
+    font-weight: 500 !important; 
+    font-size: 12px !important;
     border: none !important; 
-    border-radius: 6px !important;
-    padding: 8px 16px !important;
-    transition: all 0.15s ease !important; 
+    border-radius: 4px !important;
+    padding: 4px 10px !important;
 }
 .tab-nav button:hover, [role="tab"]:hover, .tabs button:hover { 
-    color: #ffffff !important; 
-    background: #3f3f46 !important; 
+    color: #111827 !important; 
+    background: #e5e7eb !important; 
 }
 .tab-nav button.selected, [role="tab"][aria-selected="true"], .tabs button.selected { 
-    background: #3f3f46 !important; 
-    color: #ffffff !important; 
-    font-weight: 700 !important; 
-    box-shadow: inset 0 -2px 0 #6366f1 !important;
+    background: #ffffff !important; 
+    color: #111827 !important; 
+    font-weight: 600 !important; 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
 }
 
 /* Chatbot */
@@ -1324,11 +1513,279 @@ footer, .footer, [class*="footer"], .built-with {
 .stat-card.primary .value { color: var(--accent-primary); }
 
 .customer-card { 
-    background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary)); 
-    border-radius: var(--radius-lg); 
-    padding: var(--space-4) var(--space-5); 
-    border-left: 4px solid var(--accent-primary);
-    box-shadow: var(--shadow-sm);
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9); 
+    border-radius: 12px; 
+    padding: 16px 20px; 
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    margin: 0;
+}
+.customer-card p { margin: 4px 0; line-height: 1.5; }
+.customer-card strong { color: #1e293b; font-size: 15px; font-weight: 600; }
+.customer-card code { 
+    background: #3b82f6; 
+    color: white; 
+    padding: 2px 8px; 
+    border-radius: 4px; 
+    font-size: 10px; 
+    font-weight: 600;
+    margin-left: 8px;
+}
+.customer-card table { 
+    width: 100%; 
+    margin-top: 12px; 
+    font-size: 13px;
+    border-collapse: collapse;
+}
+.customer-card th, .customer-card td { 
+    padding: 8px 12px !important; 
+    text-align: center !important;
+    border: 1px solid #e2e8f0 !important;
+    background: white !important;
+}
+.customer-card th { 
+    background: #f8fafc !important; 
+    font-weight: 500 !important;
+    color: #64748b !important;
+    font-size: 11px !important;
+}
+.customer-card td { color: #1e293b !important; }
+
+/* CS Agent Professional Layout */
+.cs-section {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+.cs-section-header {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f3f4f6;
+}
+.cs-chat-container {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.cs-input-row {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+}
+.cs-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+}
+.cs-quick-btn {
+    background: #f3f4f6 !important;
+    border: 1px solid #e5e7eb !important;
+    color: #374151 !important;
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    transition: all 0.15s ease !important;
+}
+.cs-quick-btn:hover {
+    background: #e5e7eb !important;
+    border-color: #d1d5db !important;
+}
+.cs-action-btn-primary {
+    background: #3b82f6 !important;
+    border: none !important;
+    color: white !important;
+}
+.cs-action-btn-primary:hover {
+    background: #2563eb !important;
+}
+.cs-action-btn-danger {
+    background: #fef2f2 !important;
+    border: 1px solid #fecaca !important;
+    color: #dc2626 !important;
+}
+.cs-action-btn-danger:hover {
+    background: #fee2e2 !important;
+}
+.cs-options-row {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+/* Debug Panel Improvements */
+.debug-section {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 12px;
+}
+.debug-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #334155;
+}
+.debug-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Slide Panel */
+.debug-panel-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 420px;
+    background: #ffffff;
+    border-left: 1px solid #e2e8f0;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+.debug-panel-container.open {
+    transform: translateX(0);
+}
+.debug-panel-header {
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+.debug-panel-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+}
+.debug-panel-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #64748b;
+    padding: 4px 8px;
+}
+.debug-panel-close:hover { color: #1e293b; }
+.debug-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+.debug-toggle-btn {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 12px 8px;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+    z-index: 999;
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+    transition: all 0.2s;
+}
+.debug-toggle-btn:hover { background: #2563eb; padding-right: 12px; }
+.debug-toggle-btn.panel-open { right: 420px; }
+
+/* Log Entry Styles */
+.log-empty {
+    text-align: center;
+    color: #94a3b8;
+    padding: 40px 20px;
+    font-size: 13px;
+}
+.log-entry {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+.log-entry.log-error {
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+.log-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+.log-time {
+    color: #64748b;
+    font-family: monospace;
+    font-size: 11px;
+}
+.log-type {
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+}
+.log-intent {
+    background: #f3e8ff;
+    color: #7c3aed;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 500;
+}
+.log-duration {
+    color: #059669;
+    font-size: 10px;
+    font-weight: 500;
+}
+.log-message {
+    color: #334155;
+    line-height: 1.4;
+    word-break: break-word;
+}
+.log-data {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 8px 10px;
+    border-radius: 4px;
+    margin-top: 8px;
+    font-size: 10px;
+    font-family: monospace;
+    overflow-x: auto;
+    max-height: 150px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
 }
 
 .section-title { 
@@ -1405,40 +1862,67 @@ footer, .footer, [class*="footer"], .built-with {
 """
 
 with gr.Blocks(title="E-Commerce CS Agent", css=CUSTOM_CSS) as demo:
+    # === Global Admin Density Override (ALL TABS) ===
+    gr.HTML("""
+<style>
+/* Base typography */
+body { font-size: 13px; }
+
+/* Compact spacing scale */
+:root {
+  --pad-xxs: 2px;
+  --pad-xs: 4px;
+  --pad-sm: 6px;
+  --pad-md: 8px;
+}
+
+/* Buttons */
+.gr-button, .gr-button-sm {
+  padding: 4px 8px !important;
+  min-height: 24px !important;
+  font-size: 12px !important;
+  border-radius: 4px !important;
+}
+
+/* Containers / panels */
+.gr-box, .gr-panel, .gr-form {
+  padding: var(--pad-sm) !important;
+  margin-bottom: var(--pad-sm) !important;
+  border-radius: 6px !important;
+}
+
+/* Markdown density */
+.gr-markdown p { margin: 2px 0 !important; }
+.gr-markdown h1,
+.gr-markdown h2,
+.gr-markdown h3 {
+  margin: 4px 0 !important;
+  font-weight: 600;
+}
+
+/* Tabs */
+button[role="tab"] {
+  padding: 4px 10px !important;
+  font-size: 12px !important;
+}
+button[role="tab"][aria-selected="true"] {
+  font-weight: 700;
+}
+
+/* Tables */
+table { font-size: 12px !important; }
+th, td { padding: 4px 6px !important; }
+
+/* Separators */
+hr { margin: 6px 0 !important; }
+</style>
+""")
     
     gr.HTML(f"""
-    <div style="background:linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);padding:24px 32px;border-radius:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(99,102,241,0.3);box-shadow:0 4px 24px rgba(0,0,0,0.4);">
+    <div style="padding:8px 0 12px;border-bottom:1px solid #e5e7eb;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
         <div>
-            <h1 style="color:white;margin:0;font-size:28px;font-weight:700;letter-spacing:-0.02em;">Knowledge Graph Intelligence</h1>
-            <p style="color:rgba(255,255,255,0.7);margin:8px 0 0;font-size:14px;font-weight:400;">온톨로지 기반 지식 그래프 · 관계형 추천 시스템 · 설명 가능한 AI</p>
-            <div style="display:flex;gap:8px;margin-top:12px;">
-                <span style="background:rgba(34,197,94,0.2);color:#4ade80;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;">RDF Triple Store</span>
-                <span style="background:rgba(6,182,212,0.2);color:#22d3ee;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;">SPARQL</span>
-                <span style="background:rgba(168,85,247,0.2);color:#c084fc;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;">LLM</span>
-                <span style="background:rgba(249,115,22,0.2);color:#fb923c;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;">RAG</span>
-            </div>
-        </div>
-        <div style="display:flex;gap:12px;">
-            <div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);padding:12px 18px;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.1);min-width:70px;">
-                <div style="font-size:22px;font-weight:700;color:#4ade80;">{STATS['customers']}</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">고객</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);padding:12px 18px;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.1);min-width:70px;">
-                <div style="font-size:22px;font-weight:700;color:#fbbf24;">{STATS['products']:,}</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">상품</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);padding:12px 18px;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.1);min-width:70px;">
-                <div style="font-size:22px;font-weight:700;color:#22d3ee;">{STATS['orders']}</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">주문</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);padding:12px 18px;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,0.1);min-width:70px;">
-                <div style="font-size:22px;font-weight:700;color:#f87171;">{STATS['tickets']}</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">티켓</div>
-            </div>
-            <div style="background:rgba(99,102,241,0.15);backdrop-filter:blur(8px);padding:12px 18px;border-radius:12px;text-align:center;border:1px solid rgba(99,102,241,0.3);min-width:70px;">
-                <div style="font-size:22px;font-weight:700;color:#a78bfa;">{STATS['triples']:,}</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;">트리플</div>
-            </div>
+            <h1 style="color:#111827;margin:0;font-size:18px;font-weight:600;">E-Commerce CS Agent</h1>
+            <p style="color:#6b7280;margin:2px 0 0;font-size:12px;">고객 {STATS['customers']} · 상품 {STATS['products']:,} · 주문 {STATS['orders']} · 티켓 {STATS['tickets']} · 트리플 {STATS['triples']:,}</p>
         </div>
     </div>
     """)
@@ -1447,52 +1931,80 @@ with gr.Blocks(title="E-Commerce CS Agent", css=CUSTOM_CSS) as demo:
         with gr.TabItem("상담"):
             with gr.Tabs():
                 with gr.TabItem("상담 에이전트"):
-                    with gr.Row():
-                        user_select = gr.Dropdown(choices=CUSTOMERS, value=CUSTOMERS[0] if CUSTOMERS else None, label="고객", scale=1)
-                        order_select = gr.Dropdown(choices=[], label="주문", scale=1, allow_custom_value=True)
-                        product_select = gr.Dropdown(choices=PRODUCTS[:30], label="상품 (추천용)", scale=1, allow_custom_value=True)
+                    debug_panel_visible = gr.State(False)
                     
-                    customer_info = gr.Markdown(elem_classes="customer-card")
-                    chat = gr.Chatbot(label="대화", height=350)
-                    
-                    with gr.Row():
-                        msg = gr.Textbox(placeholder="무엇을 도와드릴까요?", scale=5, container=False, show_label=False)
-                        send_btn = gr.Button("전송", variant="primary", scale=1)
-                    
-                    with gr.Row():
-                        with gr.Column(scale=1):
-                            gr.Markdown("**빠른 질문**")
+                    with gr.Row(equal_height=False):
+                        with gr.Column(scale=2):
+                            gr.HTML('<div class="cs-section-header">고객 컨텍스트</div>')
                             with gr.Row():
-                                ex1 = gr.Button("주문 보여줘", size="sm")
-                                ex2 = gr.Button("환불 정책", size="sm")
-                                ex3 = gr.Button("추천해줘", size="sm")
-                                ex4 = gr.Button("배송 상태", size="sm")
-                                ex5 = gr.Button("주문 취소", size="sm")
+                                user_select = gr.Dropdown(choices=CUSTOMERS, value=CUSTOMERS[0] if CUSTOMERS else None, label="고객", scale=2)
+                                order_select = gr.Dropdown(choices=[], label="주문", scale=2, allow_custom_value=True)
+                            with gr.Row():
+                                product_select = gr.Dropdown(choices=PRODUCTS[:30], label="상품 (추천용)", scale=2, allow_custom_value=True)
+                            
+                            customer_info = gr.Markdown(elem_classes="customer-card")
+                            
+                            gr.HTML('<div class="cs-section-header" style="margin-top:16px;">빠른 액션</div>')
+                            with gr.Row():
+                                ex1 = gr.Button("주문 조회", size="sm", elem_classes="cs-quick-btn")
+                                ex2 = gr.Button("환불 정책", size="sm", elem_classes="cs-quick-btn")
+                                ex3 = gr.Button("추천", size="sm", elem_classes="cs-quick-btn")
+                            with gr.Row():
+                                ex4 = gr.Button("배송 상태", size="sm", elem_classes="cs-quick-btn")
+                                ex5 = gr.Button("주문 취소", size="sm", elem_classes="cs-quick-btn")
+                            
+                            gr.HTML('<div class="cs-section-header" style="margin-top:16px;">주문 관리</div>')
+                            with gr.Row():
+                                btn_detail = gr.Button("상세 보기", variant="primary", size="sm")
+                                btn_status = gr.Button("상태 확인", variant="secondary", size="sm")
+                            with gr.Row():
+                                btn_cancel = gr.Button("취소 요청", variant="stop", size="sm")
+                                btn_ticket = gr.Button("문의 등록", variant="secondary", size="sm")
+                            
+                            with gr.Accordion("추가 옵션", open=False):
+                                cancel_reason = gr.Textbox(label="취소/문의 사유", value="고객 요청", lines=1)
+                                clear_btn = gr.Button("대화 초기화", variant="secondary", size="sm")
                         
-                        with gr.Column(scale=1):
-                            gr.Markdown("**주문 액션**")
+                        with gr.Column(scale=5):
+                            gr.HTML('<div class="cs-section-header">상담 대화</div>')
+                            chat = gr.Chatbot(label=None, height=420, show_label=False)
+                            
                             with gr.Row():
-                                btn_detail = gr.Button("상세", variant="primary")
-                                btn_status = gr.Button("상태", variant="secondary")
-                                btn_cancel = gr.Button("취소", variant="stop")
-                                btn_ticket = gr.Button("문의", variant="secondary")
+                                msg = gr.Textbox(placeholder="고객 문의를 입력하세요...", scale=6, container=False, show_label=False)
+                                send_btn = gr.Button("전송", variant="primary", scale=1, min_width=80)
+                            
+                            with gr.Accordion("개발자 도구", open=False):
+                                gr.HTML('<div class="debug-section-title">파이프라인 로그</div>')
+                                debug_toggle_btn = gr.Button("로그 패널 열기", variant="secondary", size="sm")
                     
-                    with gr.Row():
-                        cancel_reason = gr.Textbox(label="취소/문의 사유", value="고객 요청", scale=1)
-                        clear_btn = gr.Button("대화 초기화", variant="secondary", scale=0)
+                    with gr.Row(visible=False) as debug_panel:
+                        with gr.Column():
+                            gr.HTML("""
+                            <div style="background:#1e293b;color:#94a3b8;padding:12px 16px;border-radius:8px 8px 0 0;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">
+                                Pipeline Debug Log
+                            </div>
+                            """)
+                            unified_log_html = gr.HTML(value='<div class="log-empty">로그가 없습니다</div>')
+                            with gr.Row():
+                                clear_log_btn = gr.Button("로그 초기화", variant="secondary", size="sm")
+                                close_debug_btn = gr.Button("패널 닫기", variant="secondary", size="sm")
+                            
+                            with gr.Accordion("Raw Trace", open=False):
+                                trace_out = gr.Textbox(label="추적", lines=6, max_lines=10, interactive=False)
+                            with gr.Accordion("Raw JSON", open=False):
+                                res_json = gr.Code(label="응답", language="json", lines=6)
                     
-                    with gr.Accordion("디버그 패널", open=False):
-                        gr.Markdown("*개발자용 파이프라인 추적*")
-                        trace_out = gr.Textbox(label="추적", lines=8, max_lines=12, interactive=False)
-                        with gr.Accordion("Raw JSON", open=False):
-                            res_json = gr.Code(label="응답", language="json", lines=6)
-                        clear_trace_btn = gr.Button("추적 초기화", size="sm")
+                    def toggle_debug_panel(visible):
+                        return gr.update(visible=not visible), not visible
+                    
+                    debug_toggle_btn.click(toggle_debug_panel, [debug_panel_visible], [debug_panel, debug_panel_visible])
+                    close_debug_btn.click(lambda: (gr.update(visible=False), False), outputs=[debug_panel, debug_panel_visible])
+                    clear_log_btn.click(clear_unified_log, outputs=[unified_log_html])
                 
                 with gr.TabItem("추천 스튜디오"):
                     gr.HTML("""
-                    <div style="padding:12px 0;">
-                        <h3 style="color:#fafafa;margin:0 0 8px 0;font-size:16px;font-weight:600;">SPARQL-Powered Recommendations</h3>
-                        <p style="color:#d4d4d8;margin:0;font-size:13px;">설명 가능한 AI 추천 - 추론 과정 완전 공개</p>
+                    <div style="padding:4px 0;">
+                        <h3 style="color:#fafafa;margin:0;font-size:14px;font-weight:600;">SPARQL 추천 엔진</h3>
                     </div>
                     """)
                     
@@ -1506,7 +2018,7 @@ with gr.Blocks(title="E-Commerce CS Agent", css=CUSTOM_CSS) as demo:
                                 label="추천 모드"
                             )
                             rec_limit = gr.Slider(minimum=3, maximum=20, value=5, step=1, label="최대 결과")
-                            rec_btn = gr.Button("추천 받기", variant="primary")
+                            rec_btn = gr.Button("추천 받기", variant="primary", size="sm")
                         
                         with gr.Column(scale=3):
                             rec_results = gr.Dataframe(
@@ -1518,8 +2030,8 @@ with gr.Blocks(title="E-Commerce CS Agent", css=CUSTOM_CSS) as demo:
                         
                         with gr.Column(scale=2):
                             gr.HTML("""
-                            <div style="background:#0f0f12;border-radius:12px;padding:16px;border:1px solid #27272a;">
-                                <div style="font-size:12px;font-weight:600;color:#c4b5fd;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">Why These Recommendations?</div>
+                            <div style="padding:8px 0;border-bottom:1px solid #e5e7eb;">
+                                <div style="font-size:11px;font-weight:600;color:#374151;">추천 근거</div>
                             </div>
                             """)
                             rec_explanation = gr.Markdown("""
@@ -1535,9 +2047,8 @@ The explanation will include:
                 
                 with gr.TabItem("정책 검색"):
                     gr.HTML("""
-                    <div style="padding:12px 0;">
-                    <h3 style="color:#fafafa;margin:0 0 8px 0;font-size:16px;font-weight:600;">하이브리드 RAG 정책 검색</h3>
-                    <p style="color:#d4d4d8;margin:0;font-size:13px;">키워드 + 벡터 검색을 사용한 정책 조회</p>
+                    <div style="padding:4px 0;">
+                    <h3 style="color:#fafafa;margin:0;font-size:14px;font-weight:600;">정책 검색 (RAG)</h3>
                     </div>
                     """)
                     
@@ -1557,21 +2068,20 @@ The explanation will include:
                 with gr.TabItem("빠른 추천"):
                     gr.Markdown("**빠른 추천 버튼** (SPARQL 협업 필터링)")
                     with gr.Row():
-                        btn_collab = gr.Button("협업 필터링", variant="primary")
-                        btn_similar = gr.Button("유사 상품", variant="secondary")
-                        btn_popular = gr.Button("인기 상품", variant="secondary")
+                        btn_collab = gr.Button("협업 필터링", variant="primary", size="sm")
+                        btn_similar = gr.Button("유사 상품", variant="secondary", size="sm")
+                        btn_popular = gr.Button("인기 상품", variant="secondary", size="sm")
 
         # ===== 탭 3: 데이터 관리 =====
         with gr.TabItem("데이터 관리"):
             gr.HTML("""
-            <div style="padding:12px 0;">
-                <h2 style="color:#fafafa;margin:0 0 8px 0;font-size:18px;font-weight:600;">데이터 탐색</h2>
-                <p style="color:#d4d4d8;margin:0;font-size:13px;">지식 그래프의 모든 엔티티 조회 및 관리</p>
+            <div style="padding:6px 0 4px 0;">
+                <h2 style="color:#fafafa;margin:0;font-size:15px;font-weight:600;">데이터 탐색</h2>
             </div>
             """)
             
             with gr.Row():
-                admin_stats_refresh = gr.Button("통계 새로고침", variant="secondary")
+                admin_stats_refresh = gr.Button("새로고침", variant="secondary", size="sm")
             
             admin_stats_html = gr.HTML()
             
@@ -1579,9 +2089,8 @@ The explanation will include:
                 admin_order_dist = gr.HTML()
                 admin_ticket_dist = gr.HTML()
             
-            gr.Markdown("---")
-            gr.Markdown("### 고객")
             with gr.Row():
+                gr.HTML('<span style="color:#a1a1aa;font-size:12px;font-weight:600;">고객</span>')
                 admin_cust_refresh = gr.Button("새로고침", variant="secondary", size="sm")
             admin_cust_table = gr.Dataframe(
                 headers=["고객 ID", "이름", "이메일", "등급", "가입일"],
@@ -1589,9 +2098,8 @@ The explanation will include:
                 interactive=False
             )
             
-            gr.Markdown("---")
-            gr.Markdown("### 주문")
             with gr.Row():
+                gr.HTML('<span style="color:#a1a1aa;font-size:12px;font-weight:600;">주문</span>')
                 admin_order_filter = gr.Dropdown(
                     choices=["전체", "pending", "processing", "shipped", "delivered", "cancelled"],
                     value="전체",
@@ -1605,9 +2113,8 @@ The explanation will include:
                 interactive=False
             )
             
-            gr.Markdown("---")
-            gr.Markdown("### 티켓")
             with gr.Row():
+                gr.HTML('<span style="color:#a1a1aa;font-size:12px;font-weight:600;">티켓</span>')
                 admin_ticket_filter = gr.Dropdown(
                     choices=["전체", "open", "in_progress", "resolved", "closed"],
                     value="전체",
@@ -1624,44 +2131,19 @@ The explanation will include:
         # ===== 탭 4: 지식그래프 =====
         with gr.TabItem("지식그래프"):
             gr.HTML("""
-            <div style="padding:12px 0;">
-                <h2 style="color:#fafafa;margin:0 0 8px 0;font-size:18px;font-weight:600;">지식 그래프 시각화</h2>
-                <p style="color:#d4d4d8;margin:0;font-size:13px;">온톨로지 스키마와 엔티티 관계 탐색</p>
+            <div style="padding:4px 0;">
+                <h2 style="color:#fafafa;margin:0;font-size:15px;font-weight:600;">지식 그래프</h2>
             </div>
             """)
 
             gr.HTML("""
-            <div style="background:#0f0f12;border-radius:12px;padding:16px 24px;margin:8px 0;border:1px solid #27272a;">
-                <div style="font-size:12px;font-weight:600;color:#c4b5fd;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;">엔티티 범례</div>
-                <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;">
-                    <div style="display:flex;align-items:center;gap:10px;background:#18181b;padding:8px 12px;border-radius:8px;">
-                        <div style="width:14px;height:14px;background:#6366f1;border-radius:4px;box-shadow:0 0 8px rgba(99,102,241,0.4);"></div>
-                        <span style="color:#e4e4e7;font-size:13px;font-weight:500;">클래스</span>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:10px;background:#18181b;padding:8px 12px;border-radius:8px;">
-                        <div style="width:14px;height:14px;background:#22c55e;border-radius:4px;box-shadow:0 0 8px rgba(34,197,94,0.4);"></div>
-                        <span style="color:#e4e4e7;font-size:13px;font-weight:500;">고객</span>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:10px;background:#18181b;padding:8px 12px;border-radius:8px;">
-                        <div style="width:14px;height:14px;background:#06b6d4;border-radius:4px;box-shadow:0 0 8px rgba(6,182,212,0.4);"></div>
-                        <span style="color:#e4e4e7;font-size:13px;font-weight:500;">주문</span>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:10px;background:#18181b;padding:8px 12px;border-radius:8px;">
-                        <div style="width:14px;height:14px;background:#f59e0b;border-radius:4px;box-shadow:0 0 8px rgba(245,158,11,0.4);"></div>
-                        <span style="color:#e4e4e7;font-size:13px;font-weight:500;">상품</span>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:10px;background:#18181b;padding:8px 12px;border-radius:8px;">
-                        <div style="width:14px;height:14px;background:#ef4444;border-radius:4px;box-shadow:0 0 8px rgba(239,68,68,0.4);"></div>
-                        <span style="color:#e4e4e7;font-size:13px;font-weight:500;">티켓</span>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:10px;background:#18181b;padding:8px 12px;border-radius:8px;">
-                        <div style="width:14px;height:14px;background:#a855f7;border-radius:4px;box-shadow:0 0 8px rgba(168,85,247,0.4);"></div>
-                        <span style="color:#e4e4e7;font-size:13px;font-weight:500;">카테고리</span>
-                    </div>
-                </div>
-                <div style="margin-top:16px;padding-top:12px;border-top:1px solid #27272a;display:flex;gap:24px;font-size:12px;color:#a1a1aa;">
-                    <span><strong style="color:#e4e4e7;">관계:</strong> 상품포함, 주문함, 유사함, 항목포함, 카테고리속함</span>
-                </div>
+            <div style="padding:4px 0;font-size:11px;color:#6b7280;">
+                <span style="margin-right:12px;"><span style="display:inline-block;width:8px;height:8px;background:#2563eb;border-radius:2px;margin-right:4px;"></span>클래스</span>
+                <span style="margin-right:12px;"><span style="display:inline-block;width:8px;height:8px;background:#059669;border-radius:2px;margin-right:4px;"></span>고객</span>
+                <span style="margin-right:12px;"><span style="display:inline-block;width:8px;height:8px;background:#0891b2;border-radius:2px;margin-right:4px;"></span>주문</span>
+                <span style="margin-right:12px;"><span style="display:inline-block;width:8px;height:8px;background:#d97706;border-radius:2px;margin-right:4px;"></span>상품</span>
+                <span style="margin-right:12px;"><span style="display:inline-block;width:8px;height:8px;background:#dc2626;border-radius:2px;margin-right:4px;"></span>티켓</span>
+                <span><span style="display:inline-block;width:8px;height:8px;background:#7c3aed;border-radius:2px;margin-right:4px;"></span>카테고리</span>
             </div>
             """)
 
@@ -1715,28 +2197,21 @@ The explanation will include:
                 
                 with gr.Column(scale=1):
                     gr.HTML("""
-                    <div style="background:#0f0f12;border-radius:12px;padding:16px;border:1px solid #27272a;height:100%;">
-                <div style="font-size:12px;font-weight:600;color:#c4b5fd;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">엔티티 상세</div>
-                            <div style="color:#d4d4d8;font-size:13px;padding:20px;text-align:center;border:1px dashed #27272a;border-radius:8px;">
-                                <div style="font-size:24px;margin-bottom:8px;">🔍</div>
-                                <div>그래프에서 노드를 클릭하여 상세 보기</div>
-                            </div>
-                    </div>
+                    <div style="font-size:11px;font-weight:600;color:#374151;padding:4px 0;border-bottom:1px solid #e5e7eb;">엔티티 상세</div>
                     """)
                     graph_entity_lookup = gr.Textbox(label="엔티티 ID", placeholder="예: user_001, ORD-001")
                     graph_entity_btn = gr.Button("엔티티 조회", variant="secondary", size="sm")
                     graph_entity_detail = gr.JSON(label="엔티티 데이터", visible=True)
 
             with gr.Row():
-                vis_refresh = gr.Button("전체 새로고침", variant="secondary")
+                vis_refresh = gr.Button("새로고침", variant="secondary", size="sm")
                 gr.Markdown("*Update data: `python scripts/export_visualization_data.py`*", elem_classes="hint")
 
         # ===== 탭 5: 개발자 도구 =====
         with gr.TabItem("개발자 도구"):
             gr.HTML("""
-            <div style="padding:12px 0;">
-                <h2 style="color:#fafafa;margin:0 0 8px 0;font-size:18px;font-weight:600;">개발자 도구</h2>
-                <p style="color:#d4d4d8;margin:0;font-size:13px;">SPARQL 쿼리, 트리플 관리, 시스템 평가</p>
+            <div style="padding:4px 0;">
+                <h2 style="color:#fafafa;margin:0;font-size:15px;font-weight:600;">개발자 도구</h2>
             </div>
             """)
 
@@ -1794,8 +2269,7 @@ The explanation will include:
                         triple_type = gr.Radio(["URI", "Literal"], value="Literal", label="Object Type")
                         triple_add = gr.Button("추가", variant="primary", size="sm")
 
-                    gr.Markdown("---")
-                    gr.Markdown("#### Delete Triple")
+                    gr.HTML('<div style="margin:8px 0 4px;color:#a1a1aa;font-size:12px;font-weight:600;">트리플 삭제</div>')
                     with gr.Row():
                         del_subject = gr.Textbox(label="Subject", placeholder="ecom:customer_user_001")
                         del_predicate = gr.Textbox(label="Predicate", placeholder="ecom:email")
@@ -1812,7 +2286,7 @@ The explanation will include:
                             label="엔티티 유형"
                         )
                         entity_search = gr.Textbox(label="ID 검색", placeholder="user_001")
-                        entity_search_btn = gr.Button("검색", variant="primary")
+                        entity_search_btn = gr.Button("검색", variant="primary", size="sm")
                     entity_detail = gr.JSON(label="엔티티 상세")
 
                 with gr.TabItem("TTL 편집기"):
@@ -1860,44 +2334,21 @@ The explanation will include:
                     """)
 
                 with gr.TabItem("평가"):
-                    gr.Markdown("### Ontology Engine Evaluation")
                     gr.HTML("""
-                    <div style="background:#0f0f12;border-radius:16px;padding:24px;margin:12px 0;border:1px solid #27272a;">
-                        <div style="color:#c4b5fd;font-weight:600;margin-bottom:20px;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;">Evaluation Metrics</div>
-                        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
-                            <div style="background:linear-gradient(135deg,#18181b,#1f1f23);padding:24px;border-radius:12px;text-align:center;border:1px solid #27272a;transition:transform 0.2s;">
-                                <div style="font-size:32px;font-weight:700;color:#22c55e;text-shadow:0 0 20px rgba(34,197,94,0.3);">-</div>
-                                <div style="font-size:12px;color:#a1a1aa;margin-top:8px;text-transform:uppercase;letter-spacing:0.03em;">Rule Precision</div>
-                                <div style="font-size:11px;color:#a1a1aa;margin-top:4px;">Ontology rule accuracy</div>
-                            </div>
-                            <div style="background:linear-gradient(135deg,#18181b,#1f1f23);padding:24px;border-radius:12px;text-align:center;border:1px solid #27272a;transition:transform 0.2s;">
-                                <div style="font-size:32px;font-weight:700;color:#6366f1;text-shadow:0 0 20px rgba(99,102,241,0.3);">-</div>
-                                <div style="font-size:12px;color:#a1a1aa;margin-top:8px;text-transform:uppercase;letter-spacing:0.03em;">Recall</div>
-                                <div style="font-size:11px;color:#a1a1aa;margin-top:4px;">Coverage of valid inferences</div>
-                            </div>
-                            <div style="background:linear-gradient(135deg,#18181b,#1f1f23);padding:24px;border-radius:12px;text-align:center;border:1px solid #27272a;transition:transform 0.2s;">
-                                <div style="font-size:32px;font-weight:700;color:#f59e0b;text-shadow:0 0 20px rgba(245,158,11,0.3);">-</div>
-                                <div style="font-size:12px;color:#a1a1aa;margin-top:8px;text-transform:uppercase;letter-spacing:0.03em;">Conflict Rate</div>
-                                <div style="font-size:11px;color:#a1a1aa;margin-top:4px;">Inconsistency detection</div>
-                            </div>
-                            <div style="background:linear-gradient(135deg,#18181b,#1f1f23);padding:24px;border-radius:12px;text-align:center;border:1px solid #27272a;transition:transform 0.2s;">
-                                <div style="font-size:32px;font-weight:700;color:#a855f7;text-shadow:0 0 20px rgba(168,85,247,0.3);">-</div>
-                                <div style="font-size:12px;color:#a1a1aa;margin-top:8px;text-transform:uppercase;letter-spacing:0.03em;">GNN Uplift</div>
-                                <div style="font-size:11px;color:#a1a1aa;margin-top:4px;">Graph neural network gain</div>
-                            </div>
-                        </div>
-                        <div style="margin-top:24px;padding:16px;background:#18181b;border-radius:10px;border:1px solid #27272a;">
-                            <div style="color:#e4e4e7;font-size:13px;font-weight:500;margin-bottom:8px;">Required Modules</div>
-                            <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                                <span style="background:#27272a;color:#a1a1aa;padding:4px 10px;border-radius:6px;font-size:11px;font-family:monospace;">src/eval/rule_precision.py</span>
-                                <span style="background:#27272a;color:#a1a1aa;padding:4px 10px;border-radius:6px;font-size:11px;font-family:monospace;">derived_consistency.py</span>
-                                <span style="background:#27272a;color:#a1a1aa;padding:4px 10px;border-radius:6px;font-size:11px;font-family:monospace;">gnn_uplift.py</span>
-                                <span style="background:#27272a;color:#a1a1aa;padding:4px 10px;border-radius:6px;font-size:11px;font-family:monospace;">explanation_coverage.py</span>
-                            </div>
-                        </div>
+                    <div style="font-size:11px;color:#6b7280;padding:8px 0;">
+                        <table style="width:100%;border-collapse:collapse;font-size:11px;">
+                            <tr style="border-bottom:1px solid #e5e7eb;">
+                                <th style="text-align:left;padding:4px;color:#374151;">Metric</th>
+                                <th style="text-align:right;padding:4px;color:#374151;">Value</th>
+                            </tr>
+                            <tr><td style="padding:4px;">Rule Precision</td><td style="text-align:right;padding:4px;">-</td></tr>
+                            <tr><td style="padding:4px;">Recall</td><td style="text-align:right;padding:4px;">-</td></tr>
+                            <tr><td style="padding:4px;">Conflict Rate</td><td style="text-align:right;padding:4px;">-</td></tr>
+                            <tr><td style="padding:4px;">GNN Uplift</td><td style="text-align:right;padding:4px;">-</td></tr>
+                        </table>
+                        <p style="margin:8px 0 0;color:#9ca3af;">평가 기능 개발 중</p>
                     </div>
                     """)
-                    gr.Markdown("*Evaluation features are under development. Measures ontology rule consistency, inference accuracy, and recommendation quality.*")
 
     def on_customer_change(uid):
         orders = get_orders(uid)
@@ -1906,13 +2357,13 @@ The explanation will include:
     
     async def on_chat(message, history, uid):
         if not message.strip():
-            return history, "", get_trace()
+            return history, "", get_trace(), get_unified_log_html()
         res, trace = await process_message(uid or "user_001", message)
         reply = format_response(res)
         return history + [
             {"role": "user", "content": message},
             {"role": "assistant", "content": reply}
-        ], json.dumps(res, ensure_ascii=False, indent=2, cls=DateTimeEncoder), trace
+        ], json.dumps(res, ensure_ascii=False, indent=2, cls=DateTimeEncoder), trace, get_unified_log_html()
     
     async def on_order_action(uid, oid, reason, history, *, action):
         if not oid:
@@ -2014,8 +2465,8 @@ The explanation will include:
     demo.load(get_order_status_dist, outputs=[admin_order_dist])
     demo.load(get_ticket_status_dist, outputs=[admin_ticket_dist])
     
-    send_btn.click(on_chat, [msg, chat, user_select], [chat, res_json, trace_out]).then(lambda: "", outputs=[msg])
-    msg.submit(on_chat, [msg, chat, user_select], [chat, res_json, trace_out]).then(lambda: "", outputs=[msg])
+    send_btn.click(on_chat, [msg, chat, user_select], [chat, res_json, trace_out, unified_log_html]).then(lambda: "", outputs=[msg])
+    msg.submit(on_chat, [msg, chat, user_select], [chat, res_json, trace_out, unified_log_html]).then(lambda: "", outputs=[msg])
     
     ex1.click(lambda: "주문 보여줘", outputs=[msg])
     ex2.click(lambda: "환불 정책 알려줘", outputs=[msg])
@@ -2119,7 +2570,6 @@ LIMIT {int(limit)}"""
     
     btn_policy.click(on_policy_search, [user_select, policy_q, chat], [chat, res_json, trace_out])
     clear_btn.click(on_clear_chat, outputs=[chat, res_json, trace_out])
-    clear_trace_btn.click(clear_trace, outputs=[trace_out])
     
     vis_refresh.click(
         refresh_all_graphs,

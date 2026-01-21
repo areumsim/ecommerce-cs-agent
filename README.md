@@ -1,127 +1,41 @@
 # E-Commerce Customer Service Agent
 
-한국어 기반 이커머스 고객 상담 에이전트 PoC (Proof of Concept)
+RDF 지식 그래프 기반 한국어 이커머스 고객 상담 에이전트
 
-**버전**: v1.1.0  
-**최종 업데이트**: 2026-01-20  
-**데이터 저장소**: Apache Jena Fuseki (RDF Triple Store)  
-**트리플 수**: ~32,000
+## 개요
 
----
+| 항목 | 내용 |
+|------|------|
+| **목적** | 지식 그래프와 LLM을 결합한 설명 가능한 고객 상담 시스템 |
+| **저장소** | Apache Jena Fuseki (RDF Triple Store) |
+| **데이터** | ~32,000 트리플 (고객 100, 상품 1,492, 주문 491, 티켓 60) |
+| **언어** | 한국어 |
 
-## 프로젝트 목표
+## 핵심 원칙
 
-**RDF 기반 지식 그래프와 LLM을 결합한 지능형 고객 상담 시스템**
+- **Ontology First**: 모든 사실은 RDF/OWL 온톨로지에서 관리
+- **Rule-based Reasoning**: 판단은 명시적 규칙으로 결정 (LLM이 판단하지 않음)
+- **Explainability**: 모든 결과에 대해 근거 제시 가능
+- **LLM as Explainer**: LLM은 의도 분류와 자연어 응답 생성에만 사용
 
-이 시스템은 일반적인 LLM 챗봇과 다릅니다:
+## 주요 기능
 
-- **Ontology First**: 모든 사실은 RDF/OWL 기반 온톨로지에서 관리
-- **Rule-based Reasoning**: 판단은 명시적 규칙에 의해 결정 (LLM이 판단하지 않음)
-- **Explainability by Design**: 왜 이런 결과가 나왔는지 항상 설명 가능
-- **LLM as Explainer**: LLM은 의도 분류와 설명 생성에만 사용
+| 기능 | 설명 |
+|------|------|
+| 자연어 상담 | 주문 조회, 환불/교환 요청, 정책 질의 |
+| 상품 추천 | SPARQL 협업 필터링 + 벡터 유사도 |
+| 정책 검색 | 하이브리드 RAG (키워드 + 벡터) |
+| 가드레일 | PII 마스킹, 프롬프트 인젝션 방어 |
+| 파이프라인 추적 | 실시간 디버그 패널 + 로그 파일 |
 
-### 핵심 기능
+## UI 구조
 
-- 자연어로 주문 조회, 환불/교환 요청, 정책 질의 처리
-- SPARQL 협업 필터링 기반 상품 추천
-- 실시간 파이프라인 추적 (디버그 패널)
-- 한국어 특화 가드레일 (PII 마스킹, 프롬프트 인젝션 방어)
-- **이중 의도 분류 시스템** (LLM + 키워드 폴백)
-
----
-
-## 데모 UI
-
-### UI Structure (v2.0)
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│  Knowledge Graph Intelligence                                        │
-│  [100 Customers] [1,492 Products] [491 Orders] [60 Tickets] [32K+]   │
-├─────────────────────────────────────────────────────────────────────┤
-│  [Overview] [Intelligence] [Graph Explorer] [Data Tables] [Dev Tools]│
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│  Tab: Overview                                                        │
-│  ┌───────────────────────────────────────────────────────────────┐   │
-│  │  [KPI Cards: Customers | Products | Orders | Tickets | Triples] │   │
-│  │  [Quick Actions: CS Agent | Recommendations | Graph | SPARQL]   │   │
-│  │  [Technology Stack: RDF | SPARQL | OWL | RAG | LLM | SHACL]     │   │
-│  └───────────────────────────────────────────────────────────────┘   │
-│                                                                       │
-│  Tab: Intelligence > [CS Agent | Recommendation Studio | Policy]      │
-│  ┌───────────────────────────────────────────────────────────────┐   │
-│  │  CS Agent: Chat interface with customer context               │   │
-│  │  Recommendation Studio: SPARQL-powered recs with WHY panel    │   │
-│  │  Policy Search: Hybrid RAG policy lookup                      │   │
-│  └───────────────────────────────────────────────────────────────┘   │
-│                                                                       │
-│  Tab: Graph Explorer                                                  │
-│  ┌───────────────────────────────────────────────────────────────┐   │
-│  │  [ER Diagram | Ontology Schema | Instance Graph | Similarity]  │   │
-│  │  + Entity Details panel (click node to view)                   │   │
-│  └───────────────────────────────────────────────────────────────┘   │
-│                                                                       │
-│  Tab: Data Tables                                                     │
-│  ┌───────────────────────────────────────────────────────────────┐   │
-│  │  [Customers | Orders | Tickets] with filters                   │   │
-│  │  Stats overview, status distributions                          │   │
-│  └───────────────────────────────────────────────────────────────┘   │
-│                                                                       │
-│  Tab: Developer Tools                                                 │
-│  ┌───────────────────────────────────────────────────────────────┐   │
-│  │  [SPARQL Studio | Triple Manager | Entity Browser | TTL Editor]│   │
-│  │  [Evaluation] - Ontology metrics and benchmarks                │   │
-│  └───────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-### Tab Structure (5 tabs)
-
-| Tab | Description | Key Features |
-|-----|-------------|--------------|
-| **Overview** | System dashboard | KPI cards, quick actions, technology stack |
-| **Intelligence** | AI-powered features | CS Agent chat, Recommendation Studio with WHY panel, Policy search |
-| **Graph Explorer** | Ontology visualization | ER Diagram, Schema graph, Instance graph, Similarity graph, Entity details |
-| **Data Tables** | Entity management | Customer/Order/Ticket tables with filters, stats distributions |
-| **Developer Tools** | Technical tools | SPARQL Studio, Triple Manager, Entity Browser, TTL Editor, Evaluation |
-
-### Feature Details
-
-| Feature | Description | Technology | Data Source |
-|---------|-------------|------------|-------------|
-| **Natural Language Chat** | Order queries, policy questions | Dual intent classification (LLM + keyword) | RDF + RAG |
-| **Order Management** | List/Detail/Status/Cancel/Inquiry | SPARQL CRUD | RDF Repository |
-| **Recommendation Studio** | Similar products, trending, categories | SPARQL + vector search | RDF + Embeddings |
-| **WHY Panel** | Explainable AI recommendations | Relationship + rule tracing | Knowledge Graph |
-| **Policy Search** | Refund/shipping/exchange policies | Hybrid RAG | FAISS + Keyword |
-| **NL→SPARQL** | LLM-based SPARQL generation | Dynamic ontology schema | LLM + RDF Schema |
-| **Graph Visualization** | Customer-Order-Product relationships | vis.js + Mermaid | RDF Repository |
-| **Entity Browser** | Detailed entity inspection | SPARQL queries | RDF Repository |
-
-### Example Queries
-
-```
-# Order-related
-Show my orders
-Order ORD-20251201-001 details
-When will my delivery arrive?
-Cancel my order
-
-# Policy-related
-Refund policy please
-How much is shipping?
-How do I exchange?
-
-# Recommendations
-Recommend products for me
-Show similar products
-What's trending?
-
-# Claims
-I want a refund
-This product is defective
-```
+| 탭 | 기능 |
+|----|------|
+| **상담** | CS Agent 채팅, 추천 스튜디오, 정책 검색 |
+| **데이터 관리** | 고객/주문/티켓 테이블 |
+| **지식그래프** | ER 다이어그램, 온톨로지 스키마, 인스턴스 그래프 |
+| **개발자 도구** | SPARQL 쿼리, 트리플 관리, 엔티티 브라우저 |
 
 ---
 
@@ -309,20 +223,28 @@ IntentResult(
 
 ## 데이터
 
+### 데이터 소스
+
+| 유형 | 소스 | 설명 |
+|------|------|------|
+| **실제 데이터** | Amazon Reviews Dataset | 상품 정보 (제목, 브랜드, 가격, 평점, 리뷰 수) |
+| **Mock 데이터** | 스크립트 생성 | 고객, 주문, 티켓 (시연용) |
+| **파생 데이터** | 자동 계산 | 상품 유사도, 벡터 임베딩 |
+
 ### 엔티티 통계
 
-| 엔티티 | 개수 | 소스 | 설명 |
-|--------|------|------|------|
-| Products | 1,492 | Amazon Reviews | 상품 정보, 평점, 리뷰 수 |
-| Orders | 491 | Mock 생성 | 주문 정보, 상태, 금액 |
-| OrderItems | 1,240 | Mock 생성 | 주문 항목, 수량, 단가 |
-| Customers | 100 | Mock 생성 | 고객 정보, 등급 |
-| Tickets | 60 | Mock 생성 | 지원 티켓 |
-| Similarities | 4,416 | 자동 생성 | 상품 간 유사도 관계 |
-| Embeddings | 1,492 | 자동 생성 | 384-dim 벡터 (전체 상품) |
-| Policy Docs | 63 | 수동 작성 | 정책 문서 |
-| SHACL Shapes | 208 | 수동 작성 | 데이터 검증 규칙 |
-| **Total Triples** | ~32,000 | Fuseki | - |
+| 엔티티 | 개수 | 유형 |
+|--------|------|------|
+| Products | 1,492 | 실제 (Amazon) |
+| Customers | 100 | Mock |
+| Orders | 491 | Mock |
+| OrderItems | 1,240 | Mock |
+| Tickets | 60 | Mock |
+| Similarities | 4,416 | 파생 |
+| Embeddings | 1,492 | 파생 (384-dim) |
+| Policy Docs | 63 | 직접 작성 |
+| SHACL Shapes | 208 | 직접 작성 |
+| **Total Triples** | ~32,000 | - |
 
 ### 온톨로지 구조
 
@@ -757,22 +679,29 @@ POST /v1/chat/completions    # 채팅 완료
 
 ## 문서 가이드
 
-이 프로젝트의 문서들은 **각각 역할이 명확히 분리**되어 있습니다.
+### 핵심 문서
 
-| 문서 | 역할 | 내용 | 분량 |
-|------|------|------|------|
-| [TECHNOLOGY_OVERVIEW.md](docs/TECHNOLOGY_OVERVIEW.md) | 개념 지도 | 시스템 철학, 아키텍처 원칙, LLM 경계 | ~280줄 |
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | 설계도 | 실행 흐름, 컴포넌트 상세, 데이터 구조 | ~1,400줄 |
-| [STATUS.md](docs/STATUS.md) | 구현 현황 | 버전, 구현된 기능, 알려진 이슈 | ~160줄 |
-| [FIRST_DAY_GUIDE.md](docs/FIRST_DAY_GUIDE.md) | 온보딩 | 첫날 실습 가이드, 체크리스트 | ~220줄 |
-| [GLOSSARY.md](docs/GLOSSARY.md) | 용어 사전 | 기술 용어 정의, 데이터 구조 | ~210줄 |
+| 문서 | 내용 |
+|------|------|
+| [GETTING_STARTED.md](docs/GETTING_STARTED.md) | 환경 설정, 튜토리얼 |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | 실행 흐름, 컴포넌트, 데이터 구조 |
+| [TECHNOLOGY_OVERVIEW.md](docs/TECHNOLOGY_OVERVIEW.md) | 시스템 설계 원칙 |
 
-### 읽는 순서 (권장)
+### 참조 문서
 
-1. **Day 1 오전**: TECHNOLOGY_OVERVIEW.md (개념 이해)
-2. **Day 1 오후**: FIRST_DAY_GUIDE.md + UI 실습
-3. **Day 2**: ARCHITECTURE.md (아키텍처 상세)
-4. **필요 시**: GLOSSARY.md (용어 참조), STATUS.md (현황 확인)
+| 문서 | 내용 |
+|------|------|
+| [GLOSSARY.md](docs/GLOSSARY.md) | 용어 사전 |
+| [STATUS.md](docs/STATUS.md) | 구현 현황 |
+| [configuration.md](docs/configuration.md) | 설정 옵션 |
+| [api_reference.md](docs/api_reference.md) | API 명세 |
+| [llm_guide.md](docs/llm_guide.md) | LLM Provider 설정 |
+| [RDF_SETUP_GUIDE.md](docs/RDF_SETUP_GUIDE.md) | Fuseki 설정 |
+| [troubleshooting.md](docs/troubleshooting.md) | 문제 해결 |
+
+### 모듈별 문서
+
+각 `src/` 하위 모듈에 `AGENTS.md` 파일 참조
 
 ### 핵심 원칙
 

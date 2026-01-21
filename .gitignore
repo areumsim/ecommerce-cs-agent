@@ -34,11 +34,15 @@ _toRemove/
 tmp/
 temp/
 
+# Archive (deprecated/old files)
+_archive/
+
 # Large processed artifacts (exclude entire directories)
 data/processed/
 data/*.db
 data/raw/*.parquet
 data/mock_csv/products_cache.csv
+data/visualization/
 
 # Generated exports (Protégé, etc.)
 exports/
@@ -58,3 +62,7 @@ log/
 # OS
 .DS_Store
 Thumbs.db
+
+# Process files
+*.pid
+*.backup

@@ -1,6 +1,6 @@
 # ECOMMERCE CS AGENT - PROJECT KNOWLEDGE BASE
 
-**Updated:** 2026-01-20 | **Commit:** 5e86900 | **Branch:** main
+**Updated:** 2026-01-21 | **Branch:** main
 
 ## OVERVIEW
 
@@ -8,14 +8,15 @@ Korean e-commerce customer service agent PoC. Intent classification → Orchestr
 
 **Storage**: Apache Jena Fuseki triple store (~32K triples)  
 **RAG**: Hybrid search (FAISS vector + keyword), 63 policy documents  
-**UI**: Gradio single-page (5 tabs: Overview, Intelligence, Graph Explorer, Data Tables, Developer Tools) | **API**: FastAPI (port 8000)
+**UI**: Gradio single-page (4 tabs: 상담, 데이터 관리, 지식그래프, 개발자 도구) | **API**: FastAPI (port 8000)  
+**Logs**: `logs/` directory (hourly rotation: `debug_YYYY-MM-DD_HH.log`)
 
 ## STRUCTURE
 
 ```
 ecommerce-cs-agent/
 ├── api.py              # FastAPI server (990 lines) - auth, chat, orders, tickets
-├── ui.py               # Gradio UI (1683 lines) - demo page, NL→SPARQL, debug panel
+├── ui.py               # Gradio UI (2300+ lines) - Admin-style compact UI, NL→SPARQL
 ├── src/
 │   ├── agents/         # Intent classifier, orchestrator, tools, specialists
 │   ├── rdf/            # RDF store + repository (SPARQL over HTTP)
@@ -66,7 +67,7 @@ ecommerce-cs-agent/
 
 | File | Lines | Purpose |
 |------|-------|---------|
-| `ui.py` | 1683 | Gradio UI, NL→SPARQL conversion |
+| `ui.py` | 2575 | Gradio UI, NL→SPARQL, slide-out debug panel |
 | `api.py` | 990 | FastAPI endpoints, auth routes |
 | `src/rdf/repository.py` | 737 | RDFRepository SPARQL CRUD |
 | `src/llm/client.py` | 671 | Multi-provider LLM client |

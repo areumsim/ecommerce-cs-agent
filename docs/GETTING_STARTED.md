@@ -144,15 +144,15 @@ UI는 4개의 주요 탭으로 구성됩니다:
 
 | 탭 | 용도 | 개발자 유용도 |
 |----|------|---------------|
-| 💬 고객 상담 | 대화형 CS 테스트 | ⭐⭐ |
-| 🔧 관리자 | 데이터 조회/관리 | ⭐⭐ |
-| 📊 데이터-지식그래프 | 온톨로지/인스턴스 시각화 | ⭐⭐⭐ |
-| 🔧 RDF 데이터 | **SPARQL 쿼리 실행** | ⭐⭐⭐ |
+| 고객 상담 | 대화형 CS 테스트 | 중 |
+| 관리자 | 데이터 조회/관리 | 중 |
+| 데이터-지식그래프 | 온톨로지/인스턴스 시각화 | 높음 |
+| RDF 데이터 | **SPARQL 쿼리 실행** | 높음 |
 
-**🔧 RDF 데이터 탭** (개발 시 유용):
-- **📝 SPARQL 쿼리**: 쿼리 직접 실행, 예시 버튼 제공
-- **➕ 트리플 관리**: 데이터 추가/삭제 테스트
-- **🔍 엔티티 브라우저**: 특정 엔티티 상세 조회
+**RDF 데이터 탭** (개발 시 유용):
+- **SPARQL 쿼리**: 쿼리 직접 실행, 예시 버튼 제공
+- **트리플 관리**: 데이터 추가/삭제 테스트
+- **엔티티 브라우저**: 특정 엔티티 상세 조회
 
 ### 2.5.1 자연어 → SPARQL 변환
 
@@ -201,16 +201,16 @@ openai:
 
 ```
 ecommerce-cs-agent/
-├── api.py                 # ⭐ FastAPI 서버 (REST API)
-├── ui.py                  # ⭐ Gradio UI (웹 인터페이스)
+├── api.py                 # FastAPI 서버 (REST API)
+├── ui.py                  # Gradio UI (웹 인터페이스)
 │
 ├── src/
 │   ├── rdf/
-│   │   ├── store.py       # ⭐ Fuseki 연결 (SPARQL 실행)
-│   │   └── repository.py  # ⭐ 데이터 CRUD (Customer, Product, Order...)
+│   │   ├── store.py       # Fuseki 연결 (SPARQL 실행)
+│   │   └── repository.py  # 데이터 CRUD (Customer, Product, Order...)
 │   │
 │   ├── agents/
-│   │   ├── orchestrator.py     # ⭐ 메인 흐름 제어
+│   │   ├── orchestrator.py     # 메인 흐름 제어
 │   │   └── nodes/
 │   │       └── intent_classifier.py  # 의도 분류
 │   │
@@ -224,7 +224,7 @@ ecommerce-cs-agent/
 │       └── retriever.py   # 정책 문서 검색
 │
 ├── ontology/
-│   ├── ecommerce.ttl      # ⭐ 온톨로지 스키마 (클래스/관계 정의)
+│   ├── ecommerce.ttl      # 온톨로지 스키마 (클래스/관계 정의)
 │   └── instances/
 │       ├── customers.ttl  # 고객 데이터
 │       ├── products.ttl   # 상품 데이터
@@ -306,7 +306,7 @@ def get_customer(self, customer_id: str) -> Optional[Customer]:
 
 **목표**: Fuseki에 직접 SPARQL 쿼리를 날려보기
 
-> 💡 **Tip**: UI의 **🔧 RDF 데이터 → 📝 SPARQL 쿼리** 탭에서도 동일한 쿼리를 실행할 수 있습니다.
+UI의 **RDF 데이터 > SPARQL 쿼리** 탭에서도 동일한 쿼리를 실행할 수 있습니다.
 
 ```bash
 # 1. 고객 목록 조회

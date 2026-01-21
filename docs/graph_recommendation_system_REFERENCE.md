@@ -1,4 +1,10 @@
-# Graph-Based Recommendation System - Technical Documentation
+# Graph-Based Recommendation System (Reference)
+
+> **Note**: 이 문서는 Neo4j 기반 설계 참고 문서입니다.  
+> 현재 시스템은 RDF/Fuseki + SPARQL 기반으로 구현되어 있습니다.  
+> 현재 구현: `src/rdf/repository.py`, `src/recommendation/service.py`
+
+---
 
 ## Overview
 

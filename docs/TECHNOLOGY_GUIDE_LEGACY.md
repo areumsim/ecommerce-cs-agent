@@ -1,6 +1,9 @@
-# RAG/Agent 프로젝트 기술 가이드
+# RAG/Agent 프로젝트 기술 가이드 (Legacy)
 
-> 신입 개발자를 위한 한국어 전자상거래 고객 상담 에이전트 기술 교육 문서
+> **Note**: 이 문서는 RDF/Fuseki 마이그레이션 이전 아키텍처(CSV/SQLite) 기준입니다.  
+> 현재 아키텍처는 `ARCHITECTURE.md` 및 `src/rdf/AGENTS.md` 참조.
+
+신입 개발자를 위한 한국어 전자상거래 고객 상담 에이전트 기술 교육 문서
 
 ---
 
