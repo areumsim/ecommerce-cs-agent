@@ -1,0 +1,70 @@
+# Neo4j 그래프 데이터베이스 설정
+# 환경변수로 오버라이드 가능: NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD
+
+neo4j:
+  # 연결 정보
+  uri: "bolt://localhost:7687"
+  user: "neo4j"
+  password: ""  # 환경변수 NEO4J_PASSWORD 사용 권장
+  database: "neo4j"  # Community Edition은 기본 DB만 지원
+  
+  # 연결 풀 설정
+  connection_pool:
+    max_size: 50
+    acquisition_timeout: 60  # seconds
+    max_age: 3600  # seconds
+    
+  # 쿼리 설정
+  query:
+    timeout: 30  # seconds
+    max_retry: 3
+    retry_delay: 1  # seconds
+
+# 스키마 설정 (마이그레이션 시 사용)
+schema:
+  # 유니크 제약조건
+  constraints:
+    - label: Customer
+      property: customer_id
+      type: unique
+    - label: Product
+      property: product_id
+      type: unique
+    - label: Category
+      property: category_id
+      type: unique
+    - label: Review
+      property: review_id
+      type: unique
+      
+  # 인덱스
+  indexes:
+    - label: Product
+      property: category_id
+    - label: Product
+      property: brand
+    - label: Product
+      property: avg_rating
+    - label: Review
+      property: rating
+    - label: Customer
+      property: segment
+
+# 마이그레이션 설정
+migration:
+  batch_size: 1000
+  parallel_workers: 4
+  checkpoint_interval: 10000
+  
+  # 데이터 소스
+  sources:
+    products: "data/processed/products.parquet"
+    users: "data/mock_csv/users.csv"
+    orders: "data/mock_csv/orders.csv"
+    order_items: "data/mock_csv/order_items.csv"
+    reviews: "data/processed/reviews_agg.parquet"  # 집계된 리뷰 사용
+
+# 기능 토글 (선택적 의존성)
+features:
+  enabled: true  # false면 추천 기능 비활성화
+  gds_enabled: false  # Graph Data Science 라이브러리 사용 여부

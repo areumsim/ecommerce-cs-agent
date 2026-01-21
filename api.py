@@ -181,28 +181,23 @@ async def root() -> Dict[str, Any]:
 @app.get("/health")
 async def health_check() -> Dict[str, Any]:
     """상세 헬스체크."""
-    import sqlite3
-    from pathlib import Path
-
     health = {
         "status": "healthy",
         "components": {},
     }
 
-    # DB 체크
+    # RDF/Fuseki 체크
     try:
-        db_path = Path("data/ecommerce.db")
-        if db_path.exists():
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-            cursor.execute("SELECT 1")
-            conn.close()
-            health["components"]["database"] = {"status": "up"}
-        else:
-            health["components"]["database"] = {"status": "down", "reason": "file not found"}
-            health["status"] = "degraded"
+        from src.rdf.store import get_store
+        store = get_store()
+        triple_count = store.triple_count
+        health["components"]["rdf_store"] = {
+            "status": "up", 
+            "triples": triple_count,
+            "backend": store.__class__.__name__,
+        }
     except Exception as e:
-        health["components"]["database"] = {"status": "down", "reason": str(e)}
+        health["components"]["rdf_store"] = {"status": "down", "reason": str(e)}
         health["status"] = "degraded"
 
     # RAG 인덱스 체크
@@ -220,11 +215,11 @@ async def health_check() -> Dict[str, Any]:
 @app.get("/ready")
 async def readiness_check() -> Dict[str, str]:
     """준비 상태 확인 (Kubernetes readiness probe)."""
-    # 필수 컴포넌트 체크
     try:
-        from pathlib import Path
-        if not Path("data/ecommerce.db").exists():
-            raise HTTPException(status_code=503, detail="Database not ready")
+        from src.rdf.store import get_store
+        store = get_store()
+        if store.triple_count == 0:
+            raise HTTPException(status_code=503, detail="RDF store not ready")
         return {"status": "ready"}
     except HTTPException:
         raise
@@ -567,6 +562,117 @@ async def list_tickets(user_id: str, status: Optional[str] = None, limit: int = 
 async def resolve_ticket(ticket_id: str) -> Dict[str, Any]:
     updated = await order_tools.update_ticket_status(ticket_id, "resolved")
     return {"ticket": updated}
+
+
+# -------- Recommendations --------
+
+
+from src.recommendation import (
+    RecommendationService,
+    get_recommendation_service,
+    RecommendationResponse,
+)
+from src.recommendation.models import (
+    SimilarProductsRequest,
+    PersonalizedRequest,
+    TrendingRequest,
+    BoughtTogetherRequest,
+)
+
+
+def get_rec_service() -> RecommendationService:
+    """추천 서비스 반환."""
+    return get_recommendation_service()
+
+
+@app.get("/recommendations/similar/{product_id}", response_model=RecommendationResponse)
+async def get_similar_products(
+    product_id: str,
+    top_k: int = Query(10, ge=1, le=50),
+    method: str = Query("hybrid", description="추천 방식 (collaborative/content/hybrid)"),
+) -> RecommendationResponse:
+    """유사 상품 추천.
+    
+    특정 상품과 유사한 상품을 추천합니다.
+    """
+    service = get_rec_service()
+    return await service.get_similar_products(
+        product_id=product_id,
+        top_k=top_k,
+        method=method,
+    )
+
+
+@app.get("/recommendations/personalized/{user_id}", response_model=RecommendationResponse)
+async def get_personalized_recommendations(
+    user_id: str,
+    top_k: int = Query(10, ge=1, le=50),
+    category_id: Optional[str] = Query(None, description="카테고리 필터"),
+    exclude_purchased: bool = Query(True, description="구매 상품 제외"),
+) -> RecommendationResponse:
+    """개인화 추천.
+    
+    사용자의 구매 이력을 기반으로 개인화된 상품을 추천합니다.
+    """
+    service = get_rec_service()
+    return await service.get_personalized(
+        user_id=user_id,
+        top_k=top_k,
+        category_id=category_id,
+        exclude_purchased=exclude_purchased,
+    )
+
+
+@app.get("/recommendations/trending", response_model=RecommendationResponse)
+async def get_trending_products(
+    period: str = Query("week", description="기간 (day/week/month)"),
+    category_id: Optional[str] = Query(None, description="카테고리 필터"),
+    top_k: int = Query(10, ge=1, le=50),
+) -> RecommendationResponse:
+    """인기 상품 추천.
+    
+    최근 인기 있는 상품을 추천합니다.
+    """
+    service = get_rec_service()
+    return await service.get_trending(
+        period=period,
+        category_id=category_id,
+        top_k=top_k,
+    )
+
+
+@app.get("/recommendations/bought-together/{product_id}", response_model=RecommendationResponse)
+async def get_bought_together(
+    product_id: str,
+    top_k: int = Query(10, ge=1, le=50),
+) -> RecommendationResponse:
+    """함께 구매한 상품 추천.
+    
+    특정 상품과 함께 자주 구매되는 상품을 추천합니다.
+    """
+    service = get_rec_service()
+    return await service.get_bought_together(
+        product_id=product_id,
+        top_k=top_k,
+    )
+
+
+@app.get("/recommendations/category/{category_id}", response_model=RecommendationResponse)
+async def get_category_recommendations(
+    category_id: str,
+    top_k: int = Query(10, ge=1, le=50),
+    min_rating: float = Query(3.0, ge=0, le=5, description="최소 평점"),
+) -> RecommendationResponse:
+    """카테고리별 추천.
+    
+    특정 카테고리 내 인기 상품을 추천합니다.
+    """
+    service = get_rec_service()
+    return await service.get_category_recommendations(
+        category_id=category_id,
+        top_k=top_k,
+        min_rating=min_rating,
+    )
 
 
 # -------- Vision (이미지 분석) --------

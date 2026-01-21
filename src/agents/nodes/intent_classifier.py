@@ -214,6 +214,86 @@ def classify_intent_keyword(message: str) -> IntentResult:
             reason=f"키워드 매칭: 클레임 ({issue_type})"
         )
 
+    # 추천 의도 체크
+    recommend_cfg = intents_cfg.get("recommend", {})
+    recommend_keywords = recommend_cfg.get("keywords", [
+        "추천", "비슷한", "유사한", "같은", "인기", "트렌드", "베스트",
+        "함께", "같이", "많이", "뭐가", "어떤"
+    ])
+    if any(k in m for k in recommend_keywords):
+        sub_intents = recommend_cfg.get("sub_intents", {})
+        
+        # 유사 상품
+        similar_cfg = sub_intents.get("similar", {})
+        similar_keywords = similar_cfg.get("keywords", ["비슷한", "유사한", "같은 종류", "이런 거"])
+        if any(k in m for k in similar_keywords):
+            # 메시지에서 상품 ID 추출 시도
+            from .recommend_agent import extract_product_id_from_message
+            product_id = extract_product_id_from_message(message) or ""
+            return IntentResult(
+                intent="recommend",
+                sub_intent="similar",
+                payload={"product_id": product_id, "query": message},
+                confidence="medium",
+                source="keyword",
+                reason="키워드 매칭: 유사 상품 추천"
+            )
+        
+        # 함께 구매
+        together_cfg = sub_intents.get("together", {})
+        together_keywords = together_cfg.get("keywords", ["함께", "같이 사는", "같이 구매", "세트"])
+        if any(k in m for k in together_keywords):
+            from .recommend_agent import extract_product_id_from_message
+            product_id = extract_product_id_from_message(message) or ""
+            return IntentResult(
+                intent="recommend",
+                sub_intent="together",
+                payload={"product_id": product_id, "query": message},
+                confidence="medium",
+                source="keyword",
+                reason="키워드 매칭: 함께 구매 추천"
+            )
+        
+        # 인기/트렌딩
+        trending_cfg = sub_intents.get("trending", {})
+        trending_keywords = trending_cfg.get("keywords", ["인기", "트렌드", "베스트", "많이 팔리는", "핫한"])
+        if any(k in m for k in trending_keywords):
+            from .recommend_agent import extract_category_from_message
+            category = extract_category_from_message(message)
+            return IntentResult(
+                intent="recommend",
+                sub_intent="trending",
+                payload={"category_id": category or "", "query": message},
+                confidence="medium",
+                source="keyword",
+                reason="키워드 매칭: 인기 상품 추천"
+            )
+        
+        # 카테고리 추천
+        category_cfg = sub_intents.get("category", {})
+        category_keywords = category_cfg.get("keywords", ["카테고리", "분야", "종류"])
+        if any(k in m for k in category_keywords):
+            from .recommend_agent import extract_category_from_message
+            category = extract_category_from_message(message)
+            return IntentResult(
+                intent="recommend",
+                sub_intent="category",
+                payload={"category_id": category or "", "query": message},
+                confidence="medium",
+                source="keyword",
+                reason="키워드 매칭: 카테고리 추천"
+            )
+        
+        # 기본: 개인화 추천
+        return IntentResult(
+            intent="recommend",
+            sub_intent="personal",
+            payload={"query": message},
+            confidence="medium",
+            source="keyword",
+            reason="키워드 매칭: 개인화 추천"
+        )
+
     # 일반 대화
     general_cfg = intents_cfg.get("general", {})
     general_keywords = general_cfg.get("keywords", ["안녕", "고마워", "감사", "도움"])
@@ -392,14 +472,25 @@ async def classify_intent_async(message: str) -> IntentResult:
     cfg = _get_intent_config()
     llm_cfg = cfg.llm_classification
 
+    logger.info(f"[intent_classifier] 분류 시작: '{message[:50]}...'")
+
     # LLM 분류 시도
     if llm_cfg.enabled:
+        logger.debug("[intent_classifier] LLM 분류 시도...")
         result = await classify_intent_llm(message)
         if result:
+            logger.info(
+                f"[intent_classifier] LLM 분류 성공: "
+                f"intent={result.intent}, sub_intent={result.sub_intent}, "
+                f"confidence={result.confidence}"
+            )
             return result
+
+        logger.info("[intent_classifier] LLM 분류 실패, 키워드 폴백 확인...")
 
         # 폴백 설정 확인
         if not llm_cfg.fallback_to_keyword:
+            logger.warning("[intent_classifier] 키워드 폴백 비활성화, unknown 반환")
             return IntentResult(
                 intent="unknown",
                 sub_intent=None,
@@ -410,7 +501,14 @@ async def classify_intent_async(message: str) -> IntentResult:
             )
 
     # 키워드 기반 폴백
-    return classify_intent_keyword(message)
+    logger.info("[intent_classifier] 키워드 기반 분류 수행...")
+    result = classify_intent_keyword(message)
+    logger.info(
+        f"[intent_classifier] 키워드 분류 완료: "
+        f"intent={result.intent}, sub_intent={result.sub_intent}, "
+        f"confidence={result.confidence}, reason={result.reason}"
+    )
+    return result
 
 
 def classify_intent(message: str) -> Tuple[str, Optional[str], Dict[str, Any]]:

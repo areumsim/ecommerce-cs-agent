@@ -40,6 +40,9 @@ data/*.db
 data/raw/*.parquet
 data/mock_csv/products_cache.csv
 
+# Generated exports (Protégé, etc.)
+exports/
+
 # Model outputs (large files - exclude entire directory)
 outputs/
 

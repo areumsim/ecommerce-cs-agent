@@ -1,0 +1,22 @@
+rdf:
+  backend: "fuseki"  # rdflib | fuseki
+  ontology_dir: "ontology"
+  auto_load: true
+  persist_path: "data/rdf_store.ttl"
+
+fuseki:
+  endpoint: "http://ar_fuseki:3030/ecommerce"
+  user: "admin"
+  password: "admin123"
+
+prefixes:
+  ecom: "http://example.org/ecommerce#"
+  schema: "http://schema.org/"
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  owl: "http://www.w3.org/2002/07/owl#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+
+vector:
+  embedding_dim: 384
+  similarity_threshold: 0.7

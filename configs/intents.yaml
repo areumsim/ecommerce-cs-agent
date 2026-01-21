@@ -83,6 +83,35 @@ intents:
       greeting: "안녕하세요! 무엇을 도와드릴까요?"
       thanks: "감사합니다. 더 도움이 필요하시면 말씀해주세요."
 
+  # 추천
+  recommend:
+    keywords:
+      - "추천"
+      - "비슷한"
+      - "유사한"
+      - "같은"
+      - "인기"
+      - "트렌드"
+      - "베스트"
+      - "함께"
+      - "같이"
+      - "많이"
+      - "뭐가"
+      - "어떤"
+    sub_intents:
+      similar:
+        keywords: ["비슷한", "유사한", "같은 종류", "이런 거"]
+      together:
+        keywords: ["함께", "같이 사는", "같이 구매", "세트"]
+      trending:
+        keywords: ["인기", "트렌드", "베스트", "많이 팔리는", "핫한"]
+      category:
+        keywords: ["카테고리", "분야", "종류"]
+      personal:
+        keywords: []
+    default_params:
+      top_k: 10
+
 # 분류 실패 시 기본 응답
 fallback:
   intent: "unknown"

@@ -1,0 +1,730 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ecom: <http://example.org/ecommerce#> .
+@prefix schema: <http://schema.org/> .
+
+# =============================================================================
+# Ontology Declaration
+# =============================================================================
+
+<http://example.org/ecommerce> a owl:Ontology ;
+    rdfs:label "이커머스 고객 서비스 온톨로지"@ko ;
+    rdfs:label "E-commerce Customer Service Ontology"@en ;
+    rdfs:comment "한국어 이커머스 고객 서비스 에이전트를 위한 OWL 온톨로지"@ko ;
+    owl:versionInfo "2.0.0" .
+
+# =============================================================================
+# Classes
+# =============================================================================
+
+ecom:Customer a owl:Class ;
+    rdfs:subClassOf schema:Person ;
+    rdfs:label "고객"@ko ;
+    rdfs:comment "이커머스 서비스의 고객"@ko .
+
+ecom:Product a owl:Class ;
+    rdfs:subClassOf schema:Product ;
+    rdfs:label "상품"@ko ;
+    rdfs:comment "판매되는 상품"@ko .
+
+ecom:Order a owl:Class ;
+    rdfs:label "주문"@ko ;
+    rdfs:comment "고객의 주문"@ko .
+
+ecom:OrderItem a owl:Class ;
+    rdfs:label "주문 항목"@ko ;
+    rdfs:comment "주문에 포함된 개별 상품 항목"@ko .
+
+ecom:Ticket a owl:Class ;
+    rdfs:label "지원 티켓"@ko ;
+    rdfs:comment "고객 지원 요청"@ko .
+
+ecom:Policy a owl:Class ;
+    rdfs:label "정책"@ko ;
+    rdfs:comment "서비스 정책 문서"@ko .
+
+# Category Hierarchy
+ecom:Category a owl:Class ;
+    rdfs:label "카테고리"@ko .
+
+ecom:Electronics a owl:Class ;
+    rdfs:subClassOf ecom:Category ;
+    rdfs:label "전자제품"@ko .
+
+ecom:MobilePhone a owl:Class ;
+    rdfs:subClassOf ecom:Electronics ;
+    rdfs:label "휴대폰"@ko .
+
+ecom:Laptop a owl:Class ;
+    rdfs:subClassOf ecom:Electronics ;
+    rdfs:label "노트북"@ko .
+
+ecom:Audio a owl:Class ;
+    rdfs:subClassOf ecom:Electronics ;
+    rdfs:label "오디오"@ko .
+
+ecom:Accessories a owl:Class ;
+    rdfs:subClassOf ecom:Electronics ;
+    rdfs:label "액세서리"@ko .
+
+ecom:General a owl:Class ;
+    rdfs:subClassOf ecom:Category ;
+    rdfs:label "일반"@ko .
+
+# =============================================================================
+# Company Entity (Phase 1 - Domain-Agnostic Ontology Engine)
+# =============================================================================
+
+ecom:Company a owl:Class ;
+    rdfs:subClassOf schema:Organization ;
+    rdfs:label "기업"@ko ;
+    rdfs:label "Company"@en ;
+    rdfs:comment "상품을 제조, 유통하는 기업 엔티티"@ko ;
+    rdfs:comment "A company entity that manufactures or distributes products"@en .
+
+# Business Relationship (reified relationship for metadata)
+ecom:BusinessRelationship a owl:Class ;
+    rdfs:label "비즈니스 관계"@ko ;
+    rdfs:label "Business Relationship"@en ;
+    rdfs:comment "기업 간 비즈니스 관계 (공급, 파트너, 경쟁 등)"@ko .
+
+ecom:SupplierRelationship a owl:Class ;
+    rdfs:subClassOf ecom:BusinessRelationship ;
+    rdfs:label "공급 관계"@ko .
+
+ecom:PartnerRelationship a owl:Class ;
+    rdfs:subClassOf ecom:BusinessRelationship ;
+    rdfs:label "파트너 관계"@ko .
+
+ecom:CompetitorRelationship a owl:Class ;
+    rdfs:subClassOf ecom:BusinessRelationship ;
+    rdfs:label "경쟁 관계"@ko .
+
+ecom:SubsidiaryRelationship a owl:Class ;
+    rdfs:subClassOf ecom:BusinessRelationship ;
+    rdfs:label "자회사 관계"@ko .
+
+# =============================================================================
+# Disjoint Classes
+# =============================================================================
+
+# Core entities are mutually exclusive
+[] a owl:AllDisjointClasses ;
+    owl:members ( ecom:Customer ecom:Product ecom:Order ecom:OrderItem ecom:Ticket ecom:Policy ecom:Category ecom:Company ecom:BusinessRelationship ) .
+
+# =============================================================================
+# Object Properties with Inverse Relations
+# =============================================================================
+
+# Customer -> Product (purchase relationship)
+ecom:purchased a owl:ObjectProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range ecom:Product ;
+    owl:inverseOf ecom:purchasedBy ;
+    rdfs:label "구매함"@ko ;
+    rdfs:comment "고객이 구매한 상품"@ko .
+
+ecom:purchasedBy a owl:ObjectProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range ecom:Customer ;
+    owl:inverseOf ecom:purchased ;
+    rdfs:label "구매됨"@ko ;
+    rdfs:comment "상품을 구매한 고객"@ko .
+
+# Customer -> Order (order relationship)
+ecom:placedOrder a owl:ObjectProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range ecom:Order ;
+    owl:inverseOf ecom:orderedBy ;
+    rdfs:label "주문함"@ko ;
+    rdfs:comment "고객이 주문한 주문"@ko .
+
+ecom:orderedBy a owl:ObjectProperty ;
+    rdfs:domain ecom:Order ;
+    rdfs:range ecom:Customer ;
+    owl:inverseOf ecom:placedOrder ;
+    a owl:FunctionalProperty ;  # Each order has exactly one customer
+    rdfs:label "주문자"@ko ;
+    rdfs:comment "주문을 한 고객"@ko .
+
+# Order -> OrderItem
+ecom:containsItem a owl:ObjectProperty ;
+    rdfs:domain ecom:Order ;
+    rdfs:range ecom:OrderItem ;
+    owl:inverseOf ecom:belongsToOrder ;
+    rdfs:label "항목 포함"@ko ;
+    rdfs:comment "주문에 포함된 항목"@ko .
+
+ecom:belongsToOrder a owl:ObjectProperty ;
+    rdfs:domain ecom:OrderItem ;
+    rdfs:range ecom:Order ;
+    owl:inverseOf ecom:containsItem ;
+    a owl:FunctionalProperty ;  # Each item belongs to exactly one order
+    rdfs:label "소속 주문"@ko ;
+    rdfs:comment "항목이 속한 주문"@ko .
+
+# OrderItem -> Product
+ecom:hasProduct a owl:ObjectProperty ;
+    rdfs:domain ecom:OrderItem ;
+    rdfs:range ecom:Product ;
+    owl:inverseOf ecom:isProductOf ;
+    a owl:FunctionalProperty ;  # Each item has exactly one product
+    rdfs:label "상품"@ko ;
+    rdfs:comment "주문 항목의 상품"@ko .
+
+ecom:isProductOf a owl:ObjectProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range ecom:OrderItem ;
+    owl:inverseOf ecom:hasProduct ;
+    rdfs:label "주문 항목에 포함됨"@ko ;
+    rdfs:comment "상품이 포함된 주문 항목들"@ko .
+
+# Product -> Product (similarity)
+ecom:similarTo a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range ecom:Product ;
+    rdfs:label "유사함"@ko ;
+    rdfs:comment "유사한 상품 관계 (대칭)"@ko .
+
+# Product -> Category
+ecom:inCategory a owl:ObjectProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range ecom:Category ;
+    owl:inverseOf ecom:hasProduct_category ;
+    rdfs:label "카테고리 소속"@ko ;
+    rdfs:comment "상품의 카테고리"@ko .
+
+ecom:hasProduct_category a owl:ObjectProperty ;
+    rdfs:domain ecom:Category ;
+    rdfs:range ecom:Product ;
+    owl:inverseOf ecom:inCategory ;
+    rdfs:label "카테고리 상품"@ko ;
+    rdfs:comment "카테고리에 속한 상품들"@ko .
+
+# Customer -> Ticket
+ecom:hasTicket a owl:ObjectProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range ecom:Ticket ;
+    owl:inverseOf ecom:ticketOf ;
+    rdfs:label "티켓 보유"@ko ;
+    rdfs:comment "고객의 지원 티켓"@ko .
+
+ecom:ticketOf a owl:ObjectProperty ;
+    rdfs:domain ecom:Ticket ;
+    rdfs:range ecom:Customer ;
+    owl:inverseOf ecom:hasTicket ;
+    a owl:FunctionalProperty ;  # Each ticket belongs to exactly one customer
+    rdfs:label "티켓 소유자"@ko ;
+    rdfs:comment "티켓을 생성한 고객"@ko .
+
+# Ticket -> Order
+ecom:relatedToOrder a owl:ObjectProperty ;
+    rdfs:domain ecom:Ticket ;
+    rdfs:range ecom:Order ;
+    owl:inverseOf ecom:hasRelatedTicket ;
+    rdfs:label "관련 주문"@ko ;
+    rdfs:comment "티켓과 관련된 주문"@ko .
+
+ecom:hasRelatedTicket a owl:ObjectProperty ;
+    rdfs:domain ecom:Order ;
+    rdfs:range ecom:Ticket ;
+    owl:inverseOf ecom:relatedToOrder ;
+    rdfs:label "관련 티켓"@ko ;
+    rdfs:comment "주문과 관련된 티켓들"@ko .
+
+# Policy -> Category
+ecom:appliesTo a owl:ObjectProperty ;
+    rdfs:domain ecom:Policy ;
+    rdfs:range ecom:Category ;
+    rdfs:label "적용 대상"@ko ;
+    rdfs:comment "정책이 적용되는 카테고리"@ko .
+
+# =============================================================================
+# Company-Product Relationships
+# =============================================================================
+
+# Company manufactures Product
+ecom:manufactures a owl:ObjectProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Product ;
+    owl:inverseOf ecom:manufacturedBy ;
+    rdfs:label "제조함"@ko ;
+    rdfs:label "manufactures"@en ;
+    rdfs:comment "기업이 제조하는 상품"@ko .
+
+ecom:manufacturedBy a owl:ObjectProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range ecom:Company ;
+    owl:inverseOf ecom:manufactures ;
+    a owl:FunctionalProperty ;  # Each product has one manufacturer
+    rdfs:label "제조자"@ko ;
+    rdfs:label "manufactured by"@en ;
+    rdfs:comment "상품을 제조한 기업"@ko .
+
+# Company distributes Product
+ecom:distributes a owl:ObjectProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Product ;
+    owl:inverseOf ecom:distributedBy ;
+    rdfs:label "유통함"@ko ;
+    rdfs:label "distributes"@en ;
+    rdfs:comment "기업이 유통하는 상품"@ko .
+
+ecom:distributedBy a owl:ObjectProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range ecom:Company ;
+    owl:inverseOf ecom:distributes ;
+    rdfs:label "유통자"@ko ;
+    rdfs:label "distributed by"@en ;
+    rdfs:comment "상품을 유통하는 기업들"@ko .
+
+# =============================================================================
+# Customer-Company Relationships
+# =============================================================================
+
+# Customer works at Company
+ecom:worksAt a owl:ObjectProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range ecom:Company ;
+    owl:inverseOf ecom:hasEmployee ;
+    rdfs:label "근무처"@ko ;
+    rdfs:label "works at"@en ;
+    rdfs:comment "고객이 근무하는 기업"@ko .
+
+ecom:hasEmployee a owl:ObjectProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Customer ;
+    owl:inverseOf ecom:worksAt ;
+    rdfs:label "직원"@ko ;
+    rdfs:label "has employee"@en ;
+    rdfs:comment "기업에서 근무하는 고객"@ko .
+
+# Customer purchased from Company (inferred from Order -> Product -> Company)
+ecom:purchasedFrom a owl:ObjectProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range ecom:Company ;
+    owl:inverseOf ecom:soldTo ;
+    rdfs:label "구매처"@ko ;
+    rdfs:label "purchased from"@en ;
+    rdfs:comment "고객이 상품을 구매한 기업"@ko .
+
+ecom:soldTo a owl:ObjectProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Customer ;
+    owl:inverseOf ecom:purchasedFrom ;
+    rdfs:label "판매고객"@ko ;
+    rdfs:label "sold to"@en ;
+    rdfs:comment "기업이 상품을 판매한 고객"@ko .
+
+# Customer subscribes to Company (for B2B/SaaS relationships)
+ecom:subscribedTo a owl:ObjectProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range ecom:Company ;
+    owl:inverseOf ecom:hasSubscriber ;
+    rdfs:label "구독중"@ko ;
+    rdfs:label "subscribed to"@en ;
+    rdfs:comment "고객이 구독 중인 기업 서비스"@ko .
+
+ecom:hasSubscriber a owl:ObjectProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Customer ;
+    owl:inverseOf ecom:subscribedTo ;
+    rdfs:label "구독자"@ko ;
+    rdfs:label "has subscriber"@en ;
+    rdfs:comment "기업 서비스를 구독하는 고객"@ko .
+
+# =============================================================================
+# Company-Company Relationships
+# =============================================================================
+
+# Supplier relationship
+ecom:supplierOf a owl:ObjectProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Company ;
+    owl:inverseOf ecom:hasSupplier ;
+    rdfs:label "공급자"@ko ;
+    rdfs:label "supplier of"@en ;
+    rdfs:comment "기업에 물품/서비스를 공급하는 관계"@ko .
+
+ecom:hasSupplier a owl:ObjectProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Company ;
+    owl:inverseOf ecom:supplierOf ;
+    rdfs:label "공급받음"@ko ;
+    rdfs:label "has supplier"@en ;
+    rdfs:comment "물품/서비스를 공급받는 관계"@ko .
+
+# Partner relationship (symmetric)
+ecom:partnerWith a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Company ;
+    rdfs:label "파트너"@ko ;
+    rdfs:label "partner with"@en ;
+    rdfs:comment "비즈니스 파트너 관계 (대칭)"@ko .
+
+# Competitor relationship (symmetric)
+ecom:competitorOf a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Company ;
+    rdfs:label "경쟁사"@ko ;
+    rdfs:label "competitor of"@en ;
+    rdfs:comment "경쟁 관계 (대칭)"@ko .
+
+# Subsidiary relationship
+ecom:subsidiaryOf a owl:ObjectProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Company ;
+    owl:inverseOf ecom:hasSubsidiary ;
+    a owl:TransitiveProperty ;  # If A is subsidiary of B, and B of C, then A of C
+    rdfs:label "자회사"@ko ;
+    rdfs:label "subsidiary of"@en ;
+    rdfs:comment "모회사-자회사 관계"@ko .
+
+ecom:hasSubsidiary a owl:ObjectProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range ecom:Company ;
+    owl:inverseOf ecom:subsidiaryOf ;
+    rdfs:label "자회사 보유"@ko ;
+    rdfs:label "has subsidiary"@en ;
+    rdfs:comment "자회사를 보유하는 관계"@ko .
+
+# =============================================================================
+# Datatype Properties - Functional (Unique Identifiers)
+# =============================================================================
+
+ecom:customerId a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:label "고객 ID"@ko ;
+    rdfs:comment "고객의 고유 식별자 (user_XXX 형식)"@ko .
+
+ecom:productId a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range xsd:string ;
+    rdfs:label "상품 ID"@ko ;
+    rdfs:comment "상품의 고유 식별자"@ko .
+
+ecom:orderId a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Order ;
+    rdfs:range xsd:string ;
+    rdfs:label "주문 ID"@ko ;
+    rdfs:comment "주문의 고유 식별자 (ORD_XXXXXXXX_XXXX 형식)"@ko .
+
+ecom:ticketId a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Ticket ;
+    rdfs:range xsd:string ;
+    rdfs:label "티켓 ID"@ko ;
+    rdfs:comment "티켓의 고유 식별자 (TICKET_XXXXXXXXXX 형식)"@ko .
+
+# =============================================================================
+# Datatype Properties - Other
+# =============================================================================
+
+ecom:name a owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "이름"@ko .
+
+ecom:email a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:label "이메일"@ko ;
+    rdfs:comment "고객 이메일 (고유)"@ko .
+
+ecom:phone a owl:DatatypeProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:label "전화번호"@ko .
+
+ecom:address a owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "주소"@ko .
+
+ecom:membershipLevel a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Customer ;
+    rdfs:range xsd:string ;
+    rdfs:label "회원 등급"@ko ;
+    rdfs:comment "bronze, silver, gold, platinum 중 하나"@ko .
+
+ecom:title a owl:DatatypeProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range xsd:string ;
+    rdfs:label "상품명"@ko .
+
+ecom:brand a owl:DatatypeProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range xsd:string ;
+    rdfs:label "브랜드"@ko .
+
+ecom:price a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "가격"@ko ;
+    rdfs:comment "상품 가격 (0 이상)"@ko .
+
+ecom:averageRating a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "평점"@ko ;
+    rdfs:comment "상품 평균 평점 (0-5)"@ko .
+
+ecom:ratingNumber a owl:DatatypeProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range xsd:integer ;
+    rdfs:label "리뷰 수"@ko .
+
+ecom:stockStatus a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Product ;
+    rdfs:range xsd:string ;
+    rdfs:label "재고 상태"@ko ;
+    rdfs:comment "in_stock, out_of_stock, limited 중 하나"@ko .
+
+ecom:status a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "상태"@ko .
+
+ecom:orderDate a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Order ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "주문일"@ko .
+
+ecom:deliveryDate a owl:DatatypeProperty ;
+    rdfs:domain ecom:Order ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "배송일"@ko .
+
+ecom:totalAmount a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Order ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "총액"@ko .
+
+ecom:shippingAddress a owl:DatatypeProperty ;
+    rdfs:domain ecom:Order ;
+    rdfs:range xsd:string ;
+    rdfs:label "배송 주소"@ko .
+
+ecom:quantity a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:OrderItem ;
+    rdfs:range xsd:integer ;
+    rdfs:label "수량"@ko ;
+    rdfs:comment "주문 수량 (1 이상)"@ko .
+
+ecom:unitPrice a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:OrderItem ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "단가"@ko .
+
+ecom:issueType a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Ticket ;
+    rdfs:range xsd:string ;
+    rdfs:label "문제 유형"@ko ;
+    rdfs:comment "shipping, refund, exchange, product_inquiry, order_inquiry, complaint, other 중 하나"@ko .
+
+ecom:description a owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "설명"@ko .
+
+ecom:priority a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Ticket ;
+    rdfs:range xsd:string ;
+    rdfs:label "우선순위"@ko ;
+    rdfs:comment "low, normal, high, urgent 중 하나"@ko .
+
+ecom:createdAt a owl:DatatypeProperty ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "생성일"@ko .
+
+ecom:resolvedAt a owl:DatatypeProperty ;
+    rdfs:domain ecom:Ticket ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "해결일"@ko .
+
+# =============================================================================
+# Company Datatype Properties
+# =============================================================================
+
+ecom:companyId a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:string ;
+    rdfs:label "기업 ID"@ko ;
+    rdfs:label "company ID"@en ;
+    rdfs:comment "기업의 고유 식별자 (COM_XXX 형식)"@ko .
+
+ecom:companyName a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:string ;
+    rdfs:label "기업명"@ko ;
+    rdfs:label "company name"@en ;
+    rdfs:comment "기업의 공식 명칭"@ko .
+
+ecom:industry a owl:DatatypeProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:string ;
+    rdfs:label "산업"@ko ;
+    rdfs:label "industry"@en ;
+    rdfs:comment "기업이 속한 산업 분야"@ko .
+
+ecom:companySize a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:string ;
+    rdfs:label "기업 규모"@ko ;
+    rdfs:label "company size"@en ;
+    rdfs:comment "startup, small, medium, large, enterprise 중 하나"@ko .
+
+ecom:foundedYear a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:integer ;
+    rdfs:label "설립연도"@ko ;
+    rdfs:label "founded year"@en ;
+    rdfs:comment "기업 설립 연도"@ko .
+
+ecom:headquarters a owl:DatatypeProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:string ;
+    rdfs:label "본사 위치"@ko ;
+    rdfs:label "headquarters"@en ;
+    rdfs:comment "기업 본사 소재지"@ko .
+
+ecom:employeeCount a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:integer ;
+    rdfs:label "직원 수"@ko ;
+    rdfs:label "employee count"@en ;
+    rdfs:comment "기업의 전체 직원 수"@ko .
+
+ecom:annualRevenue a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "연간 매출"@ko ;
+    rdfs:label "annual revenue"@en ;
+    rdfs:comment "연간 매출액 (억원 단위)"@ko .
+
+ecom:website a owl:DatatypeProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "웹사이트"@ko ;
+    rdfs:label "website"@en ;
+    rdfs:comment "기업 공식 웹사이트 URL"@ko .
+
+ecom:stockTicker a owl:DatatypeProperty ;
+    rdfs:domain ecom:Company ;
+    rdfs:range xsd:string ;
+    rdfs:label "주식 코드"@ko ;
+    rdfs:label "stock ticker"@en ;
+    rdfs:comment "상장 기업의 주식 티커 (예: AAPL, 005930)"@ko .
+
+# BusinessRelationship properties (for reified relationships)
+ecom:relationshipType a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:BusinessRelationship ;
+    rdfs:range xsd:string ;
+    rdfs:label "관계 유형"@ko ;
+    rdfs:comment "supplier, partner, competitor, subsidiary 중 하나"@ko .
+
+ecom:relationshipStartDate a owl:DatatypeProperty ;
+    rdfs:domain ecom:BusinessRelationship ;
+    rdfs:range xsd:date ;
+    rdfs:label "관계 시작일"@ko ;
+    rdfs:comment "비즈니스 관계 시작 날짜"@ko .
+
+ecom:relationshipEndDate a owl:DatatypeProperty ;
+    rdfs:domain ecom:BusinessRelationship ;
+    rdfs:range xsd:date ;
+    rdfs:label "관계 종료일"@ko ;
+    rdfs:comment "비즈니스 관계 종료 날짜 (null이면 현재 진행 중)"@ko .
+
+ecom:relationshipStrength a owl:DatatypeProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:BusinessRelationship ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "관계 강도"@ko ;
+    rdfs:comment "관계의 강도 (0.0 ~ 1.0)"@ko .
+
+# =============================================================================
+# Cardinality Restrictions (OWL 2)
+# =============================================================================
+
+# Order must have at least one OrderItem
+ecom:Order rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:containsItem ;
+    owl:minCardinality 1
+] .
+
+# OrderItem must have exactly one Product
+ecom:OrderItem rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:hasProduct ;
+    owl:cardinality 1
+] .
+
+# OrderItem must belong to exactly one Order
+ecom:OrderItem rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:belongsToOrder ;
+    owl:cardinality 1
+] .
+
+# Order must have exactly one Customer (via orderedBy)
+ecom:Order rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:orderedBy ;
+    owl:cardinality 1
+] .
+
+# Ticket must have exactly one Customer (via ticketOf)
+ecom:Ticket rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:ticketOf ;
+    owl:cardinality 1
+] .
+
+# =============================================================================
+# Company Cardinality Restrictions
+# =============================================================================
+
+# Company must have exactly one companyId
+ecom:Company rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:companyId ;
+    owl:cardinality 1
+] .
+
+# Company must have exactly one companyName
+ecom:Company rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:companyName ;
+    owl:cardinality 1
+] .
+
+# Company must have exactly one companySize
+ecom:Company rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:companySize ;
+    owl:cardinality 1
+] .
+
+# BusinessRelationship connects exactly two companies
+ecom:BusinessRelationship rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:hasSourceCompany ;
+    owl:cardinality 1
+] .
+
+ecom:BusinessRelationship rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty ecom:hasTargetCompany ;
+    owl:cardinality 1
+] .
+
+# Object properties for reified relationships
+ecom:hasSourceCompany a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:BusinessRelationship ;
+    rdfs:range ecom:Company ;
+    rdfs:label "관계 시작 기업"@ko ;
+    rdfs:comment "비즈니스 관계의 시작점이 되는 기업"@ko .
+
+ecom:hasTargetCompany a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain ecom:BusinessRelationship ;
+    rdfs:range ecom:Company ;
+    rdfs:label "관계 대상 기업"@ko ;
+    rdfs:comment "비즈니스 관계의 대상이 되는 기업"@ko .

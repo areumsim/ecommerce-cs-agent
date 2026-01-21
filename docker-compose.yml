@@ -80,6 +80,24 @@ services:
     depends_on:
       - prometheus
 
+  # ==============================================
+  # Apache Jena Fuseki (SPARQL 서버)
+  # ==============================================
+  fuseki:
+    image: stain/jena-fuseki:4.10.0
+    container_name: ar-agent-fuseki
+    ports:
+      - "3030:3030"
+    environment:
+      - ADMIN_PASSWORD=${FUSEKI_ADMIN_PASSWORD:-admin123}
+      - JVM_ARGS=-Xmx2g
+    volumes:
+      - fuseki-data:/fuseki
+      - ./ontology:/staging:ro
+    restart: unless-stopped
+    networks:
+      - ar-agent-network
+
 networks:
   ar-agent-network:
     driver: bridge
@@ -87,3 +105,4 @@ networks:
 volumes:
   prometheus-data:
   grafana-data:
+  fuseki-data:

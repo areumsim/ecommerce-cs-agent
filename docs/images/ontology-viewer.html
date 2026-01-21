@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce 온톨로지 다이어그램</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Malgun Gothic', sans-serif; background: #1a1a2e; }
+        h1 { color: #eee; text-align: center; padding: 20px; }
+        #network { width: 100%; height: calc(100vh - 80px); }
+        .legend {
+            position: fixed; bottom: 20px; right: 20px;
+            background: rgba(255,255,255,0.9); padding: 15px;
+            border-radius: 8px; font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>E-Commerce 온톨로지 구조</h1>
+    <div id="network"></div>
+    <div class="legend">
+        <strong>범례</strong><br>
+        노드: 클래스 (엔티티)<br>
+        엣지: Object Property (관계)<br>
+        양방향 화살표: 대칭 관계
+    </div>
+    <script>
+        const nodes = new vis.DataSet([
+  {
+    "id": "Customer",
+    "label": "고객",
+    "title": "Customer"
+  },
+  {
+    "id": "Product",
+    "label": "상품",
+    "title": "Product"
+  },
+  {
+    "id": "Order",
+    "label": "주문",
+    "title": "Order"
+  },
+  {
+    "id": "OrderItem",
+    "label": "주문 항목",
+    "title": "OrderItem"
+  },
+  {
+    "id": "Ticket",
+    "label": "지원 티켓",
+    "title": "Ticket"
+  },
+  {
+    "id": "Policy",
+    "label": "정책",
+    "title": "Policy"
+  },
+  {
+    "id": "MobilePhone",
+    "label": "휴대폰",
+    "title": "MobilePhone"
+  },
+  {
+    "id": "Laptop",
+    "label": "노트북",
+    "title": "Laptop"
+  },
+  {
+    "id": "Audio",
+    "label": "오디오",
+    "title": "Audio"
+  },
+  {
+    "id": "Accessories",
+    "label": "액세서리",
+    "title": "Accessories"
+  }
+]);
+        const edges = new vis.DataSet([
+  {
+    "from": "Customer",
+    "to": "Product",
+    "label": "구매함",
+    "arrows": "to"
+  },
+  {
+    "from": "Customer",
+    "to": "Order",
+    "label": "주문함",
+    "arrows": "to"
+  },
+  {
+    "from": "Order",
+    "to": "OrderItem",
+    "label": "항목 포함",
+    "arrows": "to"
+  },
+  {
+    "from": "OrderItem",
+    "to": "Product",
+    "label": "상품",
+    "arrows": "to"
+  },
+  {
+    "from": "Product",
+    "to": "Product",
+    "label": "유사함",
+    "arrows": "to, from"
+  },
+  {
+    "from": "Customer",
+    "to": "Ticket",
+    "label": "티켓 보유",
+    "arrows": "to"
+  },
+  {
+    "from": "Ticket",
+    "to": "Order",
+    "label": "관련 주문",
+    "arrows": "to"
+  }
+]);
+
+        const container = document.getElementById('network');
+        const data = { nodes: nodes, edges: edges };
+        const options = {
+            nodes: {
+                shape: 'box',
+                color: {
+                    background: '#4a69bd',
+                    border: '#1e3799',
+                    highlight: { background: '#6a89cc', border: '#1e3799' }
+                },
+                font: { color: '#fff', size: 14 },
+                margin: 10
+            },
+            edges: {
+                color: '#78e08f',
+                font: { size: 11, color: '#aaa', align: 'middle' },
+                smooth: { type: 'curvedCW', roundness: 0.2 }
+            },
+            physics: {
+                enabled: true,
+                solver: 'forceAtlas2Based',
+                forceAtlas2Based: {
+                    gravitationalConstant: -50,
+                    centralGravity: 0.01,
+                    springLength: 150,
+                    springConstant: 0.08
+                }
+            },
+            interaction: {
+                hover: true,
+                navigationButtons: true,
+                keyboard: true
+            }
+        };
+
+        const network = new vis.Network(container, data, options);
+    </script>
+</body>
+</html>

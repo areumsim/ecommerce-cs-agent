@@ -1,0 +1,97 @@
+# 추천 시스템 설정
+
+recommendation:
+  # 알고리즘 설정
+  algorithms:
+    # 협업 필터링
+    collaborative:
+      enabled: true
+      min_common_items: 2  # 유사 사용자 판단을 위한 최소 공통 구매 수
+      max_similar_users: 50  # 고려할 최대 유사 사용자 수
+      decay_factor: 0.9  # 시간 감쇠 계수 (최근 구매 우선)
+      
+    # 콘텐츠 기반 필터링
+    content_based:
+      enabled: true
+      min_attribute_match: 1  # 유사 상품 판단을 위한 최소 속성 일치 수
+      category_weight: 0.4  # 카테고리 일치 가중치
+      brand_weight: 0.2  # 브랜드 일치 가중치
+      price_range_weight: 0.2  # 가격대 일치 가중치
+      rating_weight: 0.2  # 평점 유사도 가중치
+      
+    # 하이브리드 추천
+    hybrid:
+      enabled: true
+      collab_weight: 0.6  # 협업 필터링 가중치
+      content_weight: 0.4  # 콘텐츠 기반 가중치
+      
+    # 인기도 기반
+    popularity:
+      enabled: true
+      periods:
+        day: 1
+        week: 7
+        month: 30
+      metrics:
+        - purchase_count
+        - review_count
+        - avg_rating
+
+  # 캐싱 설정
+  cache:
+    enabled: true
+    ttl_seconds: 3600  # 1시간
+    max_entries: 10000
+    
+  # 배치 처리 설정
+  batch:
+    # 유사도 관계 업데이트 주기 (cron 표현식)
+    similarity_update_schedule: "0 2 * * *"  # 매일 02:00
+    batch_size: 10000
+    
+  # 기본값
+  defaults:
+    top_k: 10
+    max_top_k: 50
+    exclude_purchased: true
+    min_rating: 3.0  # 추천 대상 최소 평점
+    
+  # 추천 이유 생성
+  explanation:
+    enabled: true
+    templates:
+      collaborative: "이 상품을 구매한 고객님들이 함께 구매한 상품입니다"
+      content_based: "고객님이 보신 상품과 유사한 상품입니다"
+      category: "같은 카테고리의 인기 상품입니다"
+      trending: "지금 가장 인기 있는 상품입니다"
+      bought_together: "함께 구매하면 좋은 상품입니다"
+
+# 의도 분류 설정 (기존 intents.yaml과 연동)
+intents:
+  recommend_similar:
+    keywords:
+      - "비슷한"
+      - "유사한"
+      - "이런 거"
+      - "이거랑"
+      - "같은 종류"
+  recommend_personal:
+    keywords:
+      - "추천"
+      - "뭐 살까"
+      - "뭐가 좋을까"
+      - "추천해"
+      - "골라줘"
+  recommend_popular:
+    keywords:
+      - "인기"
+      - "베스트"
+      - "많이 팔리는"
+      - "트렌드"
+      - "요즘"
+  recommend_together:
+    keywords:
+      - "함께"
+      - "같이"
+      - "세트"
+      - "조합"

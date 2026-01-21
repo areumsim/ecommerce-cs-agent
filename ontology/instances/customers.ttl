@@ -1,0 +1,903 @@
+@prefix ecom: <http://example.org/ecommerce#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+ecom:customer_user_001 a ecom:Customer ;
+    ecom:customerId "user_001" ;
+    ecom:name "이민준" ;
+    ecom:email "user_001@daum.net" ;
+    ecom:phone "010-5012-4657" ;
+    ecom:address "인천 남동구 18동 457호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2024-12-31T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_002 a ecom:Customer ;
+    ecom:customerId "user_002" ;
+    ecom:name "김도윤" ;
+    ecom:email "user_002@naver.com" ;
+    ecom:phone "010-4811-9279" ;
+    ecom:address "서울 마포구 18동 1819호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-11-07T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_003 a ecom:Customer ;
+    ecom:customerId "user_003" ;
+    ecom:name "임지후" ;
+    ecom:email "user_003@gmail.com" ;
+    ecom:phone "010-3615-7924" ;
+    ecom:address "광주 서구 5동 982호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-04-08T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_004 a ecom:Customer ;
+    ecom:customerId "user_004" ;
+    ecom:name "이지우" ;
+    ecom:email "user_004@gmail.com" ;
+    ecom:phone "010-6881-6635" ;
+    ecom:address "대전 유성구 15동 2297호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-10-02T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_005 a ecom:Customer ;
+    ecom:customerId "user_005" ;
+    ecom:name "이지유" ;
+    ecom:email "user_005@daum.net" ;
+    ecom:phone "010-6925-4150" ;
+    ecom:address "부산 해운대구 8동 1286호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-05-14T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_006 a ecom:Customer ;
+    ecom:customerId "user_006" ;
+    ecom:name "권예준" ;
+    ecom:email "user_006@kakao.com" ;
+    ecom:phone "010-5554-8428" ;
+    ecom:address "광주 광산구 12동 1556호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-07-27T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_007 a ecom:Customer ;
+    ecom:customerId "user_007" ;
+    ecom:name "신영민" ;
+    ecom:email "user_007@gmail.com" ;
+    ecom:phone "010-3803-9751" ;
+    ecom:address "대구 달서구 15동 1655호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-07-10T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_008 a ecom:Customer ;
+    ecom:customerId "user_008" ;
+    ecom:name "신지유" ;
+    ecom:email "user_008@naver.com" ;
+    ecom:phone "010-6313-1916" ;
+    ecom:address "대구 수성구 11동 1744호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2024-12-31T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_009 a ecom:Customer ;
+    ecom:customerId "user_009" ;
+    ecom:name "최영민" ;
+    ecom:email "user_009@hanmail.net" ;
+    ecom:phone "010-6155-4483" ;
+    ecom:address "세종 새롬동 15동 686호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-10-21T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_010 a ecom:Customer ;
+    ecom:customerId "user_010" ;
+    ecom:name "최현우" ;
+    ecom:email "user_010@hanmail.net" ;
+    ecom:phone "010-9830-5304" ;
+    ecom:address "울산 동구 13동 1583호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-09-13T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_011 a ecom:Customer ;
+    ecom:customerId "user_011" ;
+    ecom:name "장하윤" ;
+    ecom:email "user_011@gmail.com" ;
+    ecom:phone "010-1771-2796" ;
+    ecom:address "인천 연수구 14동 2543호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-09-14T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_012 a ecom:Customer ;
+    ecom:customerId "user_012" ;
+    ecom:name "조채원" ;
+    ecom:email "user_012@kakao.com" ;
+    ecom:phone "010-9669-5119" ;
+    ecom:address "서울 서초구 18동 1193호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-05-10T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_013 a ecom:Customer ;
+    ecom:customerId "user_013" ;
+    ecom:name "정서현" ;
+    ecom:email "user_013@naver.com" ;
+    ecom:phone "010-8433-1053" ;
+    ecom:address "대전 중구 6동 2180호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-09-27T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_014 a ecom:Customer ;
+    ecom:customerId "user_014" ;
+    ecom:name "정승현" ;
+    ecom:email "user_014@hanmail.net" ;
+    ecom:phone "010-4258-3504" ;
+    ecom:address "광주 광산구 18동 2273호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-01-07T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_015 a ecom:Customer ;
+    ecom:customerId "user_015" ;
+    ecom:name "강하윤" ;
+    ecom:email "user_015@gmail.com" ;
+    ecom:phone "010-2832-6947" ;
+    ecom:address "대전 유성구 2동 1087호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-01-21T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_016 a ecom:Customer ;
+    ecom:customerId "user_016" ;
+    ecom:name "신하윤" ;
+    ecom:email "user_016@gmail.com" ;
+    ecom:phone "010-9727-3060" ;
+    ecom:address "인천 계양구 18동 777호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-10-11T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_017 a ecom:Customer ;
+    ecom:customerId "user_017" ;
+    ecom:name "권채원" ;
+    ecom:email "user_017@kakao.com" ;
+    ecom:phone "010-4470-9835" ;
+    ecom:address "대구 북구 13동 1630호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-02-26T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_018 a ecom:Customer ;
+    ecom:customerId "user_018" ;
+    ecom:name "윤예준" ;
+    ecom:email "user_018@naver.com" ;
+    ecom:phone "010-4681-2049" ;
+    ecom:address "광주 광산구 19동 2369호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-03-04T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_019 a ecom:Customer ;
+    ecom:customerId "user_019" ;
+    ecom:name "최민준" ;
+    ecom:email "user_019@gmail.com" ;
+    ecom:phone "010-1964-4750" ;
+    ecom:address "부산 해운대구 11동 391호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-01-26T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_020 a ecom:Customer ;
+    ecom:customerId "user_020" ;
+    ecom:name "한하윤" ;
+    ecom:email "user_020@naver.com" ;
+    ecom:phone "010-9834-3167" ;
+    ecom:address "세종 아름동 16동 1768호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-07-04T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_021 a ecom:Customer ;
+    ecom:customerId "user_021" ;
+    ecom:name "이수빈" ;
+    ecom:email "user_021@kakao.com" ;
+    ecom:phone "010-6804-7939" ;
+    ecom:address "울산 중구 2동 504호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-10-06T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_022 a ecom:Customer ;
+    ecom:customerId "user_022" ;
+    ecom:name "신서연" ;
+    ecom:email "user_022@gmail.com" ;
+    ecom:phone "010-5073-4139" ;
+    ecom:address "대구 중구 5동 1829호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-05-01T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_023 a ecom:Customer ;
+    ecom:customerId "user_023" ;
+    ecom:name "윤주원" ;
+    ecom:email "user_023@gmail.com" ;
+    ecom:phone "010-8260-2604" ;
+    ecom:address "서울 강남구 3동 1069호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-07-04T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_024 a ecom:Customer ;
+    ecom:customerId "user_024" ;
+    ecom:name "윤하윤" ;
+    ecom:email "user_024@naver.com" ;
+    ecom:phone "010-7570-1960" ;
+    ecom:address "인천 계양구 1동 1700호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-04-29T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_025 a ecom:Customer ;
+    ecom:customerId "user_025" ;
+    ecom:name "정서현" ;
+    ecom:email "user_025@hanmail.net" ;
+    ecom:phone "010-8973-3536" ;
+    ecom:address "대구 북구 7동 340호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-04-05T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_026 a ecom:Customer ;
+    ecom:customerId "user_026" ;
+    ecom:name "김서준" ;
+    ecom:email "user_026@hanmail.net" ;
+    ecom:phone "010-8811-9238" ;
+    ecom:address "인천 남동구 17동 429호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-06-16T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_027 a ecom:Customer ;
+    ecom:customerId "user_027" ;
+    ecom:name "임도윤" ;
+    ecom:email "user_027@naver.com" ;
+    ecom:phone "010-7615-2964" ;
+    ecom:address "대구 수성구 20동 436호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-10-19T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_028 a ecom:Customer ;
+    ecom:customerId "user_028" ;
+    ecom:name "임민서" ;
+    ecom:email "user_028@daum.net" ;
+    ecom:phone "010-5272-4346" ;
+    ecom:address "광주 광산구 9동 1722호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-01-29T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_029 a ecom:Customer ;
+    ecom:customerId "user_029" ;
+    ecom:name "정하은" ;
+    ecom:email "user_029@daum.net" ;
+    ecom:phone "010-2188-1152" ;
+    ecom:address "세종 한솔동 19동 510호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2024-12-28T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_030 a ecom:Customer ;
+    ecom:customerId "user_030" ;
+    ecom:name "최민서" ;
+    ecom:email "user_030@daum.net" ;
+    ecom:phone "010-3170-6718" ;
+    ecom:address "부산 수영구 12동 1268호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-02-21T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_031 a ecom:Customer ;
+    ecom:customerId "user_031" ;
+    ecom:name "권지유" ;
+    ecom:email "user_031@daum.net" ;
+    ecom:phone "010-9666-1128" ;
+    ecom:address "대전 중구 4동 651호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-04-13T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_032 a ecom:Customer ;
+    ecom:customerId "user_032" ;
+    ecom:name "황예준" ;
+    ecom:email "user_032@hanmail.net" ;
+    ecom:phone "010-3546-5462" ;
+    ecom:address "대전 중구 7동 1505호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-09-25T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_033 a ecom:Customer ;
+    ecom:customerId "user_033" ;
+    ecom:name "권지후" ;
+    ecom:email "user_033@hanmail.net" ;
+    ecom:phone "010-9004-5114" ;
+    ecom:address "서울 서초구 14동 1234호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-01-03T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_034 a ecom:Customer ;
+    ecom:customerId "user_034" ;
+    ecom:name "강성민" ;
+    ecom:email "user_034@naver.com" ;
+    ecom:phone "010-5291-3647" ;
+    ecom:address "세종 한솔동 14동 2398호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-11-22T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_035 a ecom:Customer ;
+    ecom:customerId "user_035" ;
+    ecom:name "이태현" ;
+    ecom:email "user_035@naver.com" ;
+    ecom:phone "010-9938-1590" ;
+    ecom:address "광주 북구 18동 707호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-09-27T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_036 a ecom:Customer ;
+    ecom:customerId "user_036" ;
+    ecom:name "김준서" ;
+    ecom:email "user_036@daum.net" ;
+    ecom:phone "010-1653-6862" ;
+    ecom:address "대구 달서구 4동 1549호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-09-19T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_037 a ecom:Customer ;
+    ecom:customerId "user_037" ;
+    ecom:name "신시우" ;
+    ecom:email "user_037@naver.com" ;
+    ecom:phone "010-3662-3900" ;
+    ecom:address "울산 남구 6동 1461호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-01-10T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_038 a ecom:Customer ;
+    ecom:customerId "user_038" ;
+    ecom:name "정하준" ;
+    ecom:email "user_038@gmail.com" ;
+    ecom:phone "010-7267-1634" ;
+    ecom:address "세종 아름동 7동 1986호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-07-19T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_039 a ecom:Customer ;
+    ecom:customerId "user_039" ;
+    ecom:name "권재현" ;
+    ecom:email "user_039@naver.com" ;
+    ecom:phone "010-4652-1387" ;
+    ecom:address "대구 중구 11동 1242호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-06-20T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_040 a ecom:Customer ;
+    ecom:customerId "user_040" ;
+    ecom:name "강지민" ;
+    ecom:email "user_040@hanmail.net" ;
+    ecom:phone "010-7548-9785" ;
+    ecom:address "광주 광산구 4동 1170호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-07-04T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_041 a ecom:Customer ;
+    ecom:customerId "user_041" ;
+    ecom:name "정서준" ;
+    ecom:email "user_041@gmail.com" ;
+    ecom:phone "010-8119-6663" ;
+    ecom:address "광주 서구 20동 2195호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-01-30T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_042 a ecom:Customer ;
+    ecom:customerId "user_042" ;
+    ecom:name "황윤서" ;
+    ecom:email "user_042@naver.com" ;
+    ecom:phone "010-5173-1727" ;
+    ecom:address "울산 남구 17동 2306호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-05-10T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_043 a ecom:Customer ;
+    ecom:customerId "user_043" ;
+    ecom:name "조도윤" ;
+    ecom:email "user_043@daum.net" ;
+    ecom:phone "010-6143-3041" ;
+    ecom:address "대전 중구 10동 1773호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-05-21T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_044 a ecom:Customer ;
+    ecom:customerId "user_044" ;
+    ecom:name "신준서" ;
+    ecom:email "user_044@hanmail.net" ;
+    ecom:phone "010-3085-4143" ;
+    ecom:address "울산 동구 13동 813호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-05-01T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_045 a ecom:Customer ;
+    ecom:customerId "user_045" ;
+    ecom:name "장승현" ;
+    ecom:email "user_045@gmail.com" ;
+    ecom:phone "010-5978-5700" ;
+    ecom:address "대구 중구 19동 2585호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-04-30T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_046 a ecom:Customer ;
+    ecom:customerId "user_046" ;
+    ecom:name "윤하은" ;
+    ecom:email "user_046@naver.com" ;
+    ecom:phone "010-9375-8752" ;
+    ecom:address "인천 남동구 10동 2212호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-03-30T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_047 a ecom:Customer ;
+    ecom:customerId "user_047" ;
+    ecom:name "권성민" ;
+    ecom:email "user_047@naver.com" ;
+    ecom:phone "010-6085-4680" ;
+    ecom:address "대구 달서구 1동 290호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-10-07T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_048 a ecom:Customer ;
+    ecom:customerId "user_048" ;
+    ecom:name "임정훈" ;
+    ecom:email "user_048@gmail.com" ;
+    ecom:phone "010-8461-7790" ;
+    ecom:address "대구 중구 16동 1737호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-03-25T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_049 a ecom:Customer ;
+    ecom:customerId "user_049" ;
+    ecom:name "한영호" ;
+    ecom:email "user_049@gmail.com" ;
+    ecom:phone "010-2746-7965" ;
+    ecom:address "대구 달서구 17동 2003호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-09-09T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_050 a ecom:Customer ;
+    ecom:customerId "user_050" ;
+    ecom:name "최영민" ;
+    ecom:email "user_050@gmail.com" ;
+    ecom:phone "010-8478-3184" ;
+    ecom:address "세종 한솔동 17동 2390호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-02-11T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_051 a ecom:Customer ;
+    ecom:customerId "user_051" ;
+    ecom:name "임승현" ;
+    ecom:email "user_051@hanmail.net" ;
+    ecom:phone "010-7991-9976" ;
+    ecom:address "세종 아름동 16동 1944호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-04-11T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_052 a ecom:Customer ;
+    ecom:customerId "user_052" ;
+    ecom:name "권지민" ;
+    ecom:email "user_052@daum.net" ;
+    ecom:phone "010-9540-8939" ;
+    ecom:address "대구 북구 15동 418호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-07-20T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_053 a ecom:Customer ;
+    ecom:customerId "user_053" ;
+    ecom:name "정서연" ;
+    ecom:email "user_053@daum.net" ;
+    ecom:phone "010-9849-2320" ;
+    ecom:address "인천 연수구 8동 1669호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-07-26T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_054 a ecom:Customer ;
+    ecom:customerId "user_054" ;
+    ecom:name "이서현" ;
+    ecom:email "user_054@kakao.com" ;
+    ecom:phone "010-6421-9890" ;
+    ecom:address "세종 새롬동 2동 948호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-08-06T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_055 a ecom:Customer ;
+    ecom:customerId "user_055" ;
+    ecom:name "황성민" ;
+    ecom:email "user_055@hanmail.net" ;
+    ecom:phone "010-1320-7232" ;
+    ecom:address "세종 아름동 12동 1324호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-05-08T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_056 a ecom:Customer ;
+    ecom:customerId "user_056" ;
+    ecom:name "장현우" ;
+    ecom:email "user_056@hanmail.net" ;
+    ecom:phone "010-4613-8999" ;
+    ecom:address "대구 북구 14동 2090호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-04-23T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_057 a ecom:Customer ;
+    ecom:customerId "user_057" ;
+    ecom:name "강수빈" ;
+    ecom:email "user_057@kakao.com" ;
+    ecom:phone "010-3704-8657" ;
+    ecom:address "인천 남동구 13동 2525호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-05-08T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_058 a ecom:Customer ;
+    ecom:customerId "user_058" ;
+    ecom:name "한서현" ;
+    ecom:email "user_058@naver.com" ;
+    ecom:phone "010-8564-3977" ;
+    ecom:address "서울 용산구 13동 1441호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-10-12T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_059 a ecom:Customer ;
+    ecom:customerId "user_059" ;
+    ecom:name "강서연" ;
+    ecom:email "user_059@kakao.com" ;
+    ecom:phone "010-5558-7906" ;
+    ecom:address "대전 유성구 16동 180호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-04-05T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_060 a ecom:Customer ;
+    ecom:customerId "user_060" ;
+    ecom:name "최지민" ;
+    ecom:email "user_060@gmail.com" ;
+    ecom:phone "010-1659-1508" ;
+    ecom:address "대구 달서구 1동 725호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-05-28T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_061 a ecom:Customer ;
+    ecom:customerId "user_061" ;
+    ecom:name "윤수빈" ;
+    ecom:email "user_061@gmail.com" ;
+    ecom:phone "010-4571-8619" ;
+    ecom:address "대전 서구 6동 2582호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-09-20T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_062 a ecom:Customer ;
+    ecom:customerId "user_062" ;
+    ecom:name "정예준" ;
+    ecom:email "user_062@hanmail.net" ;
+    ecom:phone "010-1420-6111" ;
+    ecom:address "울산 중구 7동 412호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-09-01T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_063 a ecom:Customer ;
+    ecom:customerId "user_063" ;
+    ecom:name "신성민" ;
+    ecom:email "user_063@daum.net" ;
+    ecom:phone "010-2983-1672" ;
+    ecom:address "광주 북구 14동 1618호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-10-02T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_064 a ecom:Customer ;
+    ecom:customerId "user_064" ;
+    ecom:name "한서연" ;
+    ecom:email "user_064@gmail.com" ;
+    ecom:phone "010-7882-9031" ;
+    ecom:address "부산 동래구 12동 1984호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-03-09T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_065 a ecom:Customer ;
+    ecom:customerId "user_065" ;
+    ecom:name "박현우" ;
+    ecom:email "user_065@hanmail.net" ;
+    ecom:phone "010-5425-9817" ;
+    ecom:address "세종 새롬동 14동 2527호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-04-15T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_066 a ecom:Customer ;
+    ecom:customerId "user_066" ;
+    ecom:name "권주원" ;
+    ecom:email "user_066@gmail.com" ;
+    ecom:phone "010-5569-8385" ;
+    ecom:address "대구 중구 19동 1653호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-06-11T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_067 a ecom:Customer ;
+    ecom:customerId "user_067" ;
+    ecom:name "윤정훈" ;
+    ecom:email "user_067@daum.net" ;
+    ecom:phone "010-3979-8988" ;
+    ecom:address "대구 북구 9동 1495호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-11-09T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_068 a ecom:Customer ;
+    ecom:customerId "user_068" ;
+    ecom:name "신태현" ;
+    ecom:email "user_068@daum.net" ;
+    ecom:phone "010-1166-9464" ;
+    ecom:address "대구 수성구 8동 1765호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-01-22T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_069 a ecom:Customer ;
+    ecom:customerId "user_069" ;
+    ecom:name "서주원" ;
+    ecom:email "user_069@kakao.com" ;
+    ecom:phone "010-9041-8342" ;
+    ecom:address "서울 서초구 10동 1008호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-02-12T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_070 a ecom:Customer ;
+    ecom:customerId "user_070" ;
+    ecom:name "정수빈" ;
+    ecom:email "user_070@hanmail.net" ;
+    ecom:phone "010-7046-8753" ;
+    ecom:address "광주 서구 18동 1455호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-07-22T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_071 a ecom:Customer ;
+    ecom:customerId "user_071" ;
+    ecom:name "정준서" ;
+    ecom:email "user_071@daum.net" ;
+    ecom:phone "010-4777-2976" ;
+    ecom:address "대구 북구 4동 2295호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-04-05T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_072 a ecom:Customer ;
+    ecom:customerId "user_072" ;
+    ecom:name "최현우" ;
+    ecom:email "user_072@kakao.com" ;
+    ecom:phone "010-5530-9595" ;
+    ecom:address "대전 유성구 7동 1314호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-08-17T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_073 a ecom:Customer ;
+    ecom:customerId "user_073" ;
+    ecom:name "박준서" ;
+    ecom:email "user_073@gmail.com" ;
+    ecom:phone "010-9751-3073" ;
+    ecom:address "대전 유성구 2동 2367호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-05-23T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_074 a ecom:Customer ;
+    ecom:customerId "user_074" ;
+    ecom:name "한정훈" ;
+    ecom:email "user_074@kakao.com" ;
+    ecom:phone "010-2680-1200" ;
+    ecom:address "대전 서구 16동 1905호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-09-20T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_075 a ecom:Customer ;
+    ecom:customerId "user_075" ;
+    ecom:name "김지후" ;
+    ecom:email "user_075@kakao.com" ;
+    ecom:phone "010-2869-2070" ;
+    ecom:address "울산 중구 3동 2464호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-08-21T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_076 a ecom:Customer ;
+    ecom:customerId "user_076" ;
+    ecom:name "박재현" ;
+    ecom:email "user_076@hanmail.net" ;
+    ecom:phone "010-5978-2395" ;
+    ecom:address "대구 수성구 18동 1805호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-09-07T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_077 a ecom:Customer ;
+    ecom:customerId "user_077" ;
+    ecom:name "조하은" ;
+    ecom:email "user_077@kakao.com" ;
+    ecom:phone "010-5871-8025" ;
+    ecom:address "대전 중구 20동 347호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-03-01T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_078 a ecom:Customer ;
+    ecom:customerId "user_078" ;
+    ecom:name "한지호" ;
+    ecom:email "user_078@daum.net" ;
+    ecom:phone "010-2330-3573" ;
+    ecom:address "대구 달서구 18동 408호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-08-09T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_079 a ecom:Customer ;
+    ecom:customerId "user_079" ;
+    ecom:name "조하은" ;
+    ecom:email "user_079@hanmail.net" ;
+    ecom:phone "010-8699-5771" ;
+    ecom:address "서울 마포구 10동 1259호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-11-22T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_080 a ecom:Customer ;
+    ecom:customerId "user_080" ;
+    ecom:name "한주원" ;
+    ecom:email "user_080@daum.net" ;
+    ecom:phone "010-4241-7965" ;
+    ecom:address "부산 남구 8동 711호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-10-18T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_081 a ecom:Customer ;
+    ecom:customerId "user_081" ;
+    ecom:name "이서준" ;
+    ecom:email "user_081@naver.com" ;
+    ecom:phone "010-6039-5728" ;
+    ecom:address "세종 아름동 15동 1346호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-09-12T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_082 a ecom:Customer ;
+    ecom:customerId "user_082" ;
+    ecom:name "장지유" ;
+    ecom:email "user_082@kakao.com" ;
+    ecom:phone "010-8172-2317" ;
+    ecom:address "서울 강서구 11동 2573호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-07-07T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_083 a ecom:Customer ;
+    ecom:customerId "user_083" ;
+    ecom:name "이주원" ;
+    ecom:email "user_083@hanmail.net" ;
+    ecom:phone "010-1339-5415" ;
+    ecom:address "서울 송파구 16동 2226호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-11-10T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_084 a ecom:Customer ;
+    ecom:customerId "user_084" ;
+    ecom:name "박윤서" ;
+    ecom:email "user_084@kakao.com" ;
+    ecom:phone "010-9056-2494" ;
+    ecom:address "세종 새롬동 14동 1466호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-07-04T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_085 a ecom:Customer ;
+    ecom:customerId "user_085" ;
+    ecom:name "권하준" ;
+    ecom:email "user_085@daum.net" ;
+    ecom:phone "010-7744-9117" ;
+    ecom:address "대전 중구 13동 2354호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-10-01T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_086 a ecom:Customer ;
+    ecom:customerId "user_086" ;
+    ecom:name "이서연" ;
+    ecom:email "user_086@daum.net" ;
+    ecom:phone "010-6296-2899" ;
+    ecom:address "울산 동구 1동 2323호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-04-05T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_087 a ecom:Customer ;
+    ecom:customerId "user_087" ;
+    ecom:name "김지호" ;
+    ecom:email "user_087@hanmail.net" ;
+    ecom:phone "010-6927-9167" ;
+    ecom:address "세종 아름동 7동 1194호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-04-26T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_088 a ecom:Customer ;
+    ecom:customerId "user_088" ;
+    ecom:name "윤태현" ;
+    ecom:email "user_088@kakao.com" ;
+    ecom:phone "010-2989-1472" ;
+    ecom:address "대구 달서구 10동 2357호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-06-29T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_089 a ecom:Customer ;
+    ecom:customerId "user_089" ;
+    ecom:name "조도윤" ;
+    ecom:email "user_089@naver.com" ;
+    ecom:phone "010-2858-8560" ;
+    ecom:address "부산 수영구 16동 1296호" ;
+    ecom:membershipLevel "gold" ;
+    ecom:createdAt "2025-02-14T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_090 a ecom:Customer ;
+    ecom:customerId "user_090" ;
+    ecom:name "권하윤" ;
+    ecom:email "user_090@kakao.com" ;
+    ecom:phone "010-4993-8483" ;
+    ecom:address "인천 계양구 7동 2556호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-04-25T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_091 a ecom:Customer ;
+    ecom:customerId "user_091" ;
+    ecom:name "정성민" ;
+    ecom:email "user_091@kakao.com" ;
+    ecom:phone "010-6568-9318" ;
+    ecom:address "대전 유성구 10동 1323호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-10-19T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_092 a ecom:Customer ;
+    ecom:customerId "user_092" ;
+    ecom:name "윤지유" ;
+    ecom:email "user_092@kakao.com" ;
+    ecom:phone "010-6654-6446" ;
+    ecom:address "울산 중구 11동 873호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-09-08T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_093 a ecom:Customer ;
+    ecom:customerId "user_093" ;
+    ecom:name "조주원" ;
+    ecom:email "user_093@kakao.com" ;
+    ecom:phone "010-1715-6213" ;
+    ecom:address "세종 한솔동 13동 1682호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-02-04T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_094 a ecom:Customer ;
+    ecom:customerId "user_094" ;
+    ecom:name "김시우" ;
+    ecom:email "user_094@hanmail.net" ;
+    ecom:phone "010-6439-2644" ;
+    ecom:address "세종 아름동 17동 1972호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-03-15T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_095 a ecom:Customer ;
+    ecom:customerId "user_095" ;
+    ecom:name "조정훈" ;
+    ecom:email "user_095@naver.com" ;
+    ecom:phone "010-2225-8692" ;
+    ecom:address "대전 서구 20동 1729호" ;
+    ecom:membershipLevel "bronze" ;
+    ecom:createdAt "2025-09-11T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_096 a ecom:Customer ;
+    ecom:customerId "user_096" ;
+    ecom:name "권수빈" ;
+    ecom:email "user_096@hanmail.net" ;
+    ecom:phone "010-7226-6188" ;
+    ecom:address "세종 한솔동 2동 381호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-06-08T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_097 a ecom:Customer ;
+    ecom:customerId "user_097" ;
+    ecom:name "한영민" ;
+    ecom:email "user_097@daum.net" ;
+    ecom:phone "010-4727-2480" ;
+    ecom:address "울산 남구 4동 1918호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-01-04T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_098 a ecom:Customer ;
+    ecom:customerId "user_098" ;
+    ecom:name "황민준" ;
+    ecom:email "user_098@gmail.com" ;
+    ecom:phone "010-6314-1919" ;
+    ecom:address "대전 서구 12동 1865호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-06-23T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_099 a ecom:Customer ;
+    ecom:customerId "user_099" ;
+    ecom:name "장서현" ;
+    ecom:email "user_099@hanmail.net" ;
+    ecom:phone "010-3950-3785" ;
+    ecom:address "인천 남동구 20동 1667호" ;
+    ecom:membershipLevel "silver" ;
+    ecom:createdAt "2025-07-21T04:31:45.065753Z"^^xsd:dateTime .
+
+ecom:customer_user_100 a ecom:Customer ;
+    ecom:customerId "user_100" ;
+    ecom:name "황윤서" ;
+    ecom:email "user_100@naver.com" ;
+    ecom:phone "010-4804-8555" ;
+    ecom:address "대전 서구 9동 139호" ;
+    ecom:membershipLevel "platinum" ;
+    ecom:createdAt "2025-03-14T04:31:45.065753Z"^^xsd:dateTime .

@@ -1,0 +1,12 @@
+@prefix ex: <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Company a ex:ExternalEntity .
+ex:CompanyRelationEvent a ex:ExternalKnowledgeEvent .
+
+ex:subject a ex:Property .
+ex:object a ex:Property .
+ex:relationType a ex:Property .
+ex:source a ex:Property .
+ex:confidence a ex:Property .
+ex:observedAt a ex:Property .

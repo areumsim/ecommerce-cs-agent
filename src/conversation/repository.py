@@ -48,7 +48,7 @@ class ConversationRepository:
         return conn
 
     def _ensure_tables(self) -> None:
-        """테이블 생성."""
+        """테이블 생성 및 스키마 마이그레이션."""
         conn = self._get_conn()
         try:
             cursor = conn.cursor()
@@ -66,6 +66,13 @@ class ConversationRepository:
                     expires_at TEXT
                 )
             """)
+
+            # 스키마 마이그레이션: 기존 테이블에 status 컬럼이 없으면 추가
+            cursor.execute("PRAGMA table_info(conversations)")
+            columns = {row[1] for row in cursor.fetchall()}
+            if "status" not in columns:
+                logger.info("conversations 테이블에 status 컬럼 추가 (마이그레이션)")
+                cursor.execute("ALTER TABLE conversations ADD COLUMN status TEXT DEFAULT 'active'")
 
             # messages 테이블
             cursor.execute("""

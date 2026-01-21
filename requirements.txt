@@ -14,6 +14,7 @@ pydantic>=2.5
 pydantic[email]>=2.5
 uvicorn[standard]>=0.23
 gradio>=4.0
+pyvis>=0.3.2
 
 # Authentication (Phase 3)
 python-jose[cryptography]>=3.3.0
@@ -37,6 +38,10 @@ structlog>=23.2.0
 # LLM (선택 - SDK 설치 시 추가 기능 제공)
 # openai>=1.0  # OpenAI SDK (타입 힌트, 스트리밍)
 # anthropic>=0.18  # Anthropic SDK
+
+# Fuseki/RDF (Graph RAG)
+SPARQLWrapper>=2.0.0
+rdflib>=7.0.0
 
 # Optional (future)
 # qdrant-client>=1.7

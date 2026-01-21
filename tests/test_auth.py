@@ -39,11 +39,12 @@ class TestPasswordHashing:
         assert verify_password(wrong_password, hashed) is False
 
     def test_hash_password_length(self):
-        """해시 길이 확인 (bcrypt 표준)."""
+        """해시 길이 확인 (bcrypt 또는 SHA-256 폴백)."""
         password = "test"
         hashed = hash_password(password)
 
-        assert len(hashed) == 60  # bcrypt 표준 길이
+        # bcrypt: 60자, SHA-256 fallback: salt(32) + $ + hash(64) = 97자
+        assert len(hashed) in (60, 97)
 
 
 class TestJWTHandler:

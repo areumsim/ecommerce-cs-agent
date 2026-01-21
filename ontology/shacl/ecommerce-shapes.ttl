@@ -1,0 +1,380 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ecom: <http://example.org/ecommerce#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ecom:CustomerShape a sh:NodeShape ;
+    sh:targetClass ecom:Customer ;
+    sh:property [
+        sh:path ecom:customerId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^user_[0-9]{3}$" ;
+        sh:message "customerId must match pattern 'user_XXX'"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 1 ;
+    ] ;
+    sh:property [
+        sh:path ecom:email ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[^@]+@[^@]+\\.[^@]+$" ;
+        sh:message "email must be valid format"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:membershipLevel ;
+        sh:datatype xsd:string ;
+        sh:in ("bronze" "silver" "gold" "platinum") ;
+        sh:message "membershipLevel must be one of: bronze, silver, gold, platinum"@en ;
+    ] .
+
+ecom:ProductShape a sh:NodeShape ;
+    sh:targetClass ecom:Product ;
+    sh:property [
+        sh:path ecom:productId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path ecom:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 1 ;
+    ] ;
+    sh:property [
+        sh:path ecom:brand ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path ecom:price ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:minInclusive 0 ;
+        sh:message "price must be non-negative"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:averageRating ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 5 ;
+        sh:message "averageRating must be between 0 and 5"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:stockStatus ;
+        sh:datatype xsd:string ;
+        sh:in ("in_stock" "out_of_stock" "limited") ;
+    ] .
+
+ecom:OrderShape a sh:NodeShape ;
+    sh:targetClass ecom:Order ;
+    sh:property [
+        sh:path ecom:orderId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^ORD_[0-9]{8}_[0-9]{4}$" ;
+        sh:message "orderId must match pattern 'ORD_YYYYMMDD_XXXX'"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:status ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ("pending" "confirmed" "shipping" "delivered" "cancelled") ;
+        sh:message "status must be one of: pending, confirmed, shipping, delivered, cancelled"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:orderDate ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path ecom:totalAmount ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:minInclusive 0 ;
+    ] ;
+    sh:property [
+        sh:path ecom:shippingAddress ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:minLength 1 ;
+    ] .
+
+ecom:OrderItemShape a sh:NodeShape ;
+    sh:targetClass ecom:OrderItem ;
+    sh:property [
+        sh:path ecom:quantity ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:minInclusive 1 ;
+        sh:message "quantity must be at least 1"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:unitPrice ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:minInclusive 0 ;
+    ] ;
+    sh:property [
+        sh:path ecom:hasProduct ;
+        sh:class ecom:Product ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+ecom:TicketShape a sh:NodeShape ;
+    sh:targetClass ecom:Ticket ;
+    sh:property [
+        sh:path ecom:ticketId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^TICKET_[0-9]+$" ;
+    ] ;
+    sh:property [
+        sh:path ecom:issueType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ("shipping" "refund" "exchange" "product_inquiry" "order_inquiry" "complaint" "other") ;
+    ] ;
+    sh:property [
+        sh:path ecom:status ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ("open" "in_progress" "resolved" "closed") ;
+    ] ;
+    sh:property [
+        sh:path ecom:priority ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ("low" "normal" "high" "urgent") ;
+    ] ;
+    sh:property [
+        sh:path ecom:createdAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+    ] .
+
+ecom:PurchaseConstraint a sh:NodeShape ;
+    sh:targetClass ecom:Customer ;
+    sh:property [
+        sh:path ecom:purchased ;
+        sh:class ecom:Product ;
+        sh:message "purchased must reference a Product"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:placedOrder ;
+        sh:class ecom:Order ;
+        sh:message "placedOrder must reference an Order"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:hasTicket ;
+        sh:class ecom:Ticket ;
+        sh:message "hasTicket must reference a Ticket"@en ;
+    ] .
+
+ecom:SimilarityConstraint a sh:NodeShape ;
+    sh:targetClass ecom:Product ;
+    sh:property [
+        sh:path ecom:similarTo ;
+        sh:class ecom:Product ;
+        sh:message "similarTo must reference another Product"@en ;
+    ] .
+
+# =============================================================================
+# Company SHACL Shapes (Phase 1 - Domain-Agnostic Ontology Engine)
+# =============================================================================
+
+ecom:CompanyShape a sh:NodeShape ;
+    sh:targetClass ecom:Company ;
+    sh:property [
+        sh:path ecom:companyId ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^COM_[0-9]{3}$" ;
+        sh:message "companyId must match pattern 'COM_XXX'"@en ;
+        sh:message "companyId는 'COM_XXX' 형식이어야 합니다"@ko ;
+    ] ;
+    sh:property [
+        sh:path ecom:companyName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 1 ;
+        sh:maxLength 200 ;
+        sh:message "companyName is required and must be 1-200 characters"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:industry ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ("Electronics" "Technology" "Retail" "Manufacturing" "Healthcare" "Finance" "Automotive" "Consumer Goods" "Telecommunications" "Other") ;
+        sh:message "industry must be one of the predefined values"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:companySize ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("startup" "small" "medium" "large" "enterprise") ;
+        sh:message "companySize must be one of: startup, small, medium, large, enterprise"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:foundedYear ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1800 ;
+        sh:maxInclusive 2026 ;
+        sh:message "foundedYear must be between 1800 and current year"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:headquarters ;
+        sh:datatype xsd:string ;
+        sh:minLength 1 ;
+    ] ;
+    sh:property [
+        sh:path ecom:employeeCount ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:message "employeeCount must be at least 1"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:annualRevenue ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0 ;
+        sh:message "annualRevenue must be non-negative"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:website ;
+        sh:datatype xsd:anyURI ;
+        sh:pattern "^https?://.*" ;
+        sh:message "website must be a valid HTTP/HTTPS URL"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:stockTicker ;
+        sh:datatype xsd:string ;
+        sh:pattern "^[A-Z0-9]{1,10}$" ;
+        sh:message "stockTicker must be 1-10 uppercase alphanumeric characters"@en ;
+    ] .
+
+# Company-Product relationship constraints
+ecom:CompanyProductConstraint a sh:NodeShape ;
+    sh:targetClass ecom:Company ;
+    sh:property [
+        sh:path ecom:manufactures ;
+        sh:class ecom:Product ;
+        sh:message "manufactures must reference a Product"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:distributes ;
+        sh:class ecom:Product ;
+        sh:message "distributes must reference a Product"@en ;
+    ] .
+
+# Company-Company relationship constraints
+ecom:CompanyRelationshipConstraint a sh:NodeShape ;
+    sh:targetClass ecom:Company ;
+    sh:property [
+        sh:path ecom:supplierOf ;
+        sh:class ecom:Company ;
+        sh:message "supplierOf must reference another Company"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:partnerWith ;
+        sh:class ecom:Company ;
+        sh:message "partnerWith must reference another Company"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:competitorOf ;
+        sh:class ecom:Company ;
+        sh:message "competitorOf must reference another Company"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:subsidiaryOf ;
+        sh:class ecom:Company ;
+        sh:maxCount 1 ;
+        sh:message "subsidiaryOf must reference at most one parent Company"@en ;
+    ] .
+
+# Customer-Company relationship constraints
+ecom:CustomerCompanyConstraint a sh:NodeShape ;
+    sh:targetClass ecom:Customer ;
+    sh:property [
+        sh:path ecom:worksAt ;
+        sh:class ecom:Company ;
+        sh:maxCount 1 ;
+        sh:message "worksAt must reference at most one Company"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:purchasedFrom ;
+        sh:class ecom:Company ;
+        sh:message "purchasedFrom must reference a Company"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:subscribedTo ;
+        sh:class ecom:Company ;
+        sh:message "subscribedTo must reference a Company"@en ;
+    ] .
+
+# BusinessRelationship Shape (reified relationships)
+ecom:BusinessRelationshipShape a sh:NodeShape ;
+    sh:targetClass ecom:BusinessRelationship ;
+    sh:property [
+        sh:path ecom:hasSourceCompany ;
+        sh:class ecom:Company ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "BusinessRelationship must have exactly one source Company"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:hasTargetCompany ;
+        sh:class ecom:Company ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "BusinessRelationship must have exactly one target Company"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:relationshipType ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ("supplier" "partner" "competitor" "subsidiary") ;
+        sh:message "relationshipType must be one of: supplier, partner, competitor, subsidiary"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:relationshipStartDate ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:message "relationshipStartDate is required"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:relationshipStrength ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+        sh:message "relationshipStrength must be between 0.0 and 1.0"@en ;
+    ] .
+
+# Product-Company constraint (inverse side)
+ecom:ProductCompanyConstraint a sh:NodeShape ;
+    sh:targetClass ecom:Product ;
+    sh:property [
+        sh:path ecom:manufacturedBy ;
+        sh:class ecom:Company ;
+        sh:maxCount 1 ;
+        sh:message "manufacturedBy must reference at most one Company"@en ;
+    ] ;
+    sh:property [
+        sh:path ecom:distributedBy ;
+        sh:class ecom:Company ;
+        sh:message "distributedBy must reference a Company"@en ;
+    ] .

@@ -1,23 +1,44 @@
 from __future__ import annotations
-"""CSV 기반 간이 저장소 구현.
-
-특징
-- 첫 로드 후 인메모리 보관(간단 캐시/인덱스)
-- 쓰기 시 임시 파일 작성 후 대체(간단 원자성)
-- JSON 필드는 자동 (디)직렬화
-
-제약
-- 파일 락 미구현: 단일-라이터 규칙을 지켜주세요.
-- 필터는 동등 비교만 지원합니다.
-"""
 
 import csv
 import json
 import os
 import tempfile
-from typing import Any, Dict, List, Optional
+import threading
+from contextlib import contextmanager
+from typing import Any, Dict, List, Optional, Generator
 
 from .interfaces import CsvRepoConfig, Repository
+
+try:
+    import fcntl
+    HAS_FCNTL = True
+except ImportError:
+    HAS_FCNTL = False
+
+
+class FileLock:
+    _locks: Dict[str, threading.Lock] = {}
+    _global_lock = threading.Lock()
+    
+    @classmethod
+    def get_lock(cls, path: str) -> threading.Lock:
+        with cls._global_lock:
+            if path not in cls._locks:
+                cls._locks[path] = threading.Lock()
+            return cls._locks[path]
+    
+    @classmethod
+    @contextmanager
+    def acquire(cls, path: str, timeout: float = 30.0) -> Generator[None, None, None]:
+        lock = cls.get_lock(path)
+        acquired = lock.acquire(timeout=timeout)
+        if not acquired:
+            raise TimeoutError(f"Could not acquire lock for {path}")
+        try:
+            yield
+        finally:
+            lock.release()
 
 
 class CSVRepository(Repository):
@@ -90,7 +111,6 @@ class CSVRepository(Repository):
     def _load(self) -> None:
         path = self._path()
         if not os.path.exists(path):
-            # initialize empty file with headers if possible
             os.makedirs(os.path.dirname(path), exist_ok=True)
             with open(path, "w", newline="", encoding="utf-8") as f:
                 pass
@@ -98,32 +118,39 @@ class CSVRepository(Repository):
             self._index = {}
             return
 
-        with open(path, "r", newline="", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            self._fieldnames = reader.fieldnames or []
-            for row in reader:
-                self._rows.append(self._deserialize(dict(row)))
+        with FileLock.acquire(path):
+            with open(path, "r", newline="", encoding="utf-8") as f:
+                if HAS_FCNTL:
+                    fcntl.flock(f.fileno(), fcntl.LOCK_SH)
+                reader = csv.DictReader(f)
+                self._fieldnames = reader.fieldnames or []
+                for row in reader:
+                    self._rows.append(self._deserialize(dict(row)))
         self._rebuild_index()
 
     def _persist(self) -> None:
         path = self._path()
         os.makedirs(os.path.dirname(path), exist_ok=True)
         fieldnames = self._fieldnames or self._infer_fieldnames()
-        fd, tmp = tempfile.mkstemp(prefix="csvrepo_", dir=os.path.dirname(path))
-        os.close(fd)
-        try:
-            with open(tmp, "w", newline="", encoding="utf-8") as f:
-                writer = csv.DictWriter(f, fieldnames=fieldnames)
-                writer.writeheader()
-                for row in self._rows:
-                    writer.writerow(self._serialize_for_write(row, fieldnames))
-            os.replace(tmp, path)
-        finally:
-            if os.path.exists(tmp):
-                try:
-                    os.remove(tmp)
-                except OSError:
-                    pass
+        
+        with FileLock.acquire(path):
+            fd, tmp = tempfile.mkstemp(prefix="csvrepo_", dir=os.path.dirname(path))
+            os.close(fd)
+            try:
+                with open(tmp, "w", newline="", encoding="utf-8") as f:
+                    if HAS_FCNTL:
+                        fcntl.flock(f.fileno(), fcntl.LOCK_EX)
+                    writer = csv.DictWriter(f, fieldnames=fieldnames)
+                    writer.writeheader()
+                    for row in self._rows:
+                        writer.writerow(self._serialize_for_write(row, fieldnames))
+                os.replace(tmp, path)
+            finally:
+                if os.path.exists(tmp):
+                    try:
+                        os.remove(tmp)
+                    except OSError:
+                        pass
 
     def _rebuild_index(self) -> None:
         self._index = {}

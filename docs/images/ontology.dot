@@ -1,0 +1,24 @@
+digraph Ontology {
+    rankdir=TB;
+    node [shape=record, fontname="Malgun Gothic"];
+    edge [fontname="Malgun Gothic"];
+
+    Customer [label="{고객|고객 ID\l이메일\l전화번호\l회원 등급\l}"];
+    Product [label="{상품|상품 ID\l상품명\l브랜드\l가격\l평점\l리뷰 수\l재고 상태\l}"];
+    Order [label="{주문|주문 ID\l주문일\l배송일\l총액\l배송 주소\l}"];
+    OrderItem [label="{주문 항목|수량\l단가\l}"];
+    Ticket [label="{지원 티켓|티켓 ID\l문제 유형\l우선순위\l해결일\l}"];
+    Policy [label="정책"];
+    MobilePhone [label="휴대폰"];
+    Laptop [label="노트북"];
+    Audio [label="오디오"];
+    Accessories [label="액세서리"];
+
+    Customer -> Product [label="구매함"];
+    Customer -> Order [label="주문함"];
+    Order -> OrderItem [label="항목 포함"];
+    OrderItem -> Product [label="상품"];
+    Product -> Product [label="유사함", dir="both"];
+    Customer -> Ticket [label="티켓 보유"];
+    Ticket -> Order [label="관련 주문"];
+}

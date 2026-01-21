@@ -1,0 +1,2466 @@
+@prefix ecom: <http://example.org/ecommerce#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+ecom:ticket_TICKET_1761539505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761539505" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송지 변경 가능한가요?" ;
+    ecom:status "in_progress" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-10-27T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_075 ecom:hasTicket ecom:ticket_TICKET_1761539505 .
+
+ecom:ticket_TICKET_1761539505 ecom:relatedToOrder ecom:order_ORD_20251222_0136 .
+
+ecom:ticket_TICKET_1766377905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766377905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "언제 배송되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-22T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_084 ecom:hasTicket ecom:ticket_TICKET_1766377905 .
+
+ecom:ticket_TICKET_1766377905 ecom:relatedToOrder ecom:order_ORD_20251021_0190 .
+
+ecom:ticket_TICKET_1761453105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761453105" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송지 변경 가능한가요?" ;
+    ecom:status "in_progress" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-10-26T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_030 ecom:hasTicket ecom:ticket_TICKET_1761453105 .
+
+ecom:ticket_TICKET_1761453105 ecom:relatedToOrder ecom:order_ORD_20251017_0158 .
+
+ecom:ticket_TICKET_1761885105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761885105" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "세탁 방법이 궁금합니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-10-31T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_093 ecom:hasTicket ecom:ticket_TICKET_1761885105 .
+
+ecom:ticket_TICKET_1762835505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762835505" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-11T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-13T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_021 ecom:hasTicket ecom:ticket_TICKET_1762835505 .
+
+ecom:ticket_TICKET_1762835505 ecom:relatedToOrder ecom:order_ORD_20251019_0444 .
+
+ecom:ticket_TICKET_1764822705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764822705" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 상태가 궁금합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-04T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-04T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_064 ecom:hasTicket ecom:ticket_TICKET_1764822705 .
+
+ecom:ticket_TICKET_1764822705 ecom:relatedToOrder ecom:order_ORD_20251014_0344 .
+
+ecom:ticket_TICKET_1761971505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761971505" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "상품 사이즈 정보 알려주세요." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-01T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_035 ecom:hasTicket ecom:ticket_TICKET_1761971505 .
+
+ecom:ticket_TICKET_1761971505 ecom:relatedToOrder ecom:order_ORD_20251016_0152 .
+
+ecom:ticket_TICKET_1765254705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765254705" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-09T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-14T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_015 ecom:hasTicket ecom:ticket_TICKET_1765254705 .
+
+ecom:ticket_TICKET_1765254705 ecom:relatedToOrder ecom:order_ORD_20251222_0358 .
+
+ecom:ticket_TICKET_1761798705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761798705" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_100 ecom:hasTicket ecom:ticket_TICKET_1761798705 .
+
+ecom:ticket_TICKET_1761798705 ecom:relatedToOrder ecom:order_ORD_20251130_0271 .
+
+ecom:ticket_TICKET_1765945905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765945905" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 취소하고 싶습니다." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-17T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_057 ecom:hasTicket ecom:ticket_TICKET_1765945905 .
+
+ecom:ticket_TICKET_1761453105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761453105" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-10-26T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_022 ecom:hasTicket ecom:ticket_TICKET_1761453105 .
+
+ecom:ticket_TICKET_1761453105 ecom:relatedToOrder ecom:order_ORD_20251010_0379 .
+
+ecom:ticket_TICKET_1762921905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762921905" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 내역 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-12T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-14T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_065 ecom:hasTicket ecom:ticket_TICKET_1762921905 .
+
+ecom:ticket_TICKET_1762921905 ecom:relatedToOrder ecom:order_ORD_20251020_0482 .
+
+ecom:ticket_TICKET_1765168305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765168305" ;
+    ecom:issueType "complaint" ;
+    ecom:description "고객센터 연결이 안 됩니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-08T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_057 ecom:hasTicket ecom:ticket_TICKET_1765168305 .
+
+ecom:ticket_TICKET_1764477105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764477105" ;
+    ecom:issueType "exchange" ;
+    ecom:description "다른 상품으로 교환 가능한가요?" ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_022 ecom:hasTicket ecom:ticket_TICKET_1764477105 .
+
+ecom:ticket_TICKET_1764477105 ecom:relatedToOrder ecom:order_ORD_20251120_0005 .
+
+ecom:ticket_TICKET_1762057905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762057905" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 내역 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-02T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-08T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_069 ecom:hasTicket ecom:ticket_TICKET_1762057905 .
+
+ecom:ticket_TICKET_1762057905 ecom:relatedToOrder ecom:order_ORD_20251127_0209 .
+
+ecom:ticket_TICKET_1761280305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761280305" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-10-24T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-26T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_067 ecom:hasTicket ecom:ticket_TICKET_1761280305 .
+
+ecom:ticket_TICKET_1764304305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764304305" ;
+    ecom:issueType "refund" ;
+    ecom:description "주문한 상품과 다른 상품이 와서 환불 원합니다." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-28T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_068 ecom:hasTicket ecom:ticket_TICKET_1764304305 .
+
+ecom:ticket_TICKET_1764304305 ecom:relatedToOrder ecom:order_ORD_20251212_0028 .
+
+ecom:ticket_TICKET_1761539505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761539505" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "상품 사이즈 정보 알려주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-10-27T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-31T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_099 ecom:hasTicket ecom:ticket_TICKET_1761539505 .
+
+ecom:ticket_TICKET_1761539505 ecom:relatedToOrder ecom:order_ORD_20251021_0037 .
+
+ecom:ticket_TICKET_1761453105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761453105" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "소재가 무엇인가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-10-26T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_089 ecom:hasTicket ecom:ticket_TICKET_1761453105 .
+
+ecom:ticket_TICKET_1761453105 ecom:relatedToOrder ecom:order_ORD_20251031_0414 .
+
+ecom:ticket_TICKET_1763094705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763094705" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-14T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_059 ecom:hasTicket ecom:ticket_TICKET_1763094705 .
+
+ecom:ticket_TICKET_1763094705 ecom:relatedToOrder ecom:order_ORD_20251113_0363 .
+
+ecom:ticket_TICKET_1761625905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761625905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송 조회가 안 됩니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-10-28T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-28T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_084 ecom:hasTicket ecom:ticket_TICKET_1761625905 .
+
+ecom:ticket_TICKET_1765341105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765341105" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-10T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-14T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_094 ecom:hasTicket ecom:ticket_TICKET_1765341105 .
+
+ecom:ticket_TICKET_1765341105 ecom:relatedToOrder ecom:order_ORD_20251214_0393 .
+
+ecom:ticket_TICKET_1763267505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763267505" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-16T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-20T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_021 ecom:hasTicket ecom:ticket_TICKET_1763267505 .
+
+ecom:ticket_TICKET_1763267505 ecom:relatedToOrder ecom:order_ORD_20251111_0064 .
+
+ecom:ticket_TICKET_1765081905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765081905" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "소재가 무엇인가요?" ;
+    ecom:status "in_progress" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-07T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_015 ecom:hasTicket ecom:ticket_TICKET_1765081905 .
+
+ecom:ticket_TICKET_1762403505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762403505" ;
+    ecom:issueType "shipping" ;
+    ecom:description "택배사 연락처 알려주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-06T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_085 ecom:hasTicket ecom:ticket_TICKET_1762403505 .
+
+ecom:ticket_TICKET_1762403505 ecom:relatedToOrder ecom:order_ORD_20251021_0103 .
+
+ecom:ticket_TICKET_1761798705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761798705" ;
+    ecom:issueType "shipping" ;
+    ecom:description "택배사 연락처 알려주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-04T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_075 ecom:hasTicket ecom:ticket_TICKET_1761798705 .
+
+ecom:ticket_TICKET_1763613105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763613105" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "세탁 방법이 궁금합니다." ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-20T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_093 ecom:hasTicket ecom:ticket_TICKET_1763613105 .
+
+ecom:ticket_TICKET_1763613105 ecom:relatedToOrder ecom:order_ORD_20251205_0467 .
+
+ecom:ticket_TICKET_1762576305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762576305" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송 조회가 안 됩니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-08T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-14T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_025 ecom:hasTicket ecom:ticket_TICKET_1762576305 .
+
+ecom:ticket_TICKET_1762576305 ecom:relatedToOrder ecom:order_ORD_20251111_0322 .
+
+ecom:ticket_TICKET_1766118705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766118705" ;
+    ecom:issueType "shipping" ;
+    ecom:description "언제 배송되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_056 ecom:hasTicket ecom:ticket_TICKET_1766118705 .
+
+ecom:ticket_TICKET_1766118705 ecom:relatedToOrder ecom:order_ORD_20251026_0017 .
+
+ecom:ticket_TICKET_1763008305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763008305" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 상태가 궁금합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-13T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-20T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_068 ecom:hasTicket ecom:ticket_TICKET_1763008305 .
+
+ecom:ticket_TICKET_1763008305 ecom:relatedToOrder ecom:order_ORD_20251103_0342 .
+
+ecom:ticket_TICKET_1763785905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763785905" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_055 ecom:hasTicket ecom:ticket_TICKET_1763785905 .
+
+ecom:ticket_TICKET_1763785905 ecom:relatedToOrder ecom:order_ORD_20251018_0081 .
+
+ecom:ticket_TICKET_1761280305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761280305" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-10-24T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-25T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_060 ecom:hasTicket ecom:ticket_TICKET_1761280305 .
+
+ecom:ticket_TICKET_1761280305 ecom:relatedToOrder ecom:order_ORD_20250927_0121 .
+
+ecom:ticket_TICKET_1765859505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765859505" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-16T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-21T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_049 ecom:hasTicket ecom:ticket_TICKET_1765859505 .
+
+ecom:ticket_TICKET_1765859505 ecom:relatedToOrder ecom:order_ORD_20251006_0453 .
+
+ecom:ticket_TICKET_1764217905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764217905" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-27T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-01T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_004 ecom:hasTicket ecom:ticket_TICKET_1764217905 .
+
+ecom:ticket_TICKET_1764217905 ecom:relatedToOrder ecom:order_ORD_20251025_0243 .
+
+ecom:ticket_TICKET_1764563505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764563505" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-01T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-01T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_096 ecom:hasTicket ecom:ticket_TICKET_1764563505 .
+
+ecom:ticket_TICKET_1764563505 ecom:relatedToOrder ecom:order_ORD_20251006_0496 .
+
+ecom:ticket_TICKET_1762144305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762144305" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송지 변경 가능한가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-03T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-05T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_041 ecom:hasTicket ecom:ticket_TICKET_1762144305 .
+
+ecom:ticket_TICKET_1762144305 ecom:relatedToOrder ecom:order_ORD_20251214_0464 .
+
+ecom:ticket_TICKET_1761712305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761712305" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "상품 사이즈 정보 알려주세요." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-10-29T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_060 ecom:hasTicket ecom:ticket_TICKET_1761712305 .
+
+ecom:ticket_TICKET_1761712305 ecom:relatedToOrder ecom:order_ORD_20250927_0121 .
+
+ecom:ticket_TICKET_1762403505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762403505" ;
+    ecom:issueType "shipping" ;
+    ecom:description "언제 배송되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-06T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-07T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_052 ecom:hasTicket ecom:ticket_TICKET_1762403505 .
+
+ecom:ticket_TICKET_1762403505 ecom:relatedToOrder ecom:order_ORD_20251019_0320 .
+
+ecom:ticket_TICKET_1763440305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763440305" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-18T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_075 ecom:hasTicket ecom:ticket_TICKET_1763440305 .
+
+ecom:ticket_TICKET_1763440305 ecom:relatedToOrder ecom:order_ORD_20251207_0302 .
+
+ecom:ticket_TICKET_1763353905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763353905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-17T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-24T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_070 ecom:hasTicket ecom:ticket_TICKET_1763353905 .
+
+ecom:ticket_TICKET_1762144305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762144305" ;
+    ecom:issueType "complaint" ;
+    ecom:description "상담원 태도가 불친절했습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-03T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-10T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_070 ecom:hasTicket ecom:ticket_TICKET_1762144305 .
+
+ecom:ticket_TICKET_1762144305 ecom:relatedToOrder ecom:order_ORD_20251116_0241 .
+
+ecom:ticket_TICKET_1763785905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763785905" ;
+    ecom:issueType "exchange" ;
+    ecom:description "사이즈 교환 부탁드립니다." ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_078 ecom:hasTicket ecom:ticket_TICKET_1763785905 .
+
+ecom:ticket_TICKET_1764390705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764390705" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-29T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_055 ecom:hasTicket ecom:ticket_TICKET_1764390705 .
+
+ecom:ticket_TICKET_1764390705 ecom:relatedToOrder ecom:order_ORD_20251018_0081 .
+
+ecom:ticket_TICKET_1765686705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765686705" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-14T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-20T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_038 ecom:hasTicket ecom:ticket_TICKET_1765686705 .
+
+ecom:ticket_TICKET_1765686705 ecom:relatedToOrder ecom:order_ORD_20251127_0048 .
+
+ecom:ticket_TICKET_1764822705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764822705" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-04T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-09T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_043 ecom:hasTicket ecom:ticket_TICKET_1764822705 .
+
+ecom:ticket_TICKET_1764822705 ecom:relatedToOrder ecom:order_ORD_20251114_0082 .
+
+ecom:ticket_TICKET_1766205105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766205105" ;
+    ecom:issueType "exchange" ;
+    ecom:description "사이즈 교환 부탁드립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-20T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-21T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_043 ecom:hasTicket ecom:ticket_TICKET_1766205105 .
+
+ecom:ticket_TICKET_1766205105 ecom:relatedToOrder ecom:order_ORD_20251123_0100 .
+
+ecom:ticket_TICKET_1766205105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766205105" ;
+    ecom:issueType "complaint" ;
+    ecom:description "상담원 태도가 불친절했습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-20T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_066 ecom:hasTicket ecom:ticket_TICKET_1766205105 .
+
+ecom:ticket_TICKET_1766205105 ecom:relatedToOrder ecom:order_ORD_20251127_0491 .
+
+ecom:ticket_TICKET_1764995505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764995505" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-06T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-07T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_054 ecom:hasTicket ecom:ticket_TICKET_1764995505 .
+
+ecom:ticket_TICKET_1764995505 ecom:relatedToOrder ecom:order_ORD_20251122_0330 .
+
+ecom:ticket_TICKET_1764045105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764045105" ;
+    ecom:issueType "exchange" ;
+    ecom:description "다른 상품으로 교환 가능한가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-25T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-28T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_085 ecom:hasTicket ecom:ticket_TICKET_1764045105 .
+
+ecom:ticket_TICKET_1764045105 ecom:relatedToOrder ecom:order_ORD_20251112_0201 .
+
+ecom:ticket_TICKET_1761453105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761453105" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-10-26T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-26T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_022 ecom:hasTicket ecom:ticket_TICKET_1761453105 .
+
+ecom:ticket_TICKET_1761453105 ecom:relatedToOrder ecom:order_ORD_20251203_0499 .
+
+ecom:ticket_TICKET_1766464305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766464305" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_080 ecom:hasTicket ecom:ticket_TICKET_1766464305 .
+
+ecom:ticket_TICKET_1763267505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763267505" ;
+    ecom:issueType "complaint" ;
+    ecom:description "환불 처리가 너무 늦습니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-16T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_089 ecom:hasTicket ecom:ticket_TICKET_1763267505 .
+
+ecom:ticket_TICKET_1763267505 ecom:relatedToOrder ecom:order_ORD_20251031_0414 .
+
+ecom:ticket_TICKET_1764304305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764304305" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-28T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_070 ecom:hasTicket ecom:ticket_TICKET_1764304305 .
+
+ecom:ticket_TICKET_1764304305 ecom:relatedToOrder ecom:order_ORD_20251027_0361 .
+
+ecom:ticket_TICKET_1761625905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761625905" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "소재가 무엇인가요?" ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-10-28T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_027 ecom:hasTicket ecom:ticket_TICKET_1761625905 .
+
+ecom:ticket_TICKET_1762835505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762835505" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송 조회가 안 됩니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_091 ecom:hasTicket ecom:ticket_TICKET_1762835505 .
+
+ecom:ticket_TICKET_1762921905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762921905" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-12T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_078 ecom:hasTicket ecom:ticket_TICKET_1762921905 .
+
+ecom:ticket_TICKET_1762921905 ecom:relatedToOrder ecom:order_ORD_20251124_0172 .
+
+ecom:ticket_TICKET_1761539505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761539505" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-10-27T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_087 ecom:hasTicket ecom:ticket_TICKET_1761539505 .
+
+ecom:ticket_TICKET_1762749105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762749105" ;
+    ecom:issueType "shipping" ;
+    ecom:description "언제 배송되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-10T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-16T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_085 ecom:hasTicket ecom:ticket_TICKET_1762749105 .
+
+ecom:ticket_TICKET_1762749105 ecom:relatedToOrder ecom:order_ORD_20251021_0103 .
+
+ecom:ticket_TICKET_1763958705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763958705" ;
+    ecom:issueType "complaint" ;
+    ecom:description "고객센터 연결이 안 됩니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-24T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-27T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_100 ecom:hasTicket ecom:ticket_TICKET_1763958705 .
+
+ecom:ticket_TICKET_1763958705 ecom:relatedToOrder ecom:order_ORD_20251101_0273 .
+
+ecom:ticket_TICKET_1765427505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765427505" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-11T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-15T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_097 ecom:hasTicket ecom:ticket_TICKET_1765427505 .
+
+ecom:ticket_TICKET_1765427505 ecom:relatedToOrder ecom:order_ORD_20251031_0134 .
+
+ecom:ticket_TICKET_1761539505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761539505" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-10-27T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_065 ecom:hasTicket ecom:ticket_TICKET_1761539505 .
+
+ecom:ticket_TICKET_1761539505 ecom:relatedToOrder ecom:order_ORD_20251102_0195 .
+
+ecom:ticket_TICKET_1763353905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763353905" ;
+    ecom:issueType "refund" ;
+    ecom:description "주문한 상품과 다른 상품이 와서 환불 원합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-17T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_083 ecom:hasTicket ecom:ticket_TICKET_1763353905 .
+
+ecom:ticket_TICKET_1763353905 ecom:relatedToOrder ecom:order_ORD_20251130_0198 .
+
+ecom:ticket_TICKET_1766118705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766118705" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "상품 사이즈 정보 알려주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_074 ecom:hasTicket ecom:ticket_TICKET_1766118705 .
+
+ecom:ticket_TICKET_1766118705 ecom:relatedToOrder ecom:order_ORD_20251023_0456 .
+
+ecom:ticket_TICKET_1765427505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765427505" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_074 ecom:hasTicket ecom:ticket_TICKET_1765427505 .
+
+ecom:ticket_TICKET_1765427505 ecom:relatedToOrder ecom:order_ORD_20251003_0135 .
+
+ecom:ticket_TICKET_1761798705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761798705" ;
+    ecom:issueType "complaint" ;
+    ecom:description "고객센터 연결이 안 됩니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_060 ecom:hasTicket ecom:ticket_TICKET_1761798705 .
+
+ecom:ticket_TICKET_1761798705 ecom:relatedToOrder ecom:order_ORD_20251116_0040 .
+
+ecom:ticket_TICKET_1762317105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762317105" ;
+    ecom:issueType "shipping" ;
+    ecom:description "택배사 연락처 알려주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-05T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-08T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_089 ecom:hasTicket ecom:ticket_TICKET_1762317105 .
+
+ecom:ticket_TICKET_1762317105 ecom:relatedToOrder ecom:order_ORD_20251031_0414 .
+
+ecom:ticket_TICKET_1764304305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764304305" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-28T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-29T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_055 ecom:hasTicket ecom:ticket_TICKET_1764304305 .
+
+ecom:ticket_TICKET_1764304305 ecom:relatedToOrder ecom:order_ORD_20251016_0413 .
+
+ecom:ticket_TICKET_1766118705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766118705" ;
+    ecom:issueType "complaint" ;
+    ecom:description "약속한 배송일이 지났는데 아직 안 왔습니다." ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_029 ecom:hasTicket ecom:ticket_TICKET_1766118705 .
+
+ecom:ticket_TICKET_1763872305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763872305" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-23T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_009 ecom:hasTicket ecom:ticket_TICKET_1763872305 .
+
+ecom:ticket_TICKET_1763872305 ecom:relatedToOrder ecom:order_ORD_20251109_0200 .
+
+ecom:ticket_TICKET_1764649905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764649905" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-02T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_032 ecom:hasTicket ecom:ticket_TICKET_1764649905 .
+
+ecom:ticket_TICKET_1762317105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762317105" ;
+    ecom:issueType "shipping" ;
+    ecom:description "언제 배송되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-05T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-12T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_100 ecom:hasTicket ecom:ticket_TICKET_1762317105 .
+
+ecom:ticket_TICKET_1762144305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762144305" ;
+    ecom:issueType "exchange" ;
+    ecom:description "사이즈 교환 부탁드립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-03T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-10T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_008 ecom:hasTicket ecom:ticket_TICKET_1762144305 .
+
+ecom:ticket_TICKET_1762144305 ecom:relatedToOrder ecom:order_ORD_20251012_0093 .
+
+ecom:ticket_TICKET_1763440305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763440305" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-18T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-24T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_082 ecom:hasTicket ecom:ticket_TICKET_1763440305 .
+
+ecom:ticket_TICKET_1763440305 ecom:relatedToOrder ecom:order_ORD_20251114_0118 .
+
+ecom:ticket_TICKET_1762144305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762144305" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-03T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_098 ecom:hasTicket ecom:ticket_TICKET_1762144305 .
+
+ecom:ticket_TICKET_1762144305 ecom:relatedToOrder ecom:order_ORD_20251212_0290 .
+
+ecom:ticket_TICKET_1763958705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763958705" ;
+    ecom:issueType "exchange" ;
+    ecom:description "사이즈 교환 부탁드립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-24T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-27T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_056 ecom:hasTicket ecom:ticket_TICKET_1763958705 .
+
+ecom:ticket_TICKET_1763958705 ecom:relatedToOrder ecom:order_ORD_20251026_0017 .
+
+ecom:ticket_TICKET_1761539505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761539505" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-10-27T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-31T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_078 ecom:hasTicket ecom:ticket_TICKET_1761539505 .
+
+ecom:ticket_TICKET_1761539505 ecom:relatedToOrder ecom:order_ORD_20251128_0274 .
+
+ecom:ticket_TICKET_1765773105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765773105" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송 조회가 안 됩니다." ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-15T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_094 ecom:hasTicket ecom:ticket_TICKET_1765773105 .
+
+ecom:ticket_TICKET_1765773105 ecom:relatedToOrder ecom:order_ORD_20251219_0332 .
+
+ecom:ticket_TICKET_1764822705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764822705" ;
+    ecom:issueType "complaint" ;
+    ecom:description "상담원 태도가 불친절했습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-04T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-06T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_057 ecom:hasTicket ecom:ticket_TICKET_1764822705 .
+
+ecom:ticket_TICKET_1764822705 ecom:relatedToOrder ecom:order_ORD_20250927_0446 .
+
+ecom:ticket_TICKET_1763613105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763613105" ;
+    ecom:issueType "exchange" ;
+    ecom:description "사이즈 교환 부탁드립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-20T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_079 ecom:hasTicket ecom:ticket_TICKET_1763613105 .
+
+ecom:ticket_TICKET_1763613105 ecom:relatedToOrder ecom:order_ORD_20250927_0235 .
+
+ecom:ticket_TICKET_1765427505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765427505" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송 조회가 안 됩니다." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_073 ecom:hasTicket ecom:ticket_TICKET_1765427505 .
+
+ecom:ticket_TICKET_1765427505 ecom:relatedToOrder ecom:order_ORD_20251006_0079 .
+
+ecom:ticket_TICKET_1763181105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763181105" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "세탁 방법이 궁금합니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-15T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_087 ecom:hasTicket ecom:ticket_TICKET_1763181105 .
+
+ecom:ticket_TICKET_1763181105 ecom:relatedToOrder ecom:order_ORD_20251209_0449 .
+
+ecom:ticket_TICKET_1763785905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763785905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_021 ecom:hasTicket ecom:ticket_TICKET_1763785905 .
+
+ecom:ticket_TICKET_1763785905 ecom:relatedToOrder ecom:order_ORD_20251111_0064 .
+
+ecom:ticket_TICKET_1762403505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762403505" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-06T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_061 ecom:hasTicket ecom:ticket_TICKET_1762403505 .
+
+ecom:ticket_TICKET_1762403505 ecom:relatedToOrder ecom:order_ORD_20250930_0334 .
+
+ecom:ticket_TICKET_1764563505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764563505" ;
+    ecom:issueType "exchange" ;
+    ecom:description "사이즈 교환 부탁드립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-01T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-02T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_024 ecom:hasTicket ecom:ticket_TICKET_1764563505 .
+
+ecom:ticket_TICKET_1764563505 ecom:relatedToOrder ecom:order_ORD_20251117_0166 .
+
+ecom:ticket_TICKET_1765427505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765427505" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-11T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-13T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_025 ecom:hasTicket ecom:ticket_TICKET_1765427505 .
+
+ecom:ticket_TICKET_1765427505 ecom:relatedToOrder ecom:order_ORD_20251111_0322 .
+
+ecom:ticket_TICKET_1765168305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765168305" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-08T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-08T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_093 ecom:hasTicket ecom:ticket_TICKET_1765168305 .
+
+ecom:ticket_TICKET_1764390705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764390705" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-29T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_013 ecom:hasTicket ecom:ticket_TICKET_1764390705 .
+
+ecom:ticket_TICKET_1762057905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762057905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송지 변경 가능한가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-02T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-04T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_040 ecom:hasTicket ecom:ticket_TICKET_1762057905 .
+
+ecom:ticket_TICKET_1762144305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762144305" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-03T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-09T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_009 ecom:hasTicket ecom:ticket_TICKET_1762144305 .
+
+ecom:ticket_TICKET_1761798705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761798705" ;
+    ecom:issueType "complaint" ;
+    ecom:description "환불 처리가 너무 늦습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-01T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_056 ecom:hasTicket ecom:ticket_TICKET_1761798705 .
+
+ecom:ticket_TICKET_1761798705 ecom:relatedToOrder ecom:order_ORD_20251026_0017 .
+
+ecom:ticket_TICKET_1765341105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765341105" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 상태가 궁금합니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-10T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_082 ecom:hasTicket ecom:ticket_TICKET_1765341105 .
+
+ecom:ticket_TICKET_1765341105 ecom:relatedToOrder ecom:order_ORD_20251114_0118 .
+
+ecom:ticket_TICKET_1763785905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763785905" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-24T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_051 ecom:hasTicket ecom:ticket_TICKET_1763785905 .
+
+ecom:ticket_TICKET_1763785905 ecom:relatedToOrder ecom:order_ORD_20251114_0339 .
+
+ecom:ticket_TICKET_1763872305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763872305" ;
+    ecom:issueType "shipping" ;
+    ecom:description "언제 배송되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-23T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-29T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_069 ecom:hasTicket ecom:ticket_TICKET_1763872305 .
+
+ecom:ticket_TICKET_1763872305 ecom:relatedToOrder ecom:order_ORD_20251102_0338 .
+
+ecom:ticket_TICKET_1765341105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765341105" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 상태가 궁금합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-10T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-16T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_026 ecom:hasTicket ecom:ticket_TICKET_1765341105 .
+
+ecom:ticket_TICKET_1765341105 ecom:relatedToOrder ecom:order_ORD_20251106_0301 .
+
+ecom:ticket_TICKET_1765773105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765773105" ;
+    ecom:issueType "exchange" ;
+    ecom:description "사이즈 교환 부탁드립니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-15T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_048 ecom:hasTicket ecom:ticket_TICKET_1765773105 .
+
+ecom:ticket_TICKET_1764649905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764649905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "택배사 연락처 알려주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-02T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-09T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_030 ecom:hasTicket ecom:ticket_TICKET_1764649905 .
+
+ecom:ticket_TICKET_1764649905 ecom:relatedToOrder ecom:order_ORD_20251018_0153 .
+
+ecom:ticket_TICKET_1765513905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765513905" ;
+    ecom:issueType "exchange" ;
+    ecom:description "사이즈 교환 부탁드립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-12T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-16T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_065 ecom:hasTicket ecom:ticket_TICKET_1765513905 .
+
+ecom:ticket_TICKET_1765513905 ecom:relatedToOrder ecom:order_ORD_20251102_0195 .
+
+ecom:ticket_TICKET_1762144305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762144305" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 취소하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-03T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-06T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_011 ecom:hasTicket ecom:ticket_TICKET_1762144305 .
+
+ecom:ticket_TICKET_1762144305 ecom:relatedToOrder ecom:order_ORD_20251025_0224 .
+
+ecom:ticket_TICKET_1765427505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765427505" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송지 변경 가능한가요?" ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_048 ecom:hasTicket ecom:ticket_TICKET_1765427505 .
+
+ecom:ticket_TICKET_1765427505 ecom:relatedToOrder ecom:order_ORD_20251113_0023 .
+
+ecom:ticket_TICKET_1762576305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762576305" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 내역 확인해주세요." ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-08T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_100 ecom:hasTicket ecom:ticket_TICKET_1762576305 .
+
+ecom:ticket_TICKET_1762576305 ecom:relatedToOrder ecom:order_ORD_20251101_0273 .
+
+ecom:ticket_TICKET_1761280305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761280305" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 상태가 궁금합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-10-24T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-24T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_040 ecom:hasTicket ecom:ticket_TICKET_1761280305 .
+
+ecom:ticket_TICKET_1761280305 ecom:relatedToOrder ecom:order_ORD_20251113_0343 .
+
+ecom:ticket_TICKET_1765254705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765254705" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 내역 확인해주세요." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-09T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_099 ecom:hasTicket ecom:ticket_TICKET_1765254705 .
+
+ecom:ticket_TICKET_1765254705 ecom:relatedToOrder ecom:order_ORD_20251001_0088 .
+
+ecom:ticket_TICKET_1764649905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764649905" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "세탁 방법이 궁금합니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-02T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_077 ecom:hasTicket ecom:ticket_TICKET_1764649905 .
+
+ecom:ticket_TICKET_1764649905 ecom:relatedToOrder ecom:order_ORD_20251119_0477 .
+
+ecom:ticket_TICKET_1761798705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761798705" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-04T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_091 ecom:hasTicket ecom:ticket_TICKET_1761798705 .
+
+ecom:ticket_TICKET_1761798705 ecom:relatedToOrder ecom:order_ORD_20251019_0194 .
+
+ecom:ticket_TICKET_1763785905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763785905" ;
+    ecom:issueType "complaint" ;
+    ecom:description "고객센터 연결이 안 됩니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_017 ecom:hasTicket ecom:ticket_TICKET_1763785905 .
+
+ecom:ticket_TICKET_1763785905 ecom:relatedToOrder ecom:order_ORD_20251104_0026 .
+
+ecom:ticket_TICKET_1764736305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764736305" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-03T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-03T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_056 ecom:hasTicket ecom:ticket_TICKET_1764736305 .
+
+ecom:ticket_TICKET_1764736305 ecom:relatedToOrder ecom:order_ORD_20250930_0115 .
+
+ecom:ticket_TICKET_1764390705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764390705" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "세탁 방법이 궁금합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-29T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-05T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_044 ecom:hasTicket ecom:ticket_TICKET_1764390705 .
+
+ecom:ticket_TICKET_1764390705 ecom:relatedToOrder ecom:order_ORD_20251020_0460 .
+
+ecom:ticket_TICKET_1764045105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764045105" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "in_progress" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-25T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_025 ecom:hasTicket ecom:ticket_TICKET_1764045105 .
+
+ecom:ticket_TICKET_1764045105 ecom:relatedToOrder ecom:order_ORD_20251219_0465 .
+
+ecom:ticket_TICKET_1763785905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763785905" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-25T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_088 ecom:hasTicket ecom:ticket_TICKET_1763785905 .
+
+ecom:ticket_TICKET_1763785905 ecom:relatedToOrder ecom:order_ORD_20251002_0377 .
+
+ecom:ticket_TICKET_1764909105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764909105" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-05T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_050 ecom:hasTicket ecom:ticket_TICKET_1764909105 .
+
+ecom:ticket_TICKET_1764304305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764304305" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-28T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-29T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_068 ecom:hasTicket ecom:ticket_TICKET_1764304305 .
+
+ecom:ticket_TICKET_1764304305 ecom:relatedToOrder ecom:order_ORD_20251212_0028 .
+
+ecom:ticket_TICKET_1765773105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765773105" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-15T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_063 ecom:hasTicket ecom:ticket_TICKET_1765773105 .
+
+ecom:ticket_TICKET_1765773105 ecom:relatedToOrder ecom:order_ORD_20250929_0183 .
+
+ecom:ticket_TICKET_1763353905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763353905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "택배사 연락처 알려주세요." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-17T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_086 ecom:hasTicket ecom:ticket_TICKET_1763353905 .
+
+ecom:ticket_TICKET_1763181105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763181105" ;
+    ecom:issueType "shipping" ;
+    ecom:description "언제 배송되나요?" ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-15T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_001 ecom:hasTicket ecom:ticket_TICKET_1763181105 .
+
+ecom:ticket_TICKET_1763181105 ecom:relatedToOrder ecom:order_ORD_20251029_0182 .
+
+ecom:ticket_TICKET_1762921905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762921905" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "소재가 무엇인가요?" ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-12T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_075 ecom:hasTicket ecom:ticket_TICKET_1762921905 .
+
+ecom:ticket_TICKET_1762921905 ecom:relatedToOrder ecom:order_ORD_20251106_0004 .
+
+ecom:ticket_TICKET_1764217905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764217905" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-27T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-03T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_093 ecom:hasTicket ecom:ticket_TICKET_1764217905 .
+
+ecom:ticket_TICKET_1764217905 ecom:relatedToOrder ecom:order_ORD_20251112_0284 .
+
+ecom:ticket_TICKET_1764304305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764304305" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-28T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_086 ecom:hasTicket ecom:ticket_TICKET_1764304305 .
+
+ecom:ticket_TICKET_1764304305 ecom:relatedToOrder ecom:order_ORD_20251207_0083 .
+
+ecom:ticket_TICKET_1762835505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762835505" ;
+    ecom:issueType "exchange" ;
+    ecom:description "불량품이라 교환 요청합니다." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_021 ecom:hasTicket ecom:ticket_TICKET_1762835505 .
+
+ecom:ticket_TICKET_1766118705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766118705" ;
+    ecom:issueType "refund" ;
+    ecom:description "주문한 상품과 다른 상품이 와서 환불 원합니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_099 ecom:hasTicket ecom:ticket_TICKET_1766118705 .
+
+ecom:ticket_TICKET_1766118705 ecom:relatedToOrder ecom:order_ORD_20250929_0359 .
+
+ecom:ticket_TICKET_1766377905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766377905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "언제 배송되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-22T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_034 ecom:hasTicket ecom:ticket_TICKET_1766377905 .
+
+ecom:ticket_TICKET_1766377905 ecom:relatedToOrder ecom:order_ORD_20251112_0187 .
+
+ecom:ticket_TICKET_1766464305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766464305" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_053 ecom:hasTicket ecom:ticket_TICKET_1766464305 .
+
+ecom:ticket_TICKET_1766464305 ecom:relatedToOrder ecom:order_ORD_20251217_0351 .
+
+ecom:ticket_TICKET_1763440305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763440305" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-18T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_061 ecom:hasTicket ecom:ticket_TICKET_1763440305 .
+
+ecom:ticket_TICKET_1763440305 ecom:relatedToOrder ecom:order_ORD_20251008_0196 .
+
+ecom:ticket_TICKET_1763181105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763181105" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-15T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_037 ecom:hasTicket ecom:ticket_TICKET_1763181105 .
+
+ecom:ticket_TICKET_1763181105 ecom:relatedToOrder ecom:order_ORD_20251213_0032 .
+
+ecom:ticket_TICKET_1762749105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762749105" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-10T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-17T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_052 ecom:hasTicket ecom:ticket_TICKET_1762749105 .
+
+ecom:ticket_TICKET_1762749105 ecom:relatedToOrder ecom:order_ORD_20251213_0287 .
+
+ecom:ticket_TICKET_1764045105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764045105" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 내역 확인해주세요." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-25T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_093 ecom:hasTicket ecom:ticket_TICKET_1764045105 .
+
+ecom:ticket_TICKET_1764045105 ecom:relatedToOrder ecom:order_ORD_20251208_0260 .
+
+ecom:ticket_TICKET_1762230705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762230705" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-04T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-07T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_058 ecom:hasTicket ecom:ticket_TICKET_1762230705 .
+
+ecom:ticket_TICKET_1762230705 ecom:relatedToOrder ecom:order_ORD_20251130_0055 .
+
+ecom:ticket_TICKET_1766377905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766377905" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_031 ecom:hasTicket ecom:ticket_TICKET_1766377905 .
+
+ecom:ticket_TICKET_1766377905 ecom:relatedToOrder ecom:order_ORD_20251020_0146 .
+
+ecom:ticket_TICKET_1762057905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762057905" ;
+    ecom:issueType "complaint" ;
+    ecom:description "고객센터 연결이 안 됩니다." ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-02T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_009 ecom:hasTicket ecom:ticket_TICKET_1762057905 .
+
+ecom:ticket_TICKET_1762057905 ecom:relatedToOrder ecom:order_ORD_20251204_0022 .
+
+ecom:ticket_TICKET_1763440305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763440305" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-18T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_067 ecom:hasTicket ecom:ticket_TICKET_1763440305 .
+
+ecom:ticket_TICKET_1763440305 ecom:relatedToOrder ecom:order_ORD_20251027_0085 .
+
+ecom:ticket_TICKET_1764563505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764563505" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-01T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-01T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_016 ecom:hasTicket ecom:ticket_TICKET_1764563505 .
+
+ecom:ticket_TICKET_1766118705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766118705" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_002 ecom:hasTicket ecom:ticket_TICKET_1766118705 .
+
+ecom:ticket_TICKET_1766118705 ecom:relatedToOrder ecom:order_ORD_20250929_0255 .
+
+ecom:ticket_TICKET_1765945905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765945905" ;
+    ecom:issueType "exchange" ;
+    ecom:description "다른 상품으로 교환 가능한가요?" ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-17T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_028 ecom:hasTicket ecom:ticket_TICKET_1765945905 .
+
+ecom:ticket_TICKET_1765945905 ecom:relatedToOrder ecom:order_ORD_20251010_0277 .
+
+ecom:ticket_TICKET_1762749105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762749105" ;
+    ecom:issueType "exchange" ;
+    ecom:description "다른 상품으로 교환 가능한가요?" ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-10T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_077 ecom:hasTicket ecom:ticket_TICKET_1762749105 .
+
+ecom:ticket_TICKET_1766118705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766118705" ;
+    ecom:issueType "exchange" ;
+    ecom:description "다른 상품으로 교환 가능한가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_099 ecom:hasTicket ecom:ticket_TICKET_1766118705 .
+
+ecom:ticket_TICKET_1766118705 ecom:relatedToOrder ecom:order_ORD_20251103_0382 .
+
+ecom:ticket_TICKET_1765254705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765254705" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-09T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-10T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_083 ecom:hasTicket ecom:ticket_TICKET_1765254705 .
+
+ecom:ticket_TICKET_1765254705 ecom:relatedToOrder ecom:order_ORD_20251211_0193 .
+
+ecom:ticket_TICKET_1765773105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765773105" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-15T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_056 ecom:hasTicket ecom:ticket_TICKET_1765773105 .
+
+ecom:ticket_TICKET_1765773105 ecom:relatedToOrder ecom:order_ORD_20251026_0017 .
+
+ecom:ticket_TICKET_1761280305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761280305" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-10-24T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-29T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_027 ecom:hasTicket ecom:ticket_TICKET_1761280305 .
+
+ecom:ticket_TICKET_1761280305 ecom:relatedToOrder ecom:order_ORD_20251008_0107 .
+
+ecom:ticket_TICKET_1762921905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762921905" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 상태가 궁금합니다." ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-12T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_084 ecom:hasTicket ecom:ticket_TICKET_1762921905 .
+
+ecom:ticket_TICKET_1762921905 ecom:relatedToOrder ecom:order_ORD_20251114_0462 .
+
+ecom:ticket_TICKET_1763526705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763526705" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-19T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_043 ecom:hasTicket ecom:ticket_TICKET_1763526705 .
+
+ecom:ticket_TICKET_1766118705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766118705" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_050 ecom:hasTicket ecom:ticket_TICKET_1766118705 .
+
+ecom:ticket_TICKET_1766118705 ecom:relatedToOrder ecom:order_ORD_20251221_0112 .
+
+ecom:ticket_TICKET_1763267505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763267505" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-16T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_019 ecom:hasTicket ecom:ticket_TICKET_1763267505 .
+
+ecom:ticket_TICKET_1763267505 ecom:relatedToOrder ecom:order_ORD_20251002_0403 .
+
+ecom:ticket_TICKET_1765168305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765168305" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-08T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_056 ecom:hasTicket ecom:ticket_TICKET_1765168305 .
+
+ecom:ticket_TICKET_1765168305 ecom:relatedToOrder ecom:order_ORD_20250930_0115 .
+
+ecom:ticket_TICKET_1766032305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766032305" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-18T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_059 ecom:hasTicket ecom:ticket_TICKET_1766032305 .
+
+ecom:ticket_TICKET_1766032305 ecom:relatedToOrder ecom:order_ORD_20251113_0363 .
+
+ecom:ticket_TICKET_1762403505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762403505" ;
+    ecom:issueType "shipping" ;
+    ecom:description "택배사 연락처 알려주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-06T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-08T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_062 ecom:hasTicket ecom:ticket_TICKET_1762403505 .
+
+ecom:ticket_TICKET_1762403505 ecom:relatedToOrder ecom:order_ORD_20251105_0376 .
+
+ecom:ticket_TICKET_1763181105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763181105" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-15T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-17T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_050 ecom:hasTicket ecom:ticket_TICKET_1763181105 .
+
+ecom:ticket_TICKET_1763181105 ecom:relatedToOrder ecom:order_ORD_20251221_0112 .
+
+ecom:ticket_TICKET_1766118705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766118705" ;
+    ecom:issueType "exchange" ;
+    ecom:description "다른 상품으로 교환 가능한가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_041 ecom:hasTicket ecom:ticket_TICKET_1766118705 .
+
+ecom:ticket_TICKET_1766118705 ecom:relatedToOrder ecom:order_ORD_20251012_0304 .
+
+ecom:ticket_TICKET_1762489905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762489905" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-07T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_025 ecom:hasTicket ecom:ticket_TICKET_1762489905 .
+
+ecom:ticket_TICKET_1762489905 ecom:relatedToOrder ecom:order_ORD_20251207_0011 .
+
+ecom:ticket_TICKET_1764390705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764390705" ;
+    ecom:issueType "complaint" ;
+    ecom:description "상담원 태도가 불친절했습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-29T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_051 ecom:hasTicket ecom:ticket_TICKET_1764390705 .
+
+ecom:ticket_TICKET_1765427505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765427505" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_016 ecom:hasTicket ecom:ticket_TICKET_1765427505 .
+
+ecom:ticket_TICKET_1761366705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761366705" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "세탁 방법이 궁금합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-10-25T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-28T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_064 ecom:hasTicket ecom:ticket_TICKET_1761366705 .
+
+ecom:ticket_TICKET_1761366705 ecom:relatedToOrder ecom:order_ORD_20251007_0399 .
+
+ecom:ticket_TICKET_1762662705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762662705" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-09T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_048 ecom:hasTicket ecom:ticket_TICKET_1762662705 .
+
+ecom:ticket_TICKET_1762662705 ecom:relatedToOrder ecom:order_ORD_20251013_0371 .
+
+ecom:ticket_TICKET_1766464305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766464305" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_089 ecom:hasTicket ecom:ticket_TICKET_1766464305 .
+
+ecom:ticket_TICKET_1766464305 ecom:relatedToOrder ecom:order_ORD_20251214_0177 .
+
+ecom:ticket_TICKET_1761625905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761625905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송 조회가 안 됩니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-10-28T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-03T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_077 ecom:hasTicket ecom:ticket_TICKET_1761625905 .
+
+ecom:ticket_TICKET_1761625905 ecom:relatedToOrder ecom:order_ORD_20251212_0036 .
+
+ecom:ticket_TICKET_1763267505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763267505" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "세탁 방법이 궁금합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-16T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_066 ecom:hasTicket ecom:ticket_TICKET_1763267505 .
+
+ecom:ticket_TICKET_1763267505 ecom:relatedToOrder ecom:order_ORD_20251029_0494 .
+
+ecom:ticket_TICKET_1764995505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764995505" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 내역 확인해주세요." ;
+    ecom:status "in_progress" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-06T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_075 ecom:hasTicket ecom:ticket_TICKET_1764995505 .
+
+ecom:ticket_TICKET_1764995505 ecom:relatedToOrder ecom:order_ORD_20251124_0412 .
+
+ecom:ticket_TICKET_1766118705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766118705" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-19T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_022 ecom:hasTicket ecom:ticket_TICKET_1766118705 .
+
+ecom:ticket_TICKET_1766118705 ecom:relatedToOrder ecom:order_ORD_20251203_0499 .
+
+ecom:ticket_TICKET_1765513905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765513905" ;
+    ecom:issueType "refund" ;
+    ecom:description "주문한 상품과 다른 상품이 와서 환불 원합니다." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-12T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_095 ecom:hasTicket ecom:ticket_TICKET_1765513905 .
+
+ecom:ticket_TICKET_1765513905 ecom:relatedToOrder ecom:order_ORD_20250929_0470 .
+
+ecom:ticket_TICKET_1765513905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765513905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송 조회가 안 됩니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-12T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-14T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_015 ecom:hasTicket ecom:ticket_TICKET_1765513905 .
+
+ecom:ticket_TICKET_1765513905 ecom:relatedToOrder ecom:order_ORD_20251113_0355 .
+
+ecom:ticket_TICKET_1761712305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761712305" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-10-29T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_054 ecom:hasTicket ecom:ticket_TICKET_1761712305 .
+
+ecom:ticket_TICKET_1761712305 ecom:relatedToOrder ecom:order_ORD_20251209_0215 .
+
+ecom:ticket_TICKET_1763267505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763267505" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-16T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_016 ecom:hasTicket ecom:ticket_TICKET_1763267505 .
+
+ecom:ticket_TICKET_1763267505 ecom:relatedToOrder ecom:order_ORD_20251125_0397 .
+
+ecom:ticket_TICKET_1765945905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765945905" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-17T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_036 ecom:hasTicket ecom:ticket_TICKET_1765945905 .
+
+ecom:ticket_TICKET_1765945905 ecom:relatedToOrder ecom:order_ORD_20251208_0360 .
+
+ecom:ticket_TICKET_1762317105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762317105" ;
+    ecom:issueType "complaint" ;
+    ecom:description "약속한 배송일이 지났는데 아직 안 왔습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-05T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_068 ecom:hasTicket ecom:ticket_TICKET_1762317105 .
+
+ecom:ticket_TICKET_1762317105 ecom:relatedToOrder ecom:order_ORD_20251002_0292 .
+
+ecom:ticket_TICKET_1762835505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762835505" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "결제가 제대로 됐는지 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-11T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-11T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_045 ecom:hasTicket ecom:ticket_TICKET_1762835505 .
+
+ecom:ticket_TICKET_1762835505 ecom:relatedToOrder ecom:order_ORD_20251112_0176 .
+
+ecom:ticket_TICKET_1762489905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762489905" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-07T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_013 ecom:hasTicket ecom:ticket_TICKET_1762489905 .
+
+ecom:ticket_TICKET_1764477105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764477105" ;
+    ecom:issueType "complaint" ;
+    ecom:description "환불 처리가 너무 늦습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-30T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-07T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_069 ecom:hasTicket ecom:ticket_TICKET_1764477105 .
+
+ecom:ticket_TICKET_1764477105 ecom:relatedToOrder ecom:order_ORD_20251102_0089 .
+
+ecom:ticket_TICKET_1761712305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761712305" ;
+    ecom:issueType "refund" ;
+    ecom:description "주문한 상품과 다른 상품이 와서 환불 원합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-10-29T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-03T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_001 ecom:hasTicket ecom:ticket_TICKET_1761712305 .
+
+ecom:ticket_TICKET_1761712305 ecom:relatedToOrder ecom:order_ORD_20251010_0375 .
+
+ecom:ticket_TICKET_1764563505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764563505" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-01T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-08T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_064 ecom:hasTicket ecom:ticket_TICKET_1764563505 .
+
+ecom:ticket_TICKET_1764563505 ecom:relatedToOrder ecom:order_ORD_20251204_0425 .
+
+ecom:ticket_TICKET_1765773105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765773105" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-15T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-16T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_039 ecom:hasTicket ecom:ticket_TICKET_1765773105 .
+
+ecom:ticket_TICKET_1765773105 ecom:relatedToOrder ecom:order_ORD_20250927_0247 .
+
+ecom:ticket_TICKET_1765600305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765600305" ;
+    ecom:issueType "complaint" ;
+    ecom:description "약속한 배송일이 지났는데 아직 안 왔습니다." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-13T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_071 ecom:hasTicket ecom:ticket_TICKET_1765600305 .
+
+ecom:ticket_TICKET_1765945905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765945905" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-17T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-22T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_031 ecom:hasTicket ecom:ticket_TICKET_1765945905 .
+
+ecom:ticket_TICKET_1765945905 ecom:relatedToOrder ecom:order_ORD_20251020_0146 .
+
+ecom:ticket_TICKET_1762489905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762489905" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 내역 확인해주세요." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-07T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-14T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_043 ecom:hasTicket ecom:ticket_TICKET_1762489905 .
+
+ecom:ticket_TICKET_1762489905 ecom:relatedToOrder ecom:order_ORD_20251207_0165 .
+
+ecom:ticket_TICKET_1762144305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762144305" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-03T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_070 ecom:hasTicket ecom:ticket_TICKET_1762144305 .
+
+ecom:ticket_TICKET_1762144305 ecom:relatedToOrder ecom:order_ORD_20250925_0367 .
+
+ecom:ticket_TICKET_1762057905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762057905" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "세탁 방법이 궁금합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-02T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-06T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_050 ecom:hasTicket ecom:ticket_TICKET_1762057905 .
+
+ecom:ticket_TICKET_1762057905 ecom:relatedToOrder ecom:order_ORD_20251221_0112 .
+
+ecom:ticket_TICKET_1762403505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762403505" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "in_progress" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-06T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_015 ecom:hasTicket ecom:ticket_TICKET_1762403505 .
+
+ecom:ticket_TICKET_1762403505 ecom:relatedToOrder ecom:order_ORD_20251214_0014 .
+
+ecom:ticket_TICKET_1764822705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764822705" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-04T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-07T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_049 ecom:hasTicket ecom:ticket_TICKET_1764822705 .
+
+ecom:ticket_TICKET_1763613105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763613105" ;
+    ecom:issueType "order_inquiry" ;
+    ecom:description "주문 내역 확인해주세요." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-20T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_041 ecom:hasTicket ecom:ticket_TICKET_1763613105 .
+
+ecom:ticket_TICKET_1761971505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761971505" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송 조회가 안 됩니다." ;
+    ecom:status "open" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-11-01T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_070 ecom:hasTicket ecom:ticket_TICKET_1761971505 .
+
+ecom:ticket_TICKET_1761971505 ecom:relatedToOrder ecom:order_ORD_20251109_0454 .
+
+ecom:ticket_TICKET_1763181105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763181105" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-15T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-16T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_019 ecom:hasTicket ecom:ticket_TICKET_1763181105 .
+
+ecom:ticket_TICKET_1763181105 ecom:relatedToOrder ecom:order_ORD_20251112_0436 .
+
+ecom:ticket_TICKET_1763785905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763785905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송 조회가 안 됩니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-22T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-28T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_091 ecom:hasTicket ecom:ticket_TICKET_1763785905 .
+
+ecom:ticket_TICKET_1761798705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761798705" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_043 ecom:hasTicket ecom:ticket_TICKET_1761798705 .
+
+ecom:ticket_TICKET_1762489905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762489905" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-07T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-09T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_100 ecom:hasTicket ecom:ticket_TICKET_1762489905 .
+
+ecom:ticket_TICKET_1762317105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762317105" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "소재가 무엇인가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-05T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-06T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_045 ecom:hasTicket ecom:ticket_TICKET_1762317105 .
+
+ecom:ticket_TICKET_1762317105 ecom:relatedToOrder ecom:order_ORD_20251112_0176 .
+
+ecom:ticket_TICKET_1762317105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762317105" ;
+    ecom:issueType "refund" ;
+    ecom:description "주문한 상품과 다른 상품이 와서 환불 원합니다." ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-05T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_025 ecom:hasTicket ecom:ticket_TICKET_1762317105 .
+
+ecom:ticket_TICKET_1762317105 ecom:relatedToOrder ecom:order_ORD_20251219_0465 .
+
+ecom:ticket_TICKET_1764909105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764909105" ;
+    ecom:issueType "refund" ;
+    ecom:description "사이즈가 맞지 않아 환불 신청합니다." ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-05T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_021 ecom:hasTicket ecom:ticket_TICKET_1764909105 .
+
+ecom:ticket_TICKET_1764909105 ecom:relatedToOrder ecom:order_ORD_20251019_0444 .
+
+ecom:ticket_TICKET_1764477105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764477105" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_026 ecom:hasTicket ecom:ticket_TICKET_1764477105 .
+
+ecom:ticket_TICKET_1764563505 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764563505" ;
+    ecom:issueType "complaint" ;
+    ecom:description "고객센터 연결이 안 됩니다." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-01T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_056 ecom:hasTicket ecom:ticket_TICKET_1764563505 .
+
+ecom:ticket_TICKET_1764563505 ecom:relatedToOrder ecom:order_ORD_20251026_0017 .
+
+ecom:ticket_TICKET_1765686705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765686705" ;
+    ecom:issueType "exchange" ;
+    ecom:description "다른 상품으로 교환 가능한가요?" ;
+    ecom:status "in_progress" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-14T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_067 ecom:hasTicket ecom:ticket_TICKET_1765686705 .
+
+ecom:ticket_TICKET_1765686705 ecom:relatedToOrder ecom:order_ORD_20251109_0440 .
+
+ecom:ticket_TICKET_1765513905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765513905" ;
+    ecom:issueType "shipping" ;
+    ecom:description "택배사 연락처 알려주세요." ;
+    ecom:status "in_progress" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-12-12T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_031 ecom:hasTicket ecom:ticket_TICKET_1765513905 .
+
+ecom:ticket_TICKET_1765513905 ecom:relatedToOrder ecom:order_ORD_20251027_0471 .
+
+ecom:ticket_TICKET_1764477105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764477105" ;
+    ecom:issueType "exchange" ;
+    ecom:description "다른 상품으로 교환 가능한가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-30T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-01T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_085 ecom:hasTicket ecom:ticket_TICKET_1764477105 .
+
+ecom:ticket_TICKET_1764477105 ecom:relatedToOrder ecom:order_ORD_20251114_0455 .
+
+ecom:ticket_TICKET_1766377905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1766377905" ;
+    ecom:issueType "complaint" ;
+    ecom:description "환불 처리가 너무 늦습니다." ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-22T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-23T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_084 ecom:hasTicket ecom:ticket_TICKET_1766377905 .
+
+ecom:ticket_TICKET_1766377905 ecom:relatedToOrder ecom:order_ORD_20250928_0434 .
+
+ecom:ticket_TICKET_1764822705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764822705" ;
+    ecom:issueType "exchange" ;
+    ecom:description "다른 상품으로 교환 가능한가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-12-04T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-05T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_013 ecom:hasTicket ecom:ticket_TICKET_1764822705 .
+
+ecom:ticket_TICKET_1764822705 ecom:relatedToOrder ecom:order_ORD_20251007_0091 .
+
+ecom:ticket_TICKET_1764304305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764304305" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-28T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-05T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_070 ecom:hasTicket ecom:ticket_TICKET_1764304305 .
+
+ecom:ticket_TICKET_1764304305 ecom:relatedToOrder ecom:order_ORD_20251116_0241 .
+
+ecom:ticket_TICKET_1762317105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762317105" ;
+    ecom:issueType "product_inquiry" ;
+    ecom:description "이 상품 재입고 언제 되나요?" ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-11-05T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_076 ecom:hasTicket ecom:ticket_TICKET_1762317105 .
+
+ecom:ticket_TICKET_1762317105 ecom:relatedToOrder ecom:order_ORD_20251007_0431 .
+
+ecom:ticket_TICKET_1764045105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764045105" ;
+    ecom:issueType "refund" ;
+    ecom:description "색상이 사진과 달라서 환불해주세요." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-25T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_089 ecom:hasTicket ecom:ticket_TICKET_1764045105 .
+
+ecom:ticket_TICKET_1761798705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761798705" ;
+    ecom:issueType "refund" ;
+    ecom:description "주문한 상품과 다른 상품이 와서 환불 원합니다." ;
+    ecom:status "open" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_027 ecom:hasTicket ecom:ticket_TICKET_1761798705 .
+
+ecom:ticket_TICKET_1761798705 ecom:relatedToOrder ecom:order_ORD_20251008_0107 .
+
+ecom:ticket_TICKET_1765168305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1765168305" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "closed" ;
+    ecom:priority "urgent" ;
+    ecom:createdAt "2025-12-08T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-12-12T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_048 ecom:hasTicket ecom:ticket_TICKET_1765168305 .
+
+ecom:ticket_TICKET_1765168305 ecom:relatedToOrder ecom:order_ORD_20251211_0303 .
+
+ecom:ticket_TICKET_1763181105 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1763181105" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송지 변경 가능한가요?" ;
+    ecom:status "closed" ;
+    ecom:priority "low" ;
+    ecom:createdAt "2025-11-15T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-11-18T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_064 ecom:hasTicket ecom:ticket_TICKET_1763181105 .
+
+ecom:ticket_TICKET_1763181105 ecom:relatedToOrder ecom:order_ORD_20251007_0399 .
+
+ecom:ticket_TICKET_1764822705 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1764822705" ;
+    ecom:issueType "refund" ;
+    ecom:description "단순 변심으로 환불하고 싶습니다." ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-04T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_006 ecom:hasTicket ecom:ticket_TICKET_1764822705 .
+
+ecom:ticket_TICKET_1764822705 ecom:relatedToOrder ecom:order_ORD_20251011_0099 .
+
+ecom:ticket_TICKET_1762489905 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1762489905" ;
+    ecom:issueType "exchange" ;
+    ecom:description "색상 교환하고 싶습니다." ;
+    ecom:status "open" ;
+    ecom:priority "high" ;
+    ecom:createdAt "2025-11-07T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_028 ecom:hasTicket ecom:ticket_TICKET_1762489905 .
+
+ecom:ticket_TICKET_1762489905 ecom:relatedToOrder ecom:order_ORD_20251216_0489 .
+
+ecom:ticket_TICKET_1761280305 a ecom:Ticket ;
+    ecom:ticketId "TICKET_1761280305" ;
+    ecom:issueType "shipping" ;
+    ecom:description "배송이 너무 오래 걸립니다." ;
+    ecom:status "closed" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-10-24T04:31:45.091709Z"^^xsd:dateTime ;
+    ecom:resolvedAt "2025-10-30T04:31:45.091709Z"^^xsd:dateTime .
+
+ecom:customer_user_085 ecom:hasTicket ecom:ticket_TICKET_1761280305 .
+
+ecom:ticket_TICKET_1761280305 ecom:relatedToOrder ecom:order_ORD_20251112_0201 .
+
+ecom:ticket_TICKET_1766464338 a ecom:Ticket ;
+    ecom:ticketId "TICKET-1766464338" ;
+    ecom:issueType "refund" ;
+    ecom:description "상품 불량으로 환불 요청합니다." ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-23T04:32:18Z"^^xsd:dateTime .
+
+ecom:customer_user_001 ecom:hasTicket ecom:ticket_TICKET_1766464338 .
+
+ecom:ticket_TICKET_1766464338 ecom:relatedToOrder ecom:order_ORD_20251201_001 .
+
+ecom:ticket_TICKET_1766471740 a ecom:Ticket ;
+    ecom:ticketId "TICKET-1766471740" ;
+    ecom:issueType "other" ;
+    ecom:description "상품이 불량이라 환불 요청합니다" ;
+    ecom:status "open" ;
+    ecom:priority "normal" ;
+    ecom:createdAt "2025-12-23T06:35:40Z"^^xsd:dateTime .
+
+ecom:customer_user_001 ecom:hasTicket ecom:ticket_TICKET_1766471740 .
+
+ecom:ticket_TICKET_1766471740 ecom:relatedToOrder ecom:order_ORD_20251221_0217 .
